@@ -1,2 +1,3 @@
-# Calibrated-inference-of-spiking
-Calibrated inference of spiking from calcium imaging data
+# Calibrated inference of spiking from calcium imaging data
+
+Work in progress
