@@ -25,6 +25,6 @@ Dependencies are:
 
 ### To do list
 
-- X
+- The relative paths of the ground truth datasets in the GUI and the 'Main_program.py' are not correct
 - Y
 - Z
