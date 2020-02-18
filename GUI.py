@@ -150,7 +150,7 @@ class window(wx.Frame):
         # select multiple entries with holding Ctrl
         
         
-        fileList = glob.glob( 'GT_*')
+        fileList = glob.glob( os.path.join('GT_datasets', 'GT_*') )
         
         wx.StaticText(panel,label="Select training datasets", pos=(S_LEFT,S_TOP+ROW))
         self.training_list = wx.ListBox(panel,
@@ -343,7 +343,7 @@ class window(wx.Frame):
         
         selection = self.training_list.GetSelections()
         
-        fileList = glob.glob( 'GT_*')
+        fileList = glob.glob( os.path.join( 'GT_datasets','GT_*' ))
         training_dataset_folders = [None]*len(selection)
         for k in range(len(selection)):
           training_dataset_folders[k] = fileList[selection[k]]
