@@ -72,7 +72,7 @@ optimizer = 'Adagrad'
 nr_of_epochs = 10
 
 # Use ensemble learning
-ensemble_size = 5
+ensemble_size = 1
 
 
 """
@@ -81,7 +81,7 @@ Use test dataset & set sampling/imaging rate
 
 """
 
-test_dataset_folder = 'Test_dataset_OGB_zf_4i3pdp'
+test_dataset_folder = os.path.join('Example_datasets','Test_dataset_OGB_zf_4i3pdp')
 sampling_rate = 7.5
 
 
@@ -127,12 +127,8 @@ load_pretrained_models = 0 # load pre-trained models
 
 
 training_dataset_folders = [None]*2
-training_dataset_folders[0] = 'GT_dataset_OGB'
-training_dataset_folders[1] = 'GT_dataset_Cal520'
-
-training_dataset_folders = [None]
-training_dataset_folders[0] = 'GT_dataset_OGB'
-ensemble_size = 1
+training_dataset_folders[0] = os.path.join('GT_datasets','GT_dataset_OGB')
+training_dataset_folders[1] = os.path.join('GT_datasets','GT_dataset_Cal520')
 
 
 X = [[None]*ensemble_size for _ in range(nb_noise_levels)] 
