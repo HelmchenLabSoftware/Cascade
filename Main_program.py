@@ -43,7 +43,7 @@ from keras import backend as K
 
 from helper_scripts.utils import define_model, noiselevels_test_dataset, preprocess_test_dataset
 from helper_scripts.utils import preprocess_groundtruth_artificial_noise, calibrated_ground_truth_artificial_noise
-from helper_scripts.utils_discrete_spikes import divide_and_conquer, fill_up_APs, systematic_exploration, random_motion, prune_APs
+from helper_scripts.utils_discrete_spikes import divide_and_conquer, fill_up_APs, systematic_exploration, prune_APs # random_motion
 
 
 
