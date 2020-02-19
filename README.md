@@ -7,6 +7,7 @@ People currently involved: Peter Rupprecht, Adrian Hoffmann
 Dependencies are:
 
 - numpy, scipy and other typical stuff that is included in Anaconda for example
+- matplotlib (only for plotting), seaborn (not essential), wxpython (for GUI)
 - tensorflow and keras (as a deep learning framework); this can be installed in an Anaconda environment either as CPU- or GPU-based framework; detailed instructions should be provided here
 
 ### Overview of main files
