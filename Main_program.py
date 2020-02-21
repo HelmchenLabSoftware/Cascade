@@ -9,10 +9,10 @@ Created on Wed Oct 16 22:00:57 2019
 """
 
 
+import os 
+os.chdir('/home/pierre/Github/Calibrated-inference-of-spiking')
+
 ## Load packages
-
-#cd '/media/pierre/Der Hort/Peter/FMI PhD/Project calibrated deconvolution/Calibrated Inference of Firing Rates/Package with GUI'
-
 
 import os
 import glob as glob
@@ -81,7 +81,7 @@ Use test dataset & set sampling/imaging rate
 
 """
 
-test_dataset_folder = os.path.join('Example_datasets','Test_dataset_OGB_zf_4i3pdp')
+test_dataset_folder = os.path.join('Example_datasets','OGB_zf_exp4_fish3_pdp')
 sampling_rate = 7.5
 
 
