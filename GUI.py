@@ -361,10 +361,10 @@ class window(wx.Frame):
             omission_list = []
             permute = 1
             
-            self.X[noise_level_index][ensemble],self.Y[noise_level_index][ensemble] = preprocess_groundtruth_artificial_noise(training_dataset_folders,before_frac,int(self.var_windowsize),after_frac,noise_level,self.var_framerate,self.var_smoothing*self.var_framerate,omission_list,permute)
+            self.X,self.Y = preprocess_groundtruth_artificial_noise(training_dataset_folders,before_frac,int(self.var_windowsize),after_frac,noise_level,self.var_framerate,self.var_smoothing*self.var_framerate,omission_list,permute)
             self.set_of_models[noise_level_index][ensemble] = define_model(filter_sizes,filter_numbers,dense_expansion,int(self.var_windowsize),conv_filter,loss_function,optimizer)
             self.set_of_models[noise_level_index][ensemble].compile(loss=loss_function, optimizer=optimizer)
-            self.set_of_models[noise_level_index][ensemble].fit(self.X[noise_level_index][ensemble], self.Y[noise_level_index][ensemble], batch_size=1024, epochs=int(self.var_epochs),verbose=1)
+            self.set_of_models[noise_level_index][ensemble].fit(self.X, self.Y, batch_size=1024, epochs=int(self.var_epochs),verbose=1)
             
             foldername = os.path.join(self.var_testdataset_folder,'Models')
             if not os.path.exists(foldername):
