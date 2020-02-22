@@ -42,7 +42,7 @@ from keras import backend as K
 
 
 from helper_scripts.utils import define_model, noiselevels_test_dataset, preprocess_test_dataset
-from helper_scripts.utils import preprocess_groundtruth_artificial_noise, calibrated_ground_truth_artificial_noise
+from helper_scripts.utils import preprocess_groundtruth_artificial_noise, calibrated_ground_truth_artificial_noise,preprocess_groundtruth_artificial_noise_balanced
 from helper_scripts.utils_discrete_spikes import divide_and_conquer, fill_up_APs, systematic_exploration, prune_APs # random_motion
 
 
@@ -72,7 +72,7 @@ optimizer = 'Adagrad'
 nr_of_epochs = 10
 
 # Use ensemble learning
-ensemble_size = 1
+ensemble_size = 5
 
 
 """
@@ -82,7 +82,7 @@ Use test dataset & set sampling/imaging rate
 """
 
 test_dataset_folder = os.path.join('Example_datasets','OGB_zf_exp4_fish3_pdp')
-sampling_rate = 7.5
+sampling_rate = 30
 
 
 
@@ -131,8 +131,29 @@ training_dataset_folders[0] = os.path.join('GT_datasets','GT_dataset_OGB')
 training_dataset_folders[1] = os.path.join('GT_datasets','GT_dataset_Cal520')
 
 
-X = [[None]*ensemble_size for _ in range(nb_noise_levels)] 
-Y = [[None]*ensemble_size for _ in range(nb_noise_levels)] 
+dataset_list_good = ['GT_dataset_Cal520',
+ 'GT_dataset_S1_OGB',
+ 'GT_dataset_Allen_Emx1f_neuropil_corrected',
+ 'GT_dataset_Allen_Cux2f_neuropil_corrected',
+ 'GT_dataset_GC_aDp',
+ 'GT_dataset_GC_dD',
+ 'GT_dataset_GC6s_Chen',
+ 'GT_dataset_RCaMP_CA3',
+ 'GT_dataset_GC6f_Chen',
+ 'GT_dataset_RCaMP_S1',
+ 'GT_dataset_Theis_3',
+ 'GT_dataset_S1_Cal520',
+ 'GT_dataset_Allen_tetOs_neuropil_corrected',
+ 'GT_dataset_GC5k_Akerboom',
+ 'GT_dataset_Allen_Emx1s_neuropil_corrected',
+ 'GT_dataset_jRCaMP1a']
+
+training_dataset_folders = [None]*len(dataset_list_good)
+for i,dataset in enumerate(dataset_list_good):
+  training_dataset_folders[i] = os.path.join('GT_datasets',dataset_list_good[i])
+
+
+
 set_of_models = [[None]*ensemble_size for _ in range(nb_noise_levels)] 
 
 for noise_level_index,noise_level in enumerate(noise_levels_model):
@@ -151,10 +172,10 @@ for noise_level_index,noise_level in enumerate(noise_levels_model):
       omission_list = []
       permute = 1
       
-      X[noise_level_index][ensemble],Y[noise_level_index][ensemble] = preprocess_groundtruth_artificial_noise(training_dataset_folders,before_frac,windowsize,after_frac,noise_level,sampling_rate,smoothing*sampling_rate,omission_list,permute)
+      X,Y = preprocess_groundtruth_artificial_noise_balanced(training_dataset_folders,before_frac,windowsize,after_frac,noise_level,sampling_rate,smoothing*sampling_rate,omission_list,permute)
       set_of_models[noise_level_index][ensemble] = define_model(filter_sizes,filter_numbers,dense_expansion,windowsize,conv_filter,loss_function,optimizer)
       set_of_models[noise_level_index][ensemble].compile(loss=loss_function, optimizer=optimizer)
-      set_of_models[noise_level_index][ensemble].fit(X[noise_level_index][ensemble], Y[noise_level_index][ensemble], batch_size=1024, epochs=nr_of_epochs,verbose=1)
+      set_of_models[noise_level_index][ensemble].fit(X, Y, batch_size=1024, epochs=nr_of_epochs,verbose=1)
 
 
 """ 
@@ -223,8 +244,8 @@ for file_index,file in enumerate(fileList):
   # Enfore non-negative spike prediction values
   Y_predict[Y_predict<0] = 0
 
-  if not os.path.exists('Predictions'):
-    os.mkdir('Predictions')
+  if not os.path.exists(os.path.join(test_dataset_folder,'Predictions')):
+    os.mkdir(os.path.join(test_dataset_folder,'Predictions'))
   stripped_path = os.path.basename(os.path.normpath(file))
   sio.savemat(os.path.join(test_dataset_folder,'Predictions','Predictions_'+stripped_path),{'Y_predict':Y_predict})
 

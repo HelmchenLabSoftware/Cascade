@@ -404,3 +404,129 @@ def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sam
   return sub_traces_all, sub_traces_events_all, framerate_all, events_all
 
 
+
+
+
+def preprocess_groundtruth_artificial_noise_balanced(ground_truth_folders,before_frac,windowsize,after_frac,noise_level,sampling_rate,smoothing,omission_list=[],permute=1,maximum_traces=5000000):
+  
+  
+  sub_traces_all = [None]*500
+  sub_traces_events_all = [None]*500
+  events_all = [None]*500
+  
+  neuron_counter = 0
+  nbx_datapoints = [None]*500
+  dataset_sizes = np.zeros(len(ground_truth_folders),)
+  dataset_indices = [None]*500
+  
+  for dataset_index,training_dataset in enumerate(ground_truth_folders):
+    
+    base_folder = os.getcwd()
+    dataset_name = basename(normpath(ground_truth_folders[dataset_index]))
+  
+    try:
+        sub_traces_allX, sub_traces_events_allX, frame_rate, events_allX = calibrated_ground_truth_artificial_noise(ground_truth_folders[dataset_index],noise_level,sampling_rate,omission_list)     
+        
+        datapoint_counter = 0
+        for k in range(len(sub_traces_allX)):
+          try:
+             datapoint_counter += sub_traces_allX[k].shape[1]*sub_traces_allX[k].shape[0]
+          except:
+            print('No things')
+            
+        dataset_sizes[dataset_index] = datapoint_counter
+            
+        nbx_datapoints[neuron_counter:neuron_counter+len(sub_traces_allX)] = datapoint_counter*np.ones(len(sub_traces_allX),)
+        sub_traces_all[neuron_counter:neuron_counter+len(sub_traces_allX)] = sub_traces_allX
+        sub_traces_events_all[neuron_counter:neuron_counter+len(sub_traces_allX)] = sub_traces_events_allX
+        events_all[neuron_counter:neuron_counter+len(sub_traces_allX)] = events_allX
+        dataset_indices[neuron_counter:neuron_counter+len(sub_traces_allX)] = dataset_index*np.ones(len(sub_traces_allX),)
+        
+        neuron_counter += len(sub_traces_allX)
+    
+    except:
+         sub_traces_allX = None
+         dataset_sizes[dataset_index] = np.NaN
+    os.chdir(base_folder)
+  
+  mininum_traces = 15e6/len(ground_truth_folders)
+  
+  reduction_factors = dataset_sizes/mininum_traces
+  
+  if np.nanmax(reduction_factors) > 1:
+    oversampling = 1
+  else:
+    oversampling = 0
+  
+  print('Reducing ground truth by a factor of ca. '+str(int(3*np.nanmean(reduction_factors)))+'.')
+    
+  nbx_datapoints = nbx_datapoints[:neuron_counter]
+  sub_traces_all = sub_traces_all[:neuron_counter]
+  sub_traces_events_all = sub_traces_events_all[:neuron_counter]
+  events_all = events_all[:neuron_counter]
+  dataset_indices = dataset_indices[:neuron_counter]
+  
+  print('Number of neurons in the ground truth: '+str(len(sub_traces_events_all)))
+  
+  before = int(before_frac*windowsize)
+  after = int(after_frac*windowsize)
+  
+  X = np.zeros((15000000,windowsize,))
+  Y = np.zeros((15000000,))
+  
+  
+  counter = 0
+  for neuron_ix,(sub_traces,sub_traces_events) in enumerate(zip(sub_traces_all,sub_traces_events_all)):
+    
+    if sub_traces is not None:
+    
+      for trace_index in range(sub_traces.shape[1]):
+        
+        single_trace = sub_traces[:,trace_index]
+        single_spikes = sub_traces_events[:,trace_index]
+        
+        single_spikes = gaussian_filter(single_spikes.astype(float), sigma=smoothing)
+        
+        recording_length = np.sum(~np.isnan(single_trace))
+      
+        datapoints_used = np.minimum(len(single_spikes)-windowsize,recording_length-windowsize)
+        
+        if oversampling:
+          
+          # Discarding some samples (randomly chosen) to reduce ground truth dataset size
+        
+          datapoints_used_rand = np.random.permutation(datapoints_used)
+          
+          reduce_samples = reduction_factors[int(dataset_indices[neuron_ix])]
+          
+          datapoints_used_rand = datapoints_used_rand[0:int(len(datapoints_used_rand)/( max(reduce_samples,1)  ))]
+          
+        else:
+          
+          datapoints_used_rand = np.arange(datapoints_used)
+        
+        for time_points in datapoints_used_rand:
+    
+          Y[counter,] = single_spikes[time_points+before]
+          X[counter,:,] = single_trace[time_points:(time_points+before+after)]
+      
+          counter += 1
+  
+  Y = np.expand_dims(Y[:counter],axis=1)
+  X = np.expand_dims(X[:counter,:],axis=2)
+  
+  if permute == 1:
+    
+    p = np.random.permutation(len(X))
+    X = X[p,:,:]
+    Y = Y[p,:]
+    
+    # Maximum of 5e6 training samples
+    X = X[:5000000,:,:]
+    Y = Y[:5000000,:]
+    
+  os.chdir(base_folder)
+  
+  return X,Y
+  
+
