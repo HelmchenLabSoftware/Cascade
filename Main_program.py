@@ -82,7 +82,7 @@ Use test dataset & set sampling/imaging rate
 """
 
 test_dataset_folder = os.path.join('Example_datasets','OGB_zf_exp4_fish3_pdp')
-sampling_rate = 30
+sampling_rate = 7.5
 
 
 
@@ -131,26 +131,26 @@ training_dataset_folders[0] = os.path.join('GT_datasets','GT_dataset_OGB')
 training_dataset_folders[1] = os.path.join('GT_datasets','GT_dataset_Cal520')
 
 
-dataset_list_good = ['GT_dataset_Cal520',
- 'GT_dataset_S1_OGB',
- 'GT_dataset_Allen_Emx1f_neuropil_corrected',
- 'GT_dataset_Allen_Cux2f_neuropil_corrected',
- 'GT_dataset_GC_aDp',
- 'GT_dataset_GC_dD',
- 'GT_dataset_GC6s_Chen',
- 'GT_dataset_RCaMP_CA3',
- 'GT_dataset_GC6f_Chen',
- 'GT_dataset_RCaMP_S1',
- 'GT_dataset_Theis_3',
- 'GT_dataset_S1_Cal520',
- 'GT_dataset_Allen_tetOs_neuropil_corrected',
- 'GT_dataset_GC5k_Akerboom',
- 'GT_dataset_Allen_Emx1s_neuropil_corrected',
- 'GT_dataset_jRCaMP1a']
-
-training_dataset_folders = [None]*len(dataset_list_good)
-for i,dataset in enumerate(dataset_list_good):
-  training_dataset_folders[i] = os.path.join('GT_datasets',dataset_list_good[i])
+#dataset_list_good = ['GT_dataset_Cal520',
+# 'GT_dataset_S1_OGB',
+# 'GT_dataset_Allen_Emx1f_neuropil_corrected',
+# 'GT_dataset_Allen_Cux2f_neuropil_corrected',
+# 'GT_dataset_GC_aDp',
+# 'GT_dataset_GC_dD',
+# 'GT_dataset_GC6s_Chen',
+# 'GT_dataset_RCaMP_CA3',
+# 'GT_dataset_GC6f_Chen',
+# 'GT_dataset_RCaMP_S1',
+# 'GT_dataset_Theis_3',
+# 'GT_dataset_S1_Cal520',
+# 'GT_dataset_Allen_tetOs_neuropil_corrected',
+# 'GT_dataset_GC5k_Akerboom',
+# 'GT_dataset_Allen_Emx1s_neuropil_corrected',
+# 'GT_dataset_jRCaMP1a']
+#
+#training_dataset_folders = [None]*len(dataset_list_good)
+#for i,dataset in enumerate(dataset_list_good):
+#  training_dataset_folders[i] = os.path.join('GT_datasets',dataset_list_good[i])
 
 
 
