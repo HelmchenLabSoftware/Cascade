@@ -26,6 +26,8 @@ Dependencies are:
 
 ### To do list
 
-- The relative paths of the ground truth datasets in the GUI and the 'Main_program.py' are not correct: 'DONE'
-- Run scripts from the repository as it is
-- Z
+- Improve "Main_program"
+- Provide comments for preprocessing scripts; simplify scripts, if possible
+- Use "balanced" preprocessing function in the GUI as well
+- How to implement tooltips for the GUI?
+- 
