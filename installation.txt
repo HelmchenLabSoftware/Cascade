@@ -1,0 +1,16 @@
+# List to keep track of all installed packages in a new anaconda environment
+# Adrian 2020-03-26
+
+conda create --name spiky python=3.6
+
+conda activate spiky
+
+pip install numpy matplotlib scipy seaborn
+
+pip install tensorflow
+# tensorflow-2.1.0-cp36-cp36m-manylinux2010_x86_64.whl
+
+pip install keras
+# Keras-2.3.1-py2.py3-none-any.whl
+
+
