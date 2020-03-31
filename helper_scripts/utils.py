@@ -51,6 +51,55 @@ def define_model(filter_sizes,filter_numbers,dense_expansion,windowsize,conv_fil
 
 
 
+def calculate_noise_levels(neurons_x_time, frame_rate):
+    """
+    TODO: documentation
+    
+    # TODO Peter: maybe short explanation of the calculation here
+    
+    """
+    dF_traces = neurons_x_time
+    
+    nb_neurons = dF_traces.shape[0]
+    noise_levels = np.zeros( nb_neurons )
+    
+    for neuron in range(nb_neurons):
+        noise_levels[neuron] = np.nanmedian( np.abs(np.diff(dF_traces[neuron,:])))/np.sqrt(frame_rate)
+
+    return noise_levels * 100     # scale noise levels to percent
+
+
+"""
+
+
+"""
+
+
+def preprocess_traces(neurons_x_time, before_frac, window_size):
+    """ Transform df/f data to format (neurons, timepoints, window_size)
+    
+    Creates a large matrix X that contains for each timepoint of each
+    calcium trace a vector of length 'window_size' around the timepoint.
+    """
+    
+    before = int( before_frac * window_size )
+    after = int( window_size - before )
+
+    dF_traces = neurons_x_time
+
+    nb_neurons = dF_traces.shape[0]
+    nb_timepoints = dF_traces.shape[1]
+
+    X = np.zeros( (nb_neurons,nb_timepoints,window_size) ) * np.nan   
+    
+    for neuron in range(nb_neurons):
+        for timepoint in range(nb_timepoints-window_size):
+
+            X[neuron,timepoint+before,:] = dF_traces[neuron, timepoint:(timepoint+window_size)]
+
+    return X
+
+
 
 
 """
