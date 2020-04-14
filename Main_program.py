@@ -219,11 +219,13 @@ for file_index,file in enumerate(fileList):
     
     print('Predictions for file '+str(file_index+1)+' out of ',str(len(fileList))+'; noise level '+str(int(model_noise)) )
     
-    # Find indices of neurons with a given noise level ('model_noise')
-    if model_noise == noise_levels_model[-1]: # Highest noise bin (or even higher)
-      neurons_ixs = np.where(noise_levels_all[file_index] >= noise_levels_model[-1])[0]-1
-    else: # Lower noise bins
-      neurons_ixs = np.where(noise_levels_all[file_index] < model_noise)[0]
+    # select neurons which have this noise level:  # TODO make more general (e.g. argmin(abs(diff)))
+    if i == 0:   # lowest noise
+        neuron_idx = np.where( noise_levels < model_noise + 0.5 )[0]
+    elif i == len(noise_levels_model)-1:   # highest noise
+        neuron_idx = np.where( noise_levels > model_noise - 0.5 )[0]
+    else:
+        neuron_idx = np.where( (noise_levels > model_noise - 0.5) & (noise_levels < model_noise + 0.5) )[0]
 
     Calcium_this_noise = XX[neurons_ixs,:,:]/100 # division by 100 to have dF/F values NOT in %
     Calcium_this_noise = np.reshape(Calcium_this_noise,(Calcium_this_noise.shape[0]*Calcium_this_noise.shape[1],Calcium_this_noise.shape[2]))
