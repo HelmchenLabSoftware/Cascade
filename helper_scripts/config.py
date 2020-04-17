@@ -73,7 +73,7 @@ batch_size: 8192                 # Batch size
 ###
 
 training_finished: No            # Yes / No / Running
-
+verbose : 1                      # level of status messages (0: minimal, 1: standard, 2: most, 3: all)
 
 ###
 ### Additional parameter not specified in template
