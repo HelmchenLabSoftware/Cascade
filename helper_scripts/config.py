@@ -1,7 +1,7 @@
 
 # if this results in an error, install the package with: pip install ruamel.yaml
 import ruamel.yaml as yaml   # install the package with: pip install ruamel.yaml
-
+import os
 
 config_template = """\
 ###
@@ -106,8 +106,13 @@ def write_config(config_dict, save_file):
     for key in config_dict:
         yml_dict[key] = config_dict[key]
 
+    file_existed = os.path.exists( save_file )
+
     # save updated configs in save_file
     with open(save_file, 'w') as file:
         yml_config.dump(yml_dict, file)
 
-    print('Created file', save_file)
+    if not file_existed:
+        print('Created file', save_file)
+    else:
+        pass  # file was updated, no need to notify user
