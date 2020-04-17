@@ -7,6 +7,7 @@ TODO: lot of documentation here, since this is the entry point for people checki
 
 import os
 import time
+import numpy as np
 
 from helper_scripts import config
 
@@ -64,12 +65,14 @@ def train_model( model_name ):
 
     # load cfg dictionary from config.yaml file
     cfg = config.read_config( os.path.join(model_folder, 'config.yaml') )
+    verbose = cfg['verbose']
 
-    print('Used configuration for model fitting (file {}):\n'.format( os.path.join(model_folder, 'config.yaml') ))
-    for key in cfg:
-        print('{}:\t{}'.format(key, cfg[key]))
+    if verbose:
+        print('Used configuration for model fitting (file {}):\n'.format( os.path.join(model_folder, 'config.yaml') ))
+        for key in cfg:
+            print('{}:\t{}'.format(key, cfg[key]))
 
-    print('\n\nModels will be saved into this folder:', model_folder)
+        print('\n\nModels will be saved into this folder:', model_folder)
 
     start = time.time()
 
@@ -136,3 +139,120 @@ def train_model( model_name ):
 
     print('\n\nDone!')
     print('Runtime: {:.0f} min'.format((time.time() - start)/60))
+
+
+def predict( model_name, traces, padding=np.nan ):
+    """ Documentation!! """
+    import keras
+    from helper_scripts import utils
+
+    model_folder = os.path.join('trained_models', model_name)
+
+    # Load config file
+    cfg = config.read_config( os.path.join( model_folder, 'config.yaml'))
+
+    # extract values from config file into variables
+    verbose = cfg['verbose']
+    sampling_rate = cfg['sampling_rate']
+    before_frac = cfg['before_frac']
+    window_size = cfg['windowsize']
+    noise_levels_model = cfg['noise_levels']
+
+    if verbose: print('Loaded model was trained at frame rate {} Hz'.format(sampling_rate))
+    if verbose: print('Given argument traces contains {} neurons and {} frames.'.format( traces.shape[0], traces.shape[1]))
+
+    # calculate noise levels for each trace
+    trace_noise_levels = utils.calculate_noise_levels(traces, sampling_rate)
+
+    # Get model paths as dictionary (key: noise_level) with lists of model
+    # paths for the different ensembles
+    model_dict = get_model_paths( model_folder )
+    if verbose > 2: print('Loaded models:', str(model_dict))
+
+    # XX has shape: (neurons, timepoints, windowsize)
+    XX = utils.preprocess_traces(traces,
+                            before_frac = before_frac,
+                            window_size = window_size)
+    Y_predict = np.zeros( (XX.shape[0], XX.shape[1]) )
+
+
+    # Use for each noise level the matching model
+    for i, model_noise in enumerate(noise_levels_model):
+
+        if verbose: print('\nPredictions for noise level {}:'.format(model_noise))
+
+        # TODO make more general (e.g. argmin(abs(diff)))
+        # select neurons which have this noise level:
+        if i == 0:   # lowest noise
+            neuron_idx = np.where( trace_noise_levels < model_noise )[0]
+        elif i == len(noise_levels_model)-1:   # highest noise
+            neuron_idx = np.where( trace_noise_levels > model_noise )[0]
+        else:
+            neuron_idx = np.where( (trace_noise_levels > model_noise - 1) & (trace_noise_levels < model_noise) )[0]
+
+        if len(neuron_idx) == 0:  # no neurons were selected
+            if verbose: print('\tNo neurons for this noise level')
+            continue   # jump to next noise level
+
+        # load keras models for the given noise level
+        models = list()
+        for model_path in model_dict[model_noise]:
+            models.append( keras.models.load_model( model_path ) )
+
+        # select neurons and merge neurons and timepoints into one dimension
+        XX_sel = XX[neuron_idx, :, :]
+
+        XX_sel = np.reshape( XX_sel, (XX_sel.shape[0]*XX_sel.shape[1], XX_sel.shape[2]) )
+        XX_sel = np.expand_dims(XX_sel,axis=2)   # add empty third dimension to match training shape
+
+        for j, model in enumerate(models):
+            if verbose: print('\t... ensemble', j)
+
+            prediction_flat = model.predict(XX_sel, verbose=verbose )
+            prediction = np.reshape(prediction_flat, (len(neuron_idx),XX.shape[1]))
+
+            Y_predict[neuron_idx,:] += prediction / len(models)  # average predictions
+
+        # remove models from memory
+        keras.backend.clear_session()
+
+    # NaN or 0 for first and last datapoints, for which no predictions can be made
+    Y_predict[:,0:int(before_frac*window_size)] = padding
+    Y_predict[:,-int((1-before_frac)*window_size):] = padding
+
+    print('Done')
+
+    return Y_predict
+
+
+
+def get_model_paths( model_folder ):
+    """ Find all models in the model folder and return as dictionary
+
+    Returns
+    -------
+    model_dict : dict
+        Dictionary with noise_level (int) as keys and entries are lists of model paths
+
+    """
+    import glob, re
+
+    all_models = glob.glob( os.path.join(model_folder, '*.h5') )
+    all_models = sorted( all_models )  # sort
+
+    # dictionary with key for noise level, entries are lists of models
+    model_dict = dict()
+
+    for model_path in all_models:
+        try:
+            noise_level = int( re.findall('_NoiseLevel_(\d+)', model_path)[0] )
+        except:
+            print('Error while processing the file with name: ', model_path)
+            raise
+
+        # add model path to the model dictionary
+        if noise_level not in model_dict:
+            model_dict[noise_level] = list()
+        model_dict[noise_level].append(model_path)
+
+    return model_dict
