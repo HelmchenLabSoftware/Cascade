@@ -30,7 +30,7 @@ Define the model using the function API of Keras.
 """
 
 
-def define_model(filter_sizes,filter_numbers,dense_expansion,windowsize,conv_filter=keras.layers.Conv1D,loss_function,optimizer):
+def define_model(filter_sizes,filter_numbers,dense_expansion,windowsize,loss_function,optimizer, conv_filter=Conv1D):
 
   inputs = Input(shape=(windowsize,1))
 
