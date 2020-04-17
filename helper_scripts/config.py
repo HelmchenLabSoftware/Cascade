@@ -18,8 +18,8 @@ training_datasets :
 
 
 # Noise levels for training (integers, normally 1-9)
-noise_levels:                   
-    - 1                         
+noise_levels:
+    - 1
     - 2
     - 3
     - 4
@@ -30,7 +30,7 @@ noise_levels:
     - 9
 
 # Standard deviation of Gaussian smoothing in time (sec)
-smoothing : 0.2                    
+smoothing : 0.2
 
 
 ###
@@ -42,8 +42,6 @@ windowsize : 64                   # Windowsize in timepoints
 before_frac : 0.5                 # Fraction of timepoints before prediction point (0-1)
 
 
-conv_filter : Conv1D              # Convolutional filter
-
 filter_sizes :                    # Filter sizes for each convolutional layer
     - 31
     - 19
@@ -52,7 +50,7 @@ filter_sizes :                    # Filter sizes for each convolutional layer
 filter_numbers :                  # Filter numbers for each convolutional layer
     - 30
     - 40
-    - 50     
+    - 50
 
 dense_expansion : 30              # For dense layer
 
@@ -62,16 +60,12 @@ optimizer : Adagrad                    #                  optimizer
 
 nr_of_epochs : 10                 # Number of training epochs per model
 ensemble_size : 5                 # Number of models trained for one noise level
-batch_size : 2048                 # Batch size (increase for GPUs with lot of memory to 8192)
+batch_size : 8192                 # Batch size
 
 ###
-### Information about system the model was fitted on
+### Information about status of fitting
 ###
 
-keras_version :
-tensorflow_version :
-
-training_date:                    # Format: YYYY-MM-DD
 training_finished :               # Yes / No / Running
 
 
@@ -83,33 +77,33 @@ training_finished :               # Yes / No / Running
 
 def read_config(config_yaml_file):
     """Read given yaml file and return dictionary with entries"""
-    
+
     # TODO: add handling of file not found error
-    
+
     yaml_config = yaml.YAML()
     with open(config_yaml_file, 'r') as file:
         config_dict = yaml_config.load(file)
-    
+
     return config_dict
 
 
 def write_config(config_dict, save_file):
     """Write config file from dictionary, use yaml_template_file to define file structure"""
-    
+
     # TODO: include error handling for wrong values, missing files, overwrite warnings of template
     # TODO: add .yml ending if not in file name
-    
+
     # read in template
     yml_config = yaml.YAML()
     yml_dict = yml_config.load(config_template)
-    
+
     # update values of config dict (to keep default values)
     for key in config_dict:
         yml_dict[key] = config_dict[key]
-        
+
     # save updated configs in save_file
     with open(save_file, 'w') as file:
         yml_config.dump(yml_dict, file)
-    
+
 
     print('Created file', save_file)
