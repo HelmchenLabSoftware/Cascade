@@ -298,7 +298,7 @@ Outputs:
 
 
 
-def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sampling_rate,omission_list=[]):
+def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sampling_rate,omission_list=[], verbose=3):
 
   #  ground_truth_folder = '/media/pierre/Der Hort/Peter/FMI PhD/Project calibrated deconvolution/Extracted_highQuality_datasets/GT_dataset_GC_aDp'
   #
@@ -327,7 +327,7 @@ def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sam
   # for loop over all mat files / neurons in this dataset
   for file_index,neuron_file in enumerate(fileList):
 
-    print('Resampling neuron '+str(file_index+1)+' from a total of '+str(len(fileList))+' neurons.')
+    if verbose > 2: print('Resampling neuron '+str(file_index+1)+' from a total of '+str(len(fileList))+' neurons.')
 
     # Load mat file
     dataset_neuron_all = sio.loadmat(neuron_file)['CAttached'][0]
@@ -448,7 +448,7 @@ def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sam
       pass
     framerate_all[file_index] = frame_rate
 
-  print('Resampled ground truth from the neurons in this dataset. Done!')
+  if verbose > 2: print('Resampled ground truth from the neurons in this dataset. Done!')
   # Function output
   return sub_traces_all, sub_traces_events_all, framerate_all, events_all
 
@@ -456,7 +456,7 @@ def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sam
 
 
 
-def preprocess_groundtruth_artificial_noise_balanced(ground_truth_folders,before_frac,windowsize,after_frac,noise_level,sampling_rate,smoothing,omission_list=[],permute=1,maximum_traces=5000000):
+def preprocess_groundtruth_artificial_noise_balanced(ground_truth_folders,before_frac,windowsize,after_frac,noise_level,sampling_rate,smoothing,omission_list=[],permute=1,maximum_traces=5000000,verbose=3):
 
 
   sub_traces_all = [None]*500
@@ -474,14 +474,16 @@ def preprocess_groundtruth_artificial_noise_balanced(ground_truth_folders,before
     dataset_name = basename(normpath(ground_truth_folders[dataset_index]))
 
     try:
-        sub_traces_allX, sub_traces_events_allX, frame_rate, events_allX = calibrated_ground_truth_artificial_noise(ground_truth_folders[dataset_index],noise_level,sampling_rate,omission_list)
+        if verbose > 2: print('Preprocessing dataset number', dataset_index)
+
+        sub_traces_allX, sub_traces_events_allX, frame_rate, events_allX = calibrated_ground_truth_artificial_noise(ground_truth_folders[dataset_index],noise_level,sampling_rate,omission_list, verbose)
 
         datapoint_counter = 0
         for k in range(len(sub_traces_allX)):
           try:
              datapoint_counter += sub_traces_allX[k].shape[1]*sub_traces_allX[k].shape[0]
           except:
-            print('No things')
+            if verbose > 2: print('No things for k={}'.format(k))
 
         dataset_sizes[dataset_index] = datapoint_counter
 
@@ -507,7 +509,7 @@ def preprocess_groundtruth_artificial_noise_balanced(ground_truth_folders,before
   else:
     oversampling = 0
 
-  print('Reducing ground truth by a factor of ca. '+str(int(3*np.nanmean(reduction_factors)))+'.')
+  if verbose>1: print('Reducing ground truth by a factor of ca. '+str(int(3*np.nanmean(reduction_factors)))+'.')
 
   nbx_datapoints = nbx_datapoints[:neuron_counter]
   sub_traces_all = sub_traces_all[:neuron_counter]
@@ -515,7 +517,7 @@ def preprocess_groundtruth_artificial_noise_balanced(ground_truth_folders,before
   events_all = events_all[:neuron_counter]
   dataset_indices = dataset_indices[:neuron_counter]
 
-  print('Number of neurons in the ground truth: '+str(len(sub_traces_events_all)))
+  if verbose>1: print('Number of neurons in the ground truth: '+str(len(sub_traces_events_all)))
 
   before = int(before_frac*windowsize)
   after = int(after_frac*windowsize)
@@ -576,4 +578,5 @@ def preprocess_groundtruth_artificial_noise_balanced(ground_truth_folders,before
 
   os.chdir(base_folder)
 
+  if verbose > 1: print('Shape of training dataset X: {}    Y: {}'.format(X.shape, Y.shape))
   return X,Y
