@@ -1,1 +1,6 @@
 Example_datasets/OGB_zf_exp4_fish3_pdp/Predictions/
+
+# locally cached files
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
