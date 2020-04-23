@@ -12,12 +12,14 @@ import os
 from os.path import normpath, basename
 import numpy as np
 import glob as glob
+
 import scipy.io as sio
 from scipy import optimize
 from scipy.ndimage.filters import gaussian_filter
-from scipy.signal import resample
+from scipy.signal import resample, convolve
 from scipy.interpolate import interp1d
-
+from scipy.stats import invgauss
+          
 from keras.models import Sequential, Model, load_model
 from keras.layers import Dense, Flatten, MaxPooling1D, Conv1D, Input, LSTM,BatchNormalization, LocallyConnected1D, Activation, concatenate
 from keras import backend as K
@@ -456,7 +458,7 @@ def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sam
 
 
 
-def preprocess_groundtruth_artificial_noise_balanced(ground_truth_folders,before_frac,windowsize,after_frac,noise_level,sampling_rate,smoothing,omission_list=[],permute=1,maximum_traces=5000000,verbose=3):
+def preprocess_groundtruth_artificial_noise_balanced(ground_truth_folders,before_frac,windowsize,after_frac,noise_level,sampling_rate,smoothing,omission_list=[],permute=1,maximum_traces=5000000,verbose=3,causal_kernel=0):
 
 
   sub_traces_all = [None]*500
@@ -535,9 +537,33 @@ def preprocess_groundtruth_artificial_noise_balanced(ground_truth_folders,before
 
         single_trace = sub_traces[:,trace_index]
         single_spikes = sub_traces_events[:,trace_index]
-
-        single_spikes = gaussian_filter(single_spikes.astype(float), sigma=smoothing)
-
+        
+        
+        single_spikes = np.zeros((1000,))
+        
+        single_spikes[55] = 1
+        single_spikes[57] = 1
+        single_spikes[444] = 1
+        single_spikes[666] = 2
+        single_spikes[667] = 1
+        
+        if causal_kernel:
+          
+          xx = np.arange(0,199)/sampling_rate
+          yy = invgauss.pdf(xx,smoothing/sampling_rate*2,101/sampling_rate,1)
+          ix = np.argmax(yy)
+          yy = np.roll(yy,int((99-ix)/1.5))
+          yy = yy/np.sum(yy)
+          single_spikes2 = convolve(single_spikes,yy,mode='same')
+          
+        else:
+          
+          single_spikes1 = gaussian_filter(single_spikes.astype(float), sigma=smoothing)
+          
+#         plt.figure; plt.plot(single_spikes)  
+#         plt.plot(single_spikes1)  
+#         plt.plot(single_spikes2)  
+          
         recording_length = np.sum(~np.isnan(single_trace))
 
         datapoints_used = np.minimum(len(single_spikes)-windowsize,recording_length-windowsize)
