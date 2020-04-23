@@ -538,15 +538,6 @@ def preprocess_groundtruth_artificial_noise_balanced(ground_truth_folders,before
         single_trace = sub_traces[:,trace_index]
         single_spikes = sub_traces_events[:,trace_index]
         
-        
-        single_spikes = np.zeros((1000,))
-        
-        single_spikes[55] = 1
-        single_spikes[57] = 1
-        single_spikes[444] = 1
-        single_spikes[666] = 2
-        single_spikes[667] = 1
-        
         if causal_kernel:
           
           xx = np.arange(0,199)/sampling_rate
@@ -554,15 +545,11 @@ def preprocess_groundtruth_artificial_noise_balanced(ground_truth_folders,before
           ix = np.argmax(yy)
           yy = np.roll(yy,int((99-ix)/1.5))
           yy = yy/np.sum(yy)
-          single_spikes2 = convolve(single_spikes,yy,mode='same')
+          single_spikes = convolve(single_spikes,yy,mode='same')
           
         else:
           
-          single_spikes1 = gaussian_filter(single_spikes.astype(float), sigma=smoothing)
-          
-#         plt.figure; plt.plot(single_spikes)  
-#         plt.plot(single_spikes1)  
-#         plt.plot(single_spikes2)  
+          single_spikes = gaussian_filter(single_spikes.astype(float), sigma=smoothing)
           
         recording_length = np.sum(~np.isnan(single_trace))
 
