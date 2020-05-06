@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed Feb 12 12:45:44 2020
+Created on Wed Feb 2020
 
 Infer discrete spikes from probabilities: define helper functions
 
@@ -15,21 +15,22 @@ import numpy as np
 
 
 
-"""
 
-fill_up_APs(): takes a probability distribution (prob_density) and an initial guess spikes (spike_locs)
-the smoothed spikes generate an approximation of the probability (approximation)
-The difference between the probability distribution and the approximation is then
-compensated with additional spikes. These spikes are sampled according to the distribution of
-the difference over time. This is a variation of a Monte Carlo / Metropolis algorithm.
-Technically, it generates a cumulative distribution and samples randomly along the y-axis of the
-cumulative distribution.
-
-"""
 
 
 def fill_up_APs(prob_density,smoothingX,nb_spikes,spike_locs):
   
+  """
+
+  fill_up_APs(): takes a probability distribution (prob_density) and an initial guess spikes (spike_locs)
+  the smoothed spikes generate an approximation of the probability (approximation)
+  The difference between the probability distribution and the approximation is then
+  compensated with additional spikes. These spikes are sampled according to the distribution of
+  the difference over time. This is a variation of a Monte Carlo / Metropolis algorithm.
+  Technically, it generates a cumulative distribution and samples randomly along the y-axis of the
+  cumulative distribution.
+  
+  """
   # produce approximation based on previously inferred spikes (spike_locs)
   approximation = np.zeros(prob_density.shape)
   for spike in spike_locs:
@@ -71,15 +72,14 @@ def fill_up_APs(prob_density,smoothingX,nb_spikes,spike_locs):
 
 
 
-"""
-
-divide_and_conquer(): plits the probablity density in continous chunks of non-zero values (so-called "support").
-These are returned as "slices", i.e., ranges of indices.
-
-"""
-
 def divide_and_conquer(prob_density,smoothingX):
   
+  """
+
+  divide_and_conquer(): plits the probablity density in continous chunks of non-zero values (so-called "support").
+  These are returned as "slices", i.e., ranges of indices.
+  
+  """
   support = prob_density > 0.03/(smoothingX)
   
   support = ndim.morphology.binary_dilation(support,np.ones((round(smoothingX*4), )))
@@ -89,15 +89,15 @@ def divide_and_conquer(prob_density,smoothingX):
   return support_slices
 
 
-"""
-
-systematic_exploration(): for each spike, all other possible locations in the probability density are tested.
-If any position is any better than the initial guess, it is accepted, otherwise rejected.
-
-"""
 
 def systematic_exploration(prob_density,smoothingX,nb_spikes,spike_locs,approximation):
   
+  """
+
+  systematic_exploration(): for each spike, all other possible locations in the probability density are tested.
+  If any position is any better than the initial guess, it is accepted, otherwise rejected.
+  
+  """
   # smoothed single spikes, initialized now beforehand because the creation takes time
   spike_reservoir = np.zeros((len(approximation),len(approximation)))
   for timepoint in range(len(approximation)):
@@ -123,16 +123,15 @@ def systematic_exploration(prob_density,smoothingX,nb_spikes,spike_locs,approxim
   return spike_locs,approximation
     
 
-  
-"""
-
-prune_APs(): chooses a random pair of two spikes and moves them randomly in small steps.
-If the result improves the fit, it is accepted, otherwise rejected.
-
-"""
 
 def prune_APs(prob_density,smoothing,nb_spikes,spike_locs,approximation):
   
+  """
+
+  prune_APs(): chooses a random pair of two spikes and moves them randomly in small steps.
+  If the result improves the fit, it is accepted, otherwise rejected.
+  
+  """
   # produce approximation based on previously inferred spikes (spike_locs)
   for spike_ix,spike1 in enumerate(spike_locs):
     
