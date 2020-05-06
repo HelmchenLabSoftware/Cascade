@@ -4,80 +4,74 @@ import ruamel.yaml as yaml   # install the package with: pip install ruamel.yaml
 import os
 
 config_template = """\
-###
-### Main parameter of this model:
-###
 
-model_name: YOUR_MODEL_NAME                   # Name of the model
-sampling_rate: YOUR_SAMPLING_RATE             # Sampling rate in Hz
+# Main parameter of this model:
 
-# Dataset of ground truth data (in folder 'GT_datasets')   Example: GT_dataset_GC6s_Chen
-training_datasets:
-- placeholder_1
-- placeholder_2
+    model_name: YOUR_MODEL_NAME                   # Name of the model
+    sampling_rate: YOUR_SAMPLING_RATE             # Sampling rate in Hz
+    
+    # Dataset of ground truth data (in folder 'GT_datasets')   Example: GT_dataset_GC6s_Chen
+    training_datasets:
+    - placeholder_1
+    - placeholder_2
+    
+    placeholder_1: 0       # protect formatting
+    
+    
+    # Noise levels for training (integers, normally 1-9)
+    noise_levels:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    
+    placeholder_2: 0       # protect formatting
+    
+    
+    # Standard deviation of Gaussian smoothing in time (sec)
+    smoothing: 0.2
 
-placeholder_1: 0       # protect formatting
-
-
-# Noise levels for training (integers, normally 1-9)
-noise_levels:
-- 1
-- 2
-- 3
-- 4
-- 5
-- 6
-- 7
-- 8
-- 9
-
-placeholder_2: 0       # protect formatting
-
-
-# Standard deviation of Gaussian smoothing in time (sec)
-smoothing: 0.2
-
-
-###
-### Additional parameters for model specification:
-###
+# Additional parameters for model specification:
 
 
-windowsize: 64                   # Windowsize in timepoints
-before_frac: 0.5                 # Fraction of timepoints before prediction point (0-1)
+    windowsize: 64                   # Windowsize in timepoints
+    before_frac: 0.5                 # Fraction of timepoints before prediction point (0-1)
+    
+    # Filter sizes for each convolutional layer
+    filter_sizes:
+    - 31
+    - 19
+    - 5
+    
+    # Filter numbers for each convolutional layer
+    filter_numbers:
+    - 30
+    - 40
+    - 50
+    
+    dense_expansion: 30              # For dense layer
+    
+    
+    loss_function: mean_squared_error     # gradient-descent loss function
+    optimizer: Adagrad                    #                  optimizer
+    
+    nr_of_epochs: 10                 # Number of training epochs per model
+    ensemble_size: 5                 # Number of models trained for one noise level
+    batch_size: 8192                 # Batch size
 
-# Filter sizes for each convolutional layer
-filter_sizes:
-- 31
-- 19
-- 5
+# Information about status of fitting
 
-# Filter numbers for each convolutional layer
-filter_numbers:
-- 30
-- 40
-- 50
-
-dense_expansion: 30              # For dense layer
+    training_finished: No            # Yes / No / Running
+    verbose : 1                      # level of status messages (0: minimal, 1: standard, 2: most, 3: all)
 
 
-loss_function: mean_squared_error     # gradient-descent loss function
-optimizer: Adagrad                    #                  optimizer
+# Additional parameter not specified in template
 
-nr_of_epochs: 10                 # Number of training epochs per model
-ensemble_size: 5                 # Number of models trained for one noise level
-batch_size: 8192                 # Batch size
-
-###
-### Information about status of fitting
-###
-
-training_finished: No            # Yes / No / Running
-verbose : 1                      # level of status messages (0: minimal, 1: standard, 2: most, 3: all)
-
-###
-### Additional parameter not specified in template
-###
 """
 
 
