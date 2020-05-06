@@ -19,14 +19,30 @@ checks.check_packages()
 from cascade2p import cascade
 
 cfg = dict( 
-    model_name = 'OGB_pDp_7.5Hz',    # Model name (and name of the save folder)
-    sampling_rate = 5,    # Sampling rate in Hz (round to next integer)
+    model_name = 'Universal_30Hz',    # Model name (and name of the save folder)
+    sampling_rate = 30,    # Sampling rate in Hz (round to next integer)
     
-    training_datasets = [
-        'DS03-OGB1-zf-pDp',
-                        ],
+    training_datasets = ['DS02-Cal520-m-S1',
+       'DS03-OGB1-zf-pDp',
+       'DS04-Cal520-zf-pDp',
+       'DS05-GCaMP6f-zf-aDp',
+       'DS06-GCaMP6f-zf-dD',
+       'DS07-GCaMP6f-zf-dD',
+       'DS08-GCaMP6f-m-V1',
+       'DS09-GCaMP6f-m-V1-neuropil-corrected',
+       'DS10-GCaMP6f-m-V1-neuropil-corrected',
+       'DS11-GCaMP6s-m-V1-neuropil-corrected',
+       'DS12-GCaMP6s-m-V1-neuropil-corrected',
+       'DS13-GCaMP6s-m-V1',
+       'DS14-GCaMP6s-m-V1',
+       'DS15-GCaMP6s-m-V1',
+       'DS16-GCaMP5k-m-V1',
+       'DS17-R-CaMP-m-CA3',
+       'DS18-R-CaMP-m-S1',
+       'DS19-jRCaMP1a-m-V1',
+                       ],
     
-    noise_levels = [noise for noise in range(2,7)],  # int values of noise values (do not use numpy here => representer error!)
+    noise_levels = [noise for noise in range(2,10)],  # int values of noise values (do not use numpy here => representer error!)
     
     smoothing = 0.2,     # std of Gaussian smoothing in time (sec)
     

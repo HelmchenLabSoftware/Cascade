@@ -412,8 +412,14 @@ def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sam
 
         for iii in range(int(nb_subROIs)):
 
-          noise_additional = np.random.normal(0,noise_std, traces_mean.shape)
+          fluo_level = np.sqrt(np.abs(traces_mean + 1))
+          fluo_level /= np.median(fluo_level)
+          
+          noise_additional = np.random.normal(0,noise_std*fluo_level, traces_mean.shape)
           sub_traces_single = traces_mean + noise_additional
+          
+          
+          
 #          print( np.nanmedian(np.abs(np.diff(sub_traces_single )))*100/np.sqrt(sampling_rate) )
 
           # If 'sub_traces' exists already, append the subROI-trace; else, generate it
