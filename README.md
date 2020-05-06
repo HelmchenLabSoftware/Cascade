@@ -1,33 +1,35 @@
-## Calibrated inference of spiking (work in progress)
+## CASCADE: Calibrated Inference of Spiking from Calcium Imaging Data
 
-People currently involved: Peter Rupprecht, Adrian Hoffmann
 
-### Installation
+### What is CASCADE?
+Embedded image of spike prediction
+Easy-to-install and -use
+Link to preprint / paper
 
-Dependencies are:
+### Installation and first steps
 
-- numpy, scipy and other typical stuff that is included in Anaconda for example
-- matplotlib (only for plotting), seaborn (not essential), wxpython (for GUI)
-- tensorflow and keras (as a deep learning framework); this can be installed in an Anaconda environment either as CPU- or GPU-based framework; detailed instructions should be provided here
+1. No installation: Colab Notebook
+2. Local installation
 
-### Overview of main files
+##### Colab Notebook
+What this is for. Limitations of this approach. Describe example use case.
 
-'Main_program.py' contains a standalone version of the program. Variables like the training dataset(s), the test dataset, the framerate of the test dataset, the ensemble size and the model parameters have to be adjusted manually in-line. This script would be a starting point to create something independent and automatized.
+##### Local installation
+Describe that using CASCADE does not require powerful GPUs. Installation procedure with pip and/or by cloning the repository. Describe the main dependencies (anaconda; keras with tensorflow, yaml).
 
-'GUI.py' contains the same functionalities, but provides a clean and simple GUI. This GUI needs to be improved and should include a lot of tooltips when hovering over the buttons or when the user tries to do something stupid.
+For developers who want to train their own models or who want to systematically study the algorithm, we recommend GPU-based deep learning frameworks. Provide a link to a tutorial on how to set this up (e.g., DeepLabCut tutorial).
 
-### Overview of helper files
 
-'helper_scripts' contains a lot of functions that are used to read data, to resample the ground truth and to fit spikes into the predicted spiking probabilities
+### Typical work flow
 
-'GT_datasets' contains all ground truth datasets as \*.mat files. They are called "mini" because the files do not contain the full ROIs, raw ephys data and other large things.
+Describe data format for inputs and functions that read the data. Describe output data format and how it can be interpreted correctly. Describe the main functions used for predictions, together with the identifier for each model.
 
-'Test_dataset' contains a test dataset, acquired in zebrafish with OGB-1 at a framerate of 7.5 Hz. Includes 21 trials, each of them with ca. 1000 neurons recorded for a bit longer than 30 sec.
+### How it works ...
 
-### To do list
+Describe ground truth datasets, how they are resampled. Provide a lot of references to key figures and sections in the paper, how predictions generalize; single-spike precision; etc.
 
-- Improve "Main_program"
-- Provide comments for preprocessing scripts; simplify scripts, if possible
-- Use "balanced" preprocessing function in the GUI as well
-- How to implement tooltips for the GUI?
-- 
+### Under the hood
+
+Describe the main methods, how they use functions in the utils-folders and what they do. Describe where the neural network is defined, etc. pp.
+
+
