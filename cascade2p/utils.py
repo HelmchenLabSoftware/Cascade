@@ -418,10 +418,6 @@ def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sam
           noise_additional = np.random.normal(0,noise_std*fluo_level, traces_mean.shape)
           sub_traces_single = traces_mean + noise_additional
           
-          
-          
-#          print( np.nanmedian(np.abs(np.diff(sub_traces_single )))*100/np.sqrt(sampling_rate) )
-
           # If 'sub_traces' exists already, append the subROI-trace; else, generate it
           # The nested if-clause covers cases where different trials for the same neuron have variable number of time points; the rest is filled up with NaNs
           if np.any(sub_traces):
