@@ -79,7 +79,7 @@ batch_size: 8192                 # Batch size
 ### Information about status of fitting
 ###
 
-training_finished: Running       # Yes / No / Running
+training_finished: Yes           # Yes / No / Running
 verbose: 1                       # level of status messages (0: minimal, 1: standard, 2: most, 3: all)
 
 ###
