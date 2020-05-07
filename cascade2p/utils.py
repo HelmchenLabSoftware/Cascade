@@ -157,7 +157,8 @@ def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sam
     
       Folder with ground truth pixel traces (dF/F) in *.mat files
       Noise level at which the ground truth should be resampled
-      >> The noise level is defined as the median different between subsequent samples (i.e., high-frequency noise)
+      >> The noise level is defined as the median different between subsequent samples (i.e., high-frequency noise),
+        normalized by the square root of the frame rate
       Temporal sampling rate at which the ground truth should be resampled
     
     Outputs:
