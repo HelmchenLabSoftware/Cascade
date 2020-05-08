@@ -1,9 +1,29 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Wed May  6 18:25:01 2020
 
-@author: pierre
+
+"""
+Demo script to train a network based on:
+  
+  - a range of noise levels
+  - a given frame rate
+  - a selection of ground truth data sets
+
+The model configuration is defined based on a couple of parameters (sampling rate,
+training data sets, noise levels, ground truth smoothing). A folder is generated
+on the hard disk with the name 'model_name'.
+
+Finally, the model is trained, "cascade.train_model( model_name )" and the trained
+models are saved to disk.
+
+"""
+
+
+
+"""
+
+Import python packages
+
 """
 
 import os
@@ -15,8 +35,14 @@ from cascade2p import checks    # TODO: put all of this in one function
 print('\nChecks for packages:')
 checks.check_packages()
 
-
 from cascade2p import cascade
+
+
+"""
+
+Configure model and its parameters
+
+"""
 
 cfg = dict( 
     model_name = 'Universal_30Hz',    # Model name (and name of the save folder)
@@ -52,15 +78,24 @@ cfg = dict(
           )
 
 
-# save parameter as config.yaml file
+"""
+
+Generate folder on hard disk for model
+
+"""
+
 cascade.create_model_folder( cfg )
 
 print('\nTo load this model, use the model name "{}"'.format( cfg['model_name'] ))
 
 
-model_name = cfg['model_name']
+"""
 
-# train model for all ensembles and noise levels
+Train model for all datasets and noise levels
+
+"""
+
+model_name = cfg['model_name']
 cascade.train_model( model_name )
 
 

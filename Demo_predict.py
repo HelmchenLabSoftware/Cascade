@@ -2,12 +2,26 @@
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Oct 16 22:00:57 2019
 
-@author: pierre
+"""
+Demo script to predict spiking activity from calcium imaging data
+
+The function "load_neurons_x_time()" loads the input data as a matrix. It can
+be modified to load npy-files, mat-files or any other standard format.
+
+The line "spike_rates = cascade.predict( model_name, traces )" performs the
+predictions. As input, it uses the loaded calcium recordings ('traces') and
+the pretrained model ('model_name'). The output are the inferred spike rates.
+
 """
 
+
+
+"""
+
+Import python packages
+
+"""
 
 import os
 if 'Notebooks' in os.getcwd(): os.chdir('..')  # change to main directory
@@ -20,8 +34,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 import glob
 import scipy.io as sio
-# local folder
-from cascade2p import cascade
+
+from cascade2p import cascade # local folder
+
+
+
+"""
+
+Define function to load dF/F traces from disk
+
+"""
 
 
 def load_neurons_x_time(file_path):
@@ -43,6 +65,14 @@ def load_neurons_x_time(file_path):
     
     return traces.T/100
   
+
+
+"""
+
+Load dF/F traces and plot example traces
+
+"""
+
   
 example_file = 'Example_datasets/Multiplane-OGB1-zf-pDp-Rupprecht-7.5Hz/Calcium_traces_04.mat'
 
@@ -77,13 +107,26 @@ plt.ylabel('Delta F/F (values normally between 0 and 4)')
 plt.tight_layout()
 
 
+
+"""
+
+Load pretrained model and apply to dF/F data
+
+"""
+
+
 model_name = 'OGB_pDp_7.5Hz'
 traces_file_name = 'Example_datasets/Multiplane-OGB1-zf-pDp-Rupprecht-7.5Hz/Calcium_traces_04.mat'
-
 traces = load_neurons_x_time( traces_file_name )
 
-
 spike_rates = cascade.predict( model_name, traces )
+
+
+"""
+
+Save predictions to disk
+
+"""
 
 
 folder = os.path.dirname(traces_file_name)
@@ -96,6 +139,14 @@ sio.savemat(save_path, {'spike_rates':spike_rates})
 # save as .mat file
 # import scipy
 # scipy.io.savemat(save_path, {'spike_rates': spike_rates})
+
+
+
+"""
+
+Plot example predictions
+
+"""
 
 neuron = 5
 
