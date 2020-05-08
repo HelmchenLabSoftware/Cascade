@@ -49,7 +49,7 @@ from scipy.interpolate import interp1d
 from scipy.stats import invgauss
           
 from keras.layers import Dense, Flatten, MaxPooling1D, Conv1D, Input
-
+from keras import Model
 
 
 
