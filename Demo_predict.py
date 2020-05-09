@@ -11,7 +11,7 @@ be modified to load npy-files, mat-files or any other standard format.
 
 The line "spike_rates = cascade.predict( model_name, traces )" performs the
 predictions. As input, it uses the loaded calcium recordings ('traces') and
-the pretrained model ('model_name'). The output are the inferred spike rates.
+the pretrained model ('model_name'). The output is a matrix with the inferred spike rates.
 
 """
 
