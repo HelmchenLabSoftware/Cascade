@@ -10,7 +10,7 @@ config_template = """\
     model_name: YOUR_MODEL_NAME                   # Name of the model
     sampling_rate: YOUR_SAMPLING_RATE             # Sampling rate in Hz
     
-    # Dataset of ground truth data (in folder 'GT_datasets')   Example: GT_dataset_GC6s_Chen
+    # Dataset of ground truth data (in folder 'Ground_truth')   Example: DS13-GCaMP6s-m-V1
     training_datasets:
     - placeholder_1
     - placeholder_2

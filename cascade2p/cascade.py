@@ -163,6 +163,7 @@ def predict( model_name, traces, padding=np.nan ):
 
     # extract values from config file into variables
     verbose = cfg['verbose']
+    batch_size = cfg['batch_size']
     sampling_rate = cfg['sampling_rate']
     before_frac = cfg['before_frac']
     window_size = cfg['windowsize']
@@ -220,7 +221,7 @@ def predict( model_name, traces, padding=np.nan ):
         for j, model in enumerate(models):
             if verbose: print('\t... ensemble', j)
 
-            prediction_flat = model.predict(XX_sel, verbose=verbose )
+            prediction_flat = model.predict(XX_sel, batch_size, verbose=verbose )
             prediction = np.reshape(prediction_flat, (len(neuron_idx),XX.shape[1]))
 
             Y_predict[neuron_idx,:] += prediction / len(models)  # average predictions
