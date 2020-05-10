@@ -31,12 +31,10 @@ from cascade2p import checks
 checks.check_packages()
 
 import numpy as np
-import matplotlib.pyplot as plt
-import glob
 import scipy.io as sio
 
 from cascade2p import cascade # local folder
-
+from cascade2p.utils import plot_dFF_traces
 
 
 """
@@ -69,42 +67,23 @@ def load_neurons_x_time(file_path):
 
 """
 
-Load dF/F traces and plot example traces
+Load dF/F traces, define frame rate and plot example traces
 
 """
 
   
 example_file = 'Example_datasets/Multiplane-OGB1-zf-pDp-Rupprecht-7.5Hz/Calcium_traces_04.mat'
+frame_rate = 7.5 # in Hz
 
 traces = load_neurons_x_time( example_file )
-
 print('Number of neurons in dataset:', traces.shape[0])
 print('Number of timepoints in dataset:', traces.shape[1])
 
-# plot traces for some neurons in loaded dataset
-np.random.seed(3952)
-random_neurons = np.random.randint(traces.shape[0], size=10)
-plt.figure(figsize=(8,7))
-plt.subplot(2,1,1)
+#np.random.seed(3952)
+neuron_indices = np.random.randint(traces.shape[0], size=10)
+plot_dFF_traces(traces,neuron_indices,frame_rate)
 
-for i,neuron in enumerate(random_neurons):
-    plt.plot(traces[neuron,:]+(i-1), alpha=0.8)
-    
-plt.xlabel('Timepoints')
-plt.ylabel('Delta F/F (values normally between 0 and 4)')
-plt.title('Random example traces')
 
-# Zoom in
-plt.subplot(2,1,2)
-for neuron in random_neurons:
-    plt.plot(traces[neuron,:], alpha=0.8)
-    
-plt.xlim(0, np.min((500, traces.shape[1])))
-plt.title('Zoom in')
-plt.xlabel('Timepoints')
-plt.ylabel('Delta F/F (values normally between 0 and 4)')
-
-plt.tight_layout()
 
 
 
@@ -114,10 +93,7 @@ Load pretrained model and apply to dF/F data
 
 """
 
-
 model_name = 'OGB_pDp_7.5Hz'
-traces_file_name = 'Example_datasets/Multiplane-OGB1-zf-pDp-Rupprecht-7.5Hz/Calcium_traces_04.mat'
-traces = load_neurons_x_time( traces_file_name )
 
 spike_rates = cascade.predict( model_name, traces )
 
@@ -148,13 +124,8 @@ Plot example predictions
 
 """
 
-neuron = 5
-
-plt.figure()
-
-plt.plot(traces[neuron], label='Df/f')
-plt.plot(spike_rates[neuron], label='Spike Rate')
-
+neuron_indices = np.random.randint(traces.shape[0], size=10)
+plot_dFF_traces(traces,neuron_indices,frame_rate,spike_rates)
 
 
 
