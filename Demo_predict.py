@@ -34,8 +34,7 @@ import numpy as np
 import scipy.io as sio
 
 from cascade2p import cascade # local folder
-from cascade2p.utils import plot_dFF_traces
-
+from cascade2p.utils import plot_dFF_traces, plot_noise_level_distribution, plot_noise_matched_ground_truth
 
 """
 
@@ -79,6 +78,10 @@ traces = load_neurons_x_time( example_file )
 print('Number of neurons in dataset:', traces.shape[0])
 print('Number of timepoints in dataset:', traces.shape[1])
 
+
+noise_levels = plot_noise_level_distribution(traces,frame_rate)
+
+
 #np.random.seed(3952)
 neuron_indices = np.random.randint(traces.shape[0], size=10)
 plot_dFF_traces(traces,neuron_indices,frame_rate)
@@ -93,7 +96,7 @@ Load pretrained model and apply to dF/F data
 
 """
 
-model_name = 'OGB_pDp_7.5Hz'
+model_name = 'OGB_zf_pDp_7.5Hz'
 
 spike_rates = cascade.predict( model_name, traces )
 
@@ -105,8 +108,8 @@ Save predictions to disk
 """
 
 
-folder = os.path.dirname(traces_file_name)
-save_path = os.path.join(folder, 'full_prediction_'+os.path.basename(traces_file_name))
+folder = os.path.dirname(example_file)
+save_path = os.path.join(folder, 'full_prediction_'+os.path.basename(example_file))
 
 # save as numpy file
 #np.save(save_path, spike_rates)
@@ -128,6 +131,17 @@ neuron_indices = np.random.randint(traces.shape[0], size=10)
 plot_dFF_traces(traces,neuron_indices,frame_rate,spike_rates)
 
 
+
+"""
+
+Plot noise-matched examples from the ground truth
+
+"""
+
+median_noise = np.round(np.median(noise_levels))
+nb_traces = 8
+duration = 50 # seconds
+plot_noise_matched_ground_truth( model_name, median_noise, frame_rate, nb_traces, duration )
 
 
 

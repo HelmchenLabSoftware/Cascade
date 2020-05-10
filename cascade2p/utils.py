@@ -52,6 +52,7 @@ from scipy.stats import invgauss
 from keras.layers import Dense, Flatten, MaxPooling1D, Conv1D, Input
 from keras import Model
 
+from cascade2p import config
 
 
 def define_model(filter_sizes,filter_numbers,dense_expansion,windowsize,loss_function,optimizer, conv_filter=Conv1D):
@@ -149,7 +150,7 @@ def preprocess_traces(neurons_x_time, before_frac, window_size):
 
 
 
-def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sampling_rate,omission_list=[], verbose=3):
+def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sampling_rate,replicas,omission_list=[], verbose=3):
   
     """
     sub_traces_all, sub_traces_events_all, frame_rate = calibrated_ground_truth(ground_truth_folder,noise_level,sampling_rate)
@@ -243,7 +244,11 @@ def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sam
           # is correlated across replicas is not dominant; this is a heuristic procedure.
           # Limit the maximum number of replicas per ground truth trace to 500.
           nb_subROIs = np.minimum(500,np.ceil( 1.2*(noise_level/base_noise)**2 ))
-  
+            
+          if not replicas:
+            
+            nb_subROIs = 1
+          
         else:
   
           nb_subROIs = 0
@@ -328,7 +333,7 @@ def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sam
 
 
 
-def preprocess_groundtruth_artificial_noise_balanced(ground_truth_folders,before_frac,windowsize,after_frac,noise_level,sampling_rate,smoothing,omission_list=[],permute=1,maximum_traces=5000000,verbose=3,causal_kernel=0):
+def preprocess_groundtruth_artificial_noise_balanced(ground_truth_folders,before_frac,windowsize,after_frac,noise_level,sampling_rate,smoothing,omission_list=[],permute=1,maximum_traces=5000000,verbose=3,replicas=1,causal_kernel=0):
 
     """
     The calcium traces are extracted, brought to a desired 'noise_level' and
@@ -369,7 +374,7 @@ def preprocess_groundtruth_artificial_noise_balanced(ground_truth_folders,before
       try:
           if verbose > 1: print('Preprocessing dataset number', dataset_index)
   
-          sub_traces_allX, sub_traces_events_allX, frame_rate, events_allX = calibrated_ground_truth_artificial_noise(ground_truth_folders[dataset_index],noise_level,sampling_rate,omission_list, verbose)
+          sub_traces_allX, sub_traces_events_allX, frame_rate, events_allX = calibrated_ground_truth_artificial_noise(ground_truth_folders[dataset_index],noise_level,sampling_rate,replicas,omission_list, verbose)
   
           datapoint_counter = 0
           for k in range(len(sub_traces_allX)):
@@ -524,3 +529,101 @@ def plot_dFF_traces(traces,neuron_indices,frame_rate,spiking=None,y_range=(-1.2,
     if spiking is not None:
       
       axs[subplot_ix].plot(time,spiking[neuron_index,:]-1)
+      
+
+
+def plot_noise_matched_ground_truth( model_name, median_noise, frame_rate, nb_traces, duration ):
+  
+  """ 
+  Plots a subset (junks of 50 seconds) of calcium imaging data together with electrophysiological
+  ground truth from the ground truth datasets used for training the model
+  
+  """
+  from cascade2p import utils
+
+  model_folder = os.path.join('Pretrained_models', model_name)
+
+  # Load config file
+  cfg = config.read_config( os.path.join( model_folder, 'config.yaml'))
+
+  # extract values from config file into variables    
+  training_folders = [os.path.join('Ground_truth', ds) for ds in cfg['training_datasets']]
+  
+  # extract ground truth
+  X,Y = utils.preprocess_groundtruth_artificial_noise_balanced(
+                              ground_truth_folders = training_folders,
+                              before_frac = cfg['before_frac'],
+                              windowsize = cfg['windowsize'],
+                              after_frac = 1 - cfg['before_frac'],
+                              noise_level = median_noise,
+                              sampling_rate = cfg['sampling_rate'],
+                              smoothing = cfg['smoothing'] * cfg['sampling_rate'],
+                              omission_list = [],
+                              permute = 0,
+                              verbose = cfg['verbose'],
+                              replicas = 0)
+  
+  X = X[:,32,]
+  Y = Y[:,]
+  
+  # the following is very similar to the function "plot_dFF_traces()"
+  
+  try:
+    import seaborn as sns; sns.set()
+    plt.style.use('seaborn-darkgrid')
+  except:
+    pass
+  
+  duration_datapoints = int(duration*frame_rate)
+  
+  time_indices = np.random.randint(X.shape[0]-duration_datapoints, size=nb_traces)
+  
+  time = np.arange(0,duration*frame_rate)/frame_rate
+  
+  fig, axs = plt.subplots(int(np.ceil(nb_traces/2)), 2,  sharex=True, sharey=True)
+  fig.add_subplot(111, frameon=False)
+  # hide tick and tick label of the big axis
+  plt.tick_params(labelcolor='none', top=False, bottom=False, left=False, right=False)
+  plt.xlabel('Time (s)')
+  plt.ylabel('dF/F and ground truth spiking')
+  
+  for k,time_index in enumerate(time_indices):
+  
+    subplot_ix = int(k/2), int(np.mod(k,2))
+    axs[subplot_ix].plot(time,X[time_index:time_index+duration_datapoints,:])
+#    axs[subplot_ix].set_ylim(y_range) 
+    axs[subplot_ix].set_xlim(0, duration) 
+    
+    axs[subplot_ix].plot(time,Y[time_index:time_index+duration_datapoints]-1)
+
+
+
+def plot_noise_level_distribution(traces,frame_rate):
+
+  """
+  Plots a histogram of the noise levels across all neurons in the dataset
+  
+  """
+  try:
+    import seaborn as sns; sns.set()
+    plt.style.use('seaborn-darkgrid')
+  except:
+    pass
+  
+  nb_neurons = traces.shape[0]
+    
+  noise_levels = np.nan*np.zeros((nb_neurons,))
+  for neuron in range(nb_neurons):
+    
+    noise_levels[neuron] = np.nanmedian(np.abs(np.diff(traces[neuron,:])))/np.sqrt(frame_rate)*100
+  
+  noise_levels = noise_levels[~np.isnan(noise_levels)]
+  
+  percent999 = np.percentile(noise_levels,99.9)
+  
+  plt.figure(1121); plt.hist(noise_levels,normed=True, bins=100)
+  plt.xlim([0, percent999])
+  plt.xlabel('Noise level (% s^(1/2))')
+  plt.title('Histogram of noise levels across neurons')
+
+  return noise_levels
