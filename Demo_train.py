@@ -45,8 +45,8 @@ Configure model and its parameters
 """
 
 cfg = dict( 
-    model_name = 'Universal_30Hz',    # Model name (and name of the save folder)
-    sampling_rate = 30,    # Sampling rate in Hz (round to next integer)
+    model_name = 'Universal_20Hz',    # Model name (and name of the save folder)
+    sampling_rate = 20,    # Sampling rate in Hz (round to next integer)
     
     training_datasets = ['DS02-Cal520-m-S1',
        'DS03-OGB1-zf-pDp',

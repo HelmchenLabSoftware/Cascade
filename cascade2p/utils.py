@@ -39,6 +39,7 @@ Keras is a high-level user interface for the deep learning framework TensorFlow.
 
 import os
 import glob as glob
+import matplotlib.pyplot as plt
 
 import numpy as np
 
@@ -482,3 +483,44 @@ def preprocess_groundtruth_artificial_noise_balanced(ground_truth_folders,before
   
     if verbose > 1: print('Shape of training dataset X: {}    Y: {}'.format(X.shape, Y.shape))
     return X,Y
+
+
+
+
+
+def plot_dFF_traces(traces,neuron_indices,frame_rate,spiking=None,y_range=(-1.2, 2)):
+
+  """
+  Plots a subset (maximum of 50 seconds) of calcium imaging data of a given matrix ('traces'),
+  using a selection of neurons ('neuron_indices') and a 'frame_rate'.
+  If spike prediction data are available (matrix 'spiking'), they are plotted as well.
+  
+  """
+  try:
+    import seaborn as sns; sns.set()
+    plt.style.use('seaborn-darkgrid')
+  except:
+    pass
+  
+  t_max = int(np.minimum(50.0,traces.shape[1]/frame_rate)*frame_rate)
+  traces = traces[:,:t_max]
+  
+  time = np.arange(0,traces.shape[1])/frame_rate
+  
+  fig, axs = plt.subplots(int(np.ceil(len(neuron_indices)/2)), 2,  sharex=True, sharey=True)
+  fig.add_subplot(111, frameon=False)
+  # hide tick and tick label of the big axis
+  plt.tick_params(labelcolor='none', top=False, bottom=False, left=False, right=False)
+  plt.xlabel('Time (s)')
+  plt.ylabel('dF/F (values normally between 0 and 4)')
+  
+  for k,neuron_index in enumerate(neuron_indices):
+  
+    subplot_ix = int(k/2), int(np.mod(k,2))
+    axs[subplot_ix].plot(time,traces[neuron_index,:])
+    axs[subplot_ix].set_ylim(y_range) 
+    axs[subplot_ix].set_xlim(32/frame_rate, t_max/frame_rate - 32/frame_rate) 
+    
+    if spiking is not None:
+      
+      axs[subplot_ix].plot(time,spiking[neuron_index,:]-1)
