@@ -104,7 +104,10 @@ def train_model( model_name ):
                                 smoothing = cfg['smoothing'] * cfg['sampling_rate'],
                                 omission_list = [],
                                 permute = 1,
-                                verbose = cfg['verbose'])
+                                verbose = cfg['verbose'],
+                                replicas=1,
+                                causal_kernel=cfg['causal_kernel'])
+            
 
             model = utils.define_model(
                                 filter_sizes = cfg['filter_sizes'],
