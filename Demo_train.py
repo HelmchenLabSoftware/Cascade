@@ -45,8 +45,8 @@ Configure model and its parameters
 """
 
 cfg = dict( 
-    model_name = 'Universal_20Hz',    # Model name (and name of the save folder)
-    sampling_rate = 20,    # Sampling rate in Hz (round to next integer)
+    model_name = 'Universal_25Hz',    # Model name (and name of the save folder)
+    sampling_rate = 25,    # Sampling rate in Hz (round to next integer)
     
     training_datasets = ['DS02-Cal520-m-S1',
        'DS03-OGB1-zf-pDp',
@@ -68,10 +68,10 @@ cfg = dict(
        'DS19-jRCaMP1a-m-V1',
                        ],
     
-    noise_levels = [noise for noise in range(2,10)],  # int values of noise values (do not use numpy here => representer error!)
+    noise_levels = [noise for noise in range(2,9)],  # int values of noise values (do not use numpy here => representer error!)
     
     smoothing = 0.2,     # std of Gaussian smoothing in time (sec)
-    
+    causal_kernel = 0,   # causal ground truth smoothing kernel 
     # Advanced:
     # For additional parameters, you can find their names in the helper_scripts/config.py
     # file in the config_template string

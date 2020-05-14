@@ -44,6 +44,9 @@ placeholder_2: 0       # protect formatting
 # Standard deviation of Gaussian smoothing in time (sec)
 smoothing: 0.2
 
+# Smoothing kernel is symmetric in time (0) or is causal (1)
+causal_kernel: 0
+
 
 ###
 ### Additional parameters for model specification:

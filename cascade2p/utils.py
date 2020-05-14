@@ -420,7 +420,17 @@ def preprocess_groundtruth_artificial_noise_balanced(ground_truth_folders,before
   
     before = int(before_frac*windowsize)
     after = int(after_frac*windowsize)
-  
+    
+    if causal_kernel:
+      
+      xx = np.arange(0,199)/sampling_rate
+      yy = invgauss.pdf(xx,smoothing/sampling_rate*2.0,101/sampling_rate,1)
+      ix = np.argmax(yy)
+      yy = np.roll(yy,int((99-ix)/1.5))
+      causal_smoothing_kernel = yy/np.nansum(yy)
+
+    
+    
     X = np.zeros((15000000,windowsize,))
     Y = np.zeros((15000000,))
   
@@ -438,12 +448,7 @@ def preprocess_groundtruth_artificial_noise_balanced(ground_truth_folders,before
           # Optional: Generates ground truth with causally smoothed kernel (see paper for details)
           if causal_kernel:
             
-            xx = np.arange(0,199)/sampling_rate
-            yy = invgauss.pdf(xx,smoothing/sampling_rate*2,101/sampling_rate,1)
-            ix = np.argmax(yy)
-            yy = np.roll(yy,int((99-ix)/1.5))
-            yy = yy/np.sum(yy)
-            single_spikes = convolve(single_spikes,yy,mode='same')
+            single_spikes = convolve(single_spikes.astype(float),causal_smoothing_kernel,mode='same')
             
           else:
             
@@ -484,6 +489,10 @@ def preprocess_groundtruth_artificial_noise_balanced(ground_truth_folders,before
       X = X[:5000000,:,:]
       Y = Y[:5000000,:]
   
+      X = X[np.where(~np.isnan(Y))[1],:,:]
+      Y = Y[np.where(~np.isnan(Y))[1],:]
+    
+
     os.chdir(base_folder)
   
     if verbose > 1: print('Shape of training dataset X: {}    Y: {}'.format(X.shape, Y.shape))
