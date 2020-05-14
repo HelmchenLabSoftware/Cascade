@@ -136,7 +136,7 @@ def train_model( model_name ):
     print('Runtime: {:.0f} min'.format((time.time() - start)/60))
 
 
-def predict( model_name, traces, padding=np.nan ):
+def predict( model_name, traces, threshold=0, padding=np.nan ):
     
     """ Use a specific trained neural network ('model_name') to predict spiking activity for calcium traces ('traces')
 
@@ -168,6 +168,7 @@ def predict( model_name, traces, padding=np.nan ):
     before_frac = cfg['before_frac']
     window_size = cfg['windowsize']
     noise_levels_model = cfg['noise_levels']
+    smoothing = cfg['smoothing']
 
     if verbose: print('Loaded model was trained at frame rate {} Hz'.format(sampling_rate))
     if verbose: print('Given argument traces contains {} neurons and {} frames.'.format( traces.shape[0], traces.shape[1]))
@@ -175,7 +176,7 @@ def predict( model_name, traces, padding=np.nan ):
     # calculate noise levels for each trace
     trace_noise_levels = utils.calculate_noise_levels(traces, sampling_rate)
     
-    print(trace_noise_levels)
+    print('Noise levels (mean, std; in standard units): '+str(int(np.nanmean(trace_noise_levels*100))/100)+', '+str(int(np.nanstd(trace_noise_levels*100))/100))
 
     # Get model paths as dictionary (key: noise_level) with lists of model
     # paths for the different ensembles
@@ -228,7 +229,32 @@ def predict( model_name, traces, padding=np.nan ):
 
         # remove models from memory
         keras.backend.clear_session()
-
+    
+    # Cut off noise floor (lower than 1/e of a single action potential);
+    if threshold:
+      
+      from scipy.ndimage.filters import gaussian_filter
+      from scipy.ndimage.morphology import binary_dilation
+      
+      # find out empirically  how large a single AP is (depends on frame rate and smoothing)
+      single_spike = np.zeros(1001,)
+      single_spike[501] = 1
+      single_spike_smoothed = gaussian_filter(single_spike.astype(float), sigma=smoothing*sampling_rate)
+      threshold_value = np.max(single_spike_smoothed)/np.exp(1)
+      
+      # Set everything below threshold to zero.
+      # Use binary dilation to avoid clipping of true events.
+      for neuron in range(Y_predict.shape[0]):
+      
+        activity_mask = Y_predict[neuron,:] > threshold_value
+        activity_mask = binary_dilation(activity_mask,iterations = int(smoothing*sampling_rate))
+        
+        Y_predict[neuron,~activity_mask] = 0
+        
+    else:
+      
+      Y_predict[Y_predict<0] = 0
+      
     # NaN or 0 for first and last datapoints, for which no predictions can be made
     Y_predict[:,0:int(before_frac*window_size)] = padding
     Y_predict[:,-int((1-before_frac)*window_size):] = padding
