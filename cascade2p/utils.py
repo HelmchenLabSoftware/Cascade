@@ -489,8 +489,8 @@ def preprocess_groundtruth_artificial_noise_balanced(ground_truth_folders,before
       X = X[:5000000,:,:]
       Y = Y[:5000000,:]
   
-      X = X[np.where(~np.isnan(Y))[1],:,:]
-      Y = Y[np.where(~np.isnan(Y))[1],:]
+    X = X[np.where(~np.isnan(Y))[0],:,:]
+    Y = Y[np.where(~np.isnan(Y))[0],:]
     
 
     os.chdir(base_folder)
