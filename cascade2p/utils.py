@@ -52,7 +52,7 @@ from scipy.stats import invgauss
 from cascade2p import config
 
 
-def define_model(filter_sizes,filter_numbers,dense_expansion,windowsize,loss_function,optimizer, conv_filter=Conv1D):
+def define_model(filter_sizes,filter_numbers,dense_expansion,windowsize,loss_function,optimizer):
 
   """"
   Defines the model using the API of Keras.
@@ -65,11 +65,13 @@ def define_model(filter_sizes,filter_numbers,dense_expansion,windowsize,loss_fun
   Example: model = define_model(filter_sizes,filter_numbers,dense_expansion,windowsize,loss_function,optimizer)
 
   """
-        
+
   from keras.layers import Dense, Flatten, MaxPooling1D, Conv1D, Input
   from keras import Model
 
   inputs = Input(shape=(windowsize,1))
+
+  conv_filter = Conv1D
 
   outX = conv_filter(filter_numbers[0], filter_sizes[0], strides=1, activation='relu')(inputs)
   outX = conv_filter(filter_numbers[1], filter_sizes[1], activation='relu')(outX)
