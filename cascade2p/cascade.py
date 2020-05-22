@@ -3,7 +3,7 @@
 
 
 
-"""  High level interface to the CASCADE package 
+"""  High level interface to the CASCADE package
 
 This file contains functions to train networks for spike prediction ('train_model')
 and to use existing networks to predict spiking activity ('predict').
@@ -11,7 +11,7 @@ and to use existing networks to predict spiking activity ('predict').
 
 A typical workflow for applying an existing network to calcium imaging data,
 shown in the "demo_predict.py" script:
-  
+
   1)  Load calcium imaging data as a dF/F matrix
   2)  Load a predefined model; the model should match the properties of the calcium
       imaging dataset (frame rate, noise levels, ground truth datasets)
@@ -20,7 +20,7 @@ shown in the "demo_predict.py" script:
 
 A typical workflow for training a new network would be the following,
 shown in the "demo_train.py" script:
-  
+
   1)  Define a model (frame rate, noise levels, ground truth datasets; additional parameters)
   2)  Use the model as input to the function 'train_model'
   3)  The trained models will be saved together with a configuration file (YAML). Done!
@@ -39,8 +39,8 @@ from cascade2p import config
 
 
 
-def train_model( model_name ):
-  
+def train_model( model_name, model_folder='Pretrained_models', ground_truth_folder='Ground_truth' ):
+
     """ Train neural network with parameters specified in the config.yaml file in the model folder
 
     In this function, a model is configured (defined in the input 'model_name': frame rate, noise levels, ground truth datasets, etc.).
@@ -48,34 +48,73 @@ def train_model( model_name ):
     The network architecture is defined (function 'define_model', defined in "utils.py").
     The thereby defined model is trained with the resampled ground truth data.
     The trained model with its weight and configuration details is saved to disk.
-    
+
+    Parameters
+    ----------
+    model_name : str
+        Name of the model, e.g. GCaMP6s_5Hz
+        This name has to correspond to the folder in which the config.yaml file which defines the model parameters is stored
+
+    model_folder: str
+        Absolute or relative path, which defines the location of the specified model_name folder
+        Default value 'Pretrained_models' assumes a current working directory in the Calibrated-inference-of_spiking folder
+
+    ground_truth_folder : str
+        Absolute or relative path, which defines the location of the ground truth datasets
+        Default value 'Ground_truth'  assumes a current working directory in the Calibrated-inference-of_spiking folder
+
+    Returns
+    --------
+    None
+        All results are saved in the folder model_name as .h5 files containing the trained model
+
     """
     import keras
     from cascade2p import utils
 
-    # TODO: check here for relative vs absolute path definition
-    model_folder = os.path.join('Pretrained_models', model_name)
+    model_path = os.path.join(model_folder, model_name)
+    cfg_file = os.path.join( model_path, 'config.yaml')
+
+    # check if configuration file can be found
+    if not os.path.isfile(cfg_file):
+        m = 'The configuration file "config.yaml" can not be found at the location "{}".\n'.format( os.path.abspath(cfg_file) ) + \
+            'You have provided the model "{}" at the absolute or relative path "{}".\n'.format( model_name, model_folder) + \
+            'Please check if there is a folder for model "{}" at the location "{}".'.format( model_name, os.path.abspath(model_folder))
+        print(m)
+        raise Exception(m)
 
     # load cfg dictionary from config.yaml file
-    cfg = config.read_config( os.path.join(model_folder, 'config.yaml') )
+    cfg = config.read_config( cfg_file )
     verbose = cfg['verbose']
 
     if verbose:
-        print('Used configuration for model fitting (file {}):\n'.format( os.path.join(model_folder, 'config.yaml') ))
+        print('Used configuration for model fitting (file {}):\n'.format( os.path.abspath(cfg_file) ))
         for key in cfg:
             print('{}:\t{}'.format(key, cfg[key]))
 
-        print('\n\nModels will be saved into this folder:', model_folder)
-
-    start = time.time()
-
+        print('\n\nModels will be saved into this folder:', os.path.abspath(model_path))
 
     # add base folder to selected training datasets
-    training_folders = [os.path.join('Ground_truth', ds) for ds in cfg['training_datasets']]
+    training_folders = [os.path.join(ground_truth_folder, ds) for ds in cfg['training_datasets']]
 
+    # check if the training datasets can be found
+    missing = False
+    for folder in training_folders:
+        if not os.path.isdir(folder):
+            print('The folder "{}" could not be found at the specified location "{}"'.format(folder, os.path.abspath(folder)))
+            missing = True
+    if missing:
+        m = 'At least one training dataset could not be located.\nThis could mean that the given path "{}" '.format(ground_truth_folder) + \
+            'does not specify the correct location or that e.g. a training dataset referenced in the config.yaml file ' + \
+            'contained a typo.'
+        print(m)
+        raise Exception(m)
+
+
+    start = time.time()
     # Update model fitting status
     cfg['training_finished'] = 'Running'
-    config.write_config(cfg, os.path.join( model_folder,'config.yaml' ))
+    config.write_config(cfg, os.path.join( model_path,'config.yaml' ))
 
     nr_model_fits = len( cfg['noise_levels'] ) * cfg['ensemble_size']
     print('Fitting a total of {} models:'.format( nr_model_fits))
@@ -83,7 +122,7 @@ def train_model( model_name ):
     curr_model_nr = 0
 
     print(training_folders[0])
-            
+
     for noise_level in cfg['noise_levels']:
         for ensemble in range( cfg['ensemble_size'] ):
             # train 'ensemble_size' (e.g. 5) models for each noise level
@@ -92,7 +131,7 @@ def train_model( model_name ):
             print('\nFitting model {} with noise level {} (total {} out of {}).'.format(
                     ensemble+1, noise_level, curr_model_nr, nr_model_fits))
 
-            
+
             # preprocess dataset to get uniform dataset for training
             X,Y = utils.preprocess_groundtruth_artificial_noise_balanced(
                                 ground_truth_folders = training_folders,
@@ -107,7 +146,7 @@ def train_model( model_name ):
                                 verbose = cfg['verbose'],
                                 replicas=1,
                                 causal_kernel=cfg['causal_kernel'])
-            
+
 
             model = utils.define_model(
                                 filter_sizes = cfg['filter_sizes'],
@@ -128,19 +167,19 @@ def train_model( model_name ):
 
             # save model
             file_name = 'Model_NoiseLevel_{}_Ensemble_{}.h5'.format(int(noise_level), ensemble)
-            model.save( os.path.join( model_folder,file_name ) )
+            model.save( os.path.join( model_path, file_name ) )
             print('Saved model:', file_name)
 
     # Update model fitting status
     cfg['training_finished'] = 'Yes'
-    config.write_config(cfg, os.path.join( model_folder,'config.yaml' ))
+    config.write_config(cfg, os.path.join( model_path, 'config.yaml' ))
 
     print('\n\nDone!')
     print('Runtime: {:.0f} min'.format((time.time() - start)/60))
 
 
-def predict( model_name, traces, threshold=0, padding=np.nan ):
-    
+def predict( model_name, traces, model_folder='Pretrained_models', threshold=0, padding=np.nan ):
+
     """ Use a specific trained neural network ('model_name') to predict spiking activity for calcium traces ('traces')
 
     In this function, a already trained model (generated by 'train_model') is loaded.
@@ -150,19 +189,57 @@ def predict( model_name, traces, threshold=0, padding=np.nan ):
     These models are used to predict spiking activitz of neurons from 'traces' with the same noise levels.
     The predictions are made in the line with 'model.predict()'.
     The predictions are returned as a matrix 'Y_predict'.
-    
-    input:  model configuration identifier 'model_name'
-            dF/F recording matrix 'traces'
-    output: spiking activity 'Y_predict' (same matrix shape as 'traces')
-    
+
+
+    Parameters
+    ------------
+    model_name : str
+        Name of the model, e.g. GCaMP6s_5Hz
+        This name has to correspond to the folder in which the config.yaml and .h5 files are stored which define
+        the trained model
+
+    traces : 2d numpy array (neurons x nr_timepoints)
+        Df/f traces with recorded fluorescence (as fractions, not in percents) on which the spiking activity will
+        be predicted. Required shape: (neurons x nr_timepoints)
+
+    model_folder: str
+        Absolute or relative path, which defines the location of the specified model_name folder
+        Default value 'Pretrained_models' assumes a current working directory in the Calibrated-inference-of_spiking folder
+
+    threshold : float
+        #TODO Peter
+
+        describe parameter, currently the value of threshold is not used but defining it as 0 implies that one can set it to e.g. 0.5
+        if bool is used, the data would be thresholded eventhough False is selected
+
+
+    padding : float (or np.nan)
+        Value which is inserted for datapoints, where no prediction can be made (because of window around timepoint of prediction)
+        Default value: np.nan, another recommended value would be 0 which circumvents some problems with following analysis.
+
+    Returns
+    --------
+    predicted_activity: 2d numpy array (neurons x nr_timepoints)
+        Spiking activity as predicted by the model. The shape is the same as 'traces'
+        This array can contain NaNs if the value 'padding' was np.nan as input argument
+
     """
     import keras
     from cascade2p import utils
 
-    model_folder = os.path.join('Pretrained_models', model_name)
+    model_path = os.path.join(model_folder, model_name)
+    cfg_file = os.path.join( model_path, 'config.yaml')
+
+    # check if configuration file can be found
+    if not os.path.isfile(cfg_file):
+        m = 'The configuration file "config.yaml" can not be found at the location "{}".\n'.format( os.path.abspath(cfg_file) ) + \
+            'You have provided the model "{}" at the absolute or relative path "{}".\n'.format( model_name, model_folder) + \
+            'Please check if there is a folder for model "{}" at the location "{}".'.format( model_name, os.path.abspath(model_folder))
+        print(m)
+        raise Exception(m)
 
     # Load config file
-    cfg = config.read_config( os.path.join( model_folder, 'config.yaml'))
+    cfg = config.read_config( cfg_file )
 
     # extract values from config file into variables
     verbose = cfg['verbose']
@@ -178,12 +255,12 @@ def predict( model_name, traces, threshold=0, padding=np.nan ):
 
     # calculate noise levels for each trace
     trace_noise_levels = utils.calculate_noise_levels(traces, sampling_rate)
-    
+
     print('Noise levels (mean, std; in standard units): '+str(int(np.nanmean(trace_noise_levels*100))/100)+', '+str(int(np.nanstd(trace_noise_levels*100))/100))
 
     # Get model paths as dictionary (key: noise_level) with lists of model
     # paths for the different ensembles
-    model_dict = get_model_paths( model_folder )
+    model_dict = get_model_paths( model_path )  # function defined below
     if verbose > 2: print('Loaded models:', str(model_dict))
 
     # XX has shape: (neurons, timepoints, windowsize)
@@ -232,32 +309,32 @@ def predict( model_name, traces, threshold=0, padding=np.nan ):
 
         # remove models from memory
         keras.backend.clear_session()
-    
+
     # Cut off noise floor (lower than 1/e of a single action potential);
     if threshold:
-      
+
       from scipy.ndimage.filters import gaussian_filter
       from scipy.ndimage.morphology import binary_dilation
-      
+
       # find out empirically  how large a single AP is (depends on frame rate and smoothing)
       single_spike = np.zeros(1001,)
       single_spike[501] = 1
       single_spike_smoothed = gaussian_filter(single_spike.astype(float), sigma=smoothing*sampling_rate)
       threshold_value = np.max(single_spike_smoothed)/np.exp(1)
-      
+
       # Set everything below threshold to zero.
       # Use binary dilation to avoid clipping of true events.
       for neuron in range(Y_predict.shape[0]):
-      
+
         activity_mask = Y_predict[neuron,:] > threshold_value
         activity_mask = binary_dilation(activity_mask,iterations = int(smoothing*sampling_rate))
-        
+
         Y_predict[neuron,~activity_mask] = 0
-        
+
     else:
-      
+
       Y_predict[Y_predict<0] = 0
-      
+
     # NaN or 0 for first and last datapoints, for which no predictions can be made
     Y_predict[:,0:int(before_frac*window_size)] = padding
     Y_predict[:,-int((1-before_frac)*window_size):] = padding
@@ -271,7 +348,7 @@ def predict( model_name, traces, threshold=0, padding=np.nan ):
 
 
 def verify_config_dict( config_dictionary ):
-  
+
     """ Perform some test to catch the most likely errors when creating config files """
 
     # TODO: Implement
@@ -281,9 +358,9 @@ def verify_config_dict( config_dictionary ):
 
 
 
-def create_model_folder( config_dictionary ):
-  
-    """ Creates a new folder in 'trained_models' and saves config.yaml file there
+def create_model_folder( config_dictionary, model_folder='Pretrained_models' ):
+
+    """ Creates a new folder in model_folder and saves config.yaml file there
 
     Parameters
     ----------
@@ -291,30 +368,38 @@ def create_model_folder( config_dictionary ):
         Dictionary with keys like 'model_name' or 'training_datasets'
         Values which are not specified will be set to default values defined in
         the config_template in config.py
+
+    model_folder : str
+        Absolute or relative path, which defines the location at which the new
+        folder containing the config file will be created
+        Default value 'Pretrained_models' assumes a current working directory
+        in the Calibrated-inference-of_spiking folder
+
     """
     cfg = config_dictionary  # shorter name
 
     # TODO: call here verify_config_dict
 
     # TODO: check here the current directory, might not be the main folder...
-    model_folder = os.path.join('Pretrained_models', cfg['model_name'])
+    model_path = os.path.join(model_folder, cfg['model_name'])
 
-    if not os.path.exists( model_folder ):
+    if not os.path.exists( model_path ):
         # create folder
-        os.mkdir(model_folder)
+        os.mkdir(model_path)
+        print('Created new directory "{}"'.format( os.path.abspath(model_path) ))
 
         # save config file into the folder
-        config.write_config(cfg, os.path.join(model_folder, 'config.yaml') )
+        config.write_config(cfg, os.path.join(model_path, 'config.yaml') )
 
     else:
-        raise Warning('There is already a folder called {}. '.format(cfg['model_name']) +
+        raise Warning('There is already a folder called {}. '.format(cfg['model_name']) + \
               'Please rename your model.')
 
 
 
 
-def get_model_paths( model_folder ):
-  
+def get_model_paths( model_path ):
+
     """ Find all models in the model folder and return as dictionary
 
     Returns
@@ -325,8 +410,13 @@ def get_model_paths( model_folder ):
     """
     import glob, re
 
-    all_models = glob.glob( os.path.join(model_folder, '*.h5') )
+    all_models = glob.glob( os.path.join(model_path, '*.h5') )
     all_models = sorted( all_models )  # sort
+
+    # Exception in case no model was found to catch this mistake where it happened
+    if len(all_models) == 0:
+        m = 'No models (*.h5 files) were found in the specified folder "{}".'.format( os.path.abspath(model_path) )
+        raise Exception(m)
 
     # dictionary with key for noise level, entries are lists of models
     model_dict = dict()
