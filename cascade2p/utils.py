@@ -633,7 +633,7 @@ def plot_noise_level_distribution(traces,frame_rate):
 
   percent999 = np.percentile(noise_levels,99.9)
 
-  plt.figure(1121); plt.hist(noise_levels,normed=True, bins=100)
+  plt.figure(1121); plt.hist(noise_levels,density=True, bins=100)
   plt.xlim([0, percent999])
   plt.xlabel('Noise level (% s^(1/2))')
   plt.title('Histogram of noise levels across neurons')
