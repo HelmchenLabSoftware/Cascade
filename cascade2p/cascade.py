@@ -434,3 +434,78 @@ def get_model_paths( model_path ):
         model_dict[noise_level].append(model_path)
 
     return model_dict
+
+
+
+def download_model( model_name,
+                    model_folder='Pretrained_models',
+                    info_file_link = 'https://drive.switch.ch/index.php/s/vi5cBz37BlztrtY/download',
+                    verbose = 1):
+    """ Download and unzip pretrained model from the online repository
+
+    Parameters
+    ----------
+    model_name : str
+        Name of the model, e.g. pre_GCaMP6s_5Hz
+        This name has to correspond to a pretrained model that is available for download
+        To see available models, run this function with model_name='update_models' and
+        check the downloaded file 'available_models.yaml'
+
+    model_folder: str
+        Absolute or relative path, which defines the location of the specified model_name folder
+        Default value 'Pretrained_models' assumes a current working directory in the Calibrated-inference-of_spiking folder
+
+    info_file_link: str
+        Direct download link to yaml file which contains download links for new models.
+        Default value is official repository of models.
+
+    verbose : int
+        If 0, no messages are printed. if larger than 0, the user is informed about status.
+
+    """
+
+    from urllib.request import urlopen
+    import zipfile
+
+    # Download the current yaml file with information about available models first
+    new_file = os.path.join( model_folder, 'available_models.yaml')
+    with urlopen( info_file_link ) as response:
+        text = response.read()
+
+    with open(new_file, 'wb') as f:
+        f.write(text)
+
+    # check if the specified model_name is present
+    download_config = config.read_config( new_file )  # orderedDict with model names as keys
+
+    if model_name not in download_config.keys():
+        if model_name == 'update_models':
+            print('You can now check the updated available_models.yaml file for valid model names.')
+            print('File location:', os.path.abspath(new_file))
+            return
+
+        raise Exception( 'The specified model_name "{}" is not in the list of available models. '.format(model_name) + \
+                         'Available models for download are: {}'.format( list( download_config.keys()) ))
+
+
+    if verbose: print('Downloading and extracting new model "{}"...'.format( model_name ) )
+
+    # download and save .zip file of model
+    download_link = download_config[model_name]['Link']
+    with urlopen( download_link ) as response:
+        data = response.read()
+
+    tmp_file = os.path.join( model_folder, 'tmp_zipped_model.zip')
+    with open(tmp_file, 'wb') as f:
+        f.write(data)
+
+    # unzip the model and save in the corresponding folder
+    with zipfile.ZipFile( tmp_file, 'r') as zip_ref:
+        zip_ref.extractall( path=model_folder)
+
+    os.remove(tmp_file)
+
+    if verbose: print('Pretrained model was saved in folder "{}"'.format(
+                                           os.path.abspath(os.path.join(model_folder, model_name)) ))
+
+    return
