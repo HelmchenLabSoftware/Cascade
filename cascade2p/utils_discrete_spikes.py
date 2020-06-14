@@ -12,6 +12,99 @@ from scipy.ndimage.filters import gaussian_filter
 import scipy.ndimage as ndim
 from copy import deepcopy
 import numpy as np
+import os
+import scipy.io as sio
+
+from cascade2p import config
+
+
+
+
+
+def infer_discrete_spikes(spike_rates,model_name,model_folder='Pretrained_models'):
+
+  """
+
+  Main function. Detailed documentation: To be done.
+  
+  """
+
+  model_path = os.path.join(model_folder, model_name)
+  cfg_file = os.path.join( model_path, 'config.yaml')
+
+  # check if configuration file can be found
+  if not os.path.isfile(cfg_file):
+      m = 'The configuration file "config.yaml" can not be found at the location "{}".\n'.format( os.path.abspath(cfg_file) ) + \
+          'You have provided the model "{}" at the absolute or relative path "{}".\n'.format( model_name, model_folder) + \
+          'Please check if there is a folder for model "{}" at the location "{}".'.format( model_name, os.path.abspath(model_folder))
+      print(m)
+      raise Exception(m)
+
+  # Load config file
+  cfg = config.read_config( cfg_file )
+
+  # extract values from config file into variables
+  sampling_rate = cfg['sampling_rate']
+  smoothing = cfg['smoothing']
+  
+  spikes_all = []
+  approximations_all = np.nan*np.ones(spike_rates.shape)
+  
+  for neuron in range(spike_rates.shape[0]):
+    
+    print('Infer spikes for neuron '+str(neuron+1)+' out of '+str(spike_rates.shape[0]))
+    
+    prob_density = spike_rates[neuron,:]
+    
+    spike_locs_all = []
+    
+    # find non-nan indices (first and last frames of predictions are NaNs)
+    nnan_indices = ~np.isnan(prob_density)
+    # offset in time to assign inferred spikes to correct positions in the end
+    offset = np.argmax(nnan_indices==True) - 1
+    
+    if np.sum(nnan_indices) > 0:
+    
+      prob_density = prob_density[nnan_indices]
+      
+      vector_of_indices = np.arange(0,len(prob_density))
+      # "support_slices", indices of continuous chunks of the array which are non-zero and which might contain spikes
+      support_slices = divide_and_conquer(prob_density,smoothing*sampling_rate)
+      
+      approximation = np.zeros(prob_density.shape)
+      # go through each slice separately
+      for k in range(len(support_slices)):
+        
+        spike_locs = []
+        
+        nb_spikes = np.sum(prob_density[support_slices[k]])
+        
+        # Monte Carlo/Metropolis-based sampling, initial guess of spikes
+        spike_locs,approximation[support_slices[k]],counter = fill_up_APs(prob_density[support_slices[k]],smoothing*sampling_rate,nb_spikes,spike_locs)
+        
+        # every spike is shifted to any other position (no sub-pixel resolution) and the best position is used
+        spike_locs,approximation[support_slices[k]] = systematic_exploration(prob_density[support_slices[k]],smoothing*sampling_rate,nb_spikes,spike_locs,approximation[support_slices[k]])
+  
+        # refine initial guess using random shifts or removal of spikes
+        for jj in range(5):
+          # remove the worst spikes
+          spike_locs,approximation[support_slices[k]] = prune_APs(prob_density[support_slices[k]],smoothing*sampling_rate,nb_spikes,spike_locs,approximation[support_slices[k]])
+          # fill up spikes again
+          nb_spikes = np.sum(prob_density[support_slices[k]]) - np.sum(approximation[support_slices[k]])
+          spike_locs,approximation[support_slices[k]],counter = fill_up_APs(prob_density[support_slices[k]],smoothing*sampling_rate,nb_spikes,spike_locs)
+        
+        # every spike is shifted to any other position (no sub-pixel resolution) and the best position is used
+        spike_locs,approximation[support_slices[k]] = systematic_exploration(prob_density[support_slices[k]],smoothing*sampling_rate,nb_spikes,spike_locs,approximation[support_slices[k]])
+      
+        temporal_offset = vector_of_indices[support_slices[k]][0]
+        new_spikes = spike_locs+temporal_offset
+        spike_locs_all.extend(new_spikes)
+        
+      approximations_all[neuron,nnan_indices] = approximation
+      
+    spikes_all.append(spike_locs_all+offset)
+  
+  return approximations_all, spikes_all
 
 
 
