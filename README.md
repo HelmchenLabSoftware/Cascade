@@ -1,4 +1,4 @@
-## CASCADE: Calibrated spike inference of spiking from calcium imaging data
+## CASCADE: Calibrated spike inference from calcium imaging data
 
 ![Concept of supervised inference of spiking activity from calcium imaging data using deep networks](https://github.com/HelmchenLabSoftware/Calibrated-inference-of-spiking/blob/master/Figure%20concept.png)
 
