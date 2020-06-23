@@ -1,5 +1,6 @@
 ## CASCADE: Calibrated Inference of Spiking from Calcium Imaging Data
 
+![Concept of supervised inference of spiking activity from calcium imaging data using deep networks](https://github.com/HelmchenLabSoftware/Calibrated-inference-of-spiking/blob/master/Figure%20concept.png)
 
 ### What is CASCADE?
 Embedded image of spike prediction
