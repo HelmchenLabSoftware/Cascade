@@ -11,8 +11,8 @@
 - A large ground truth dataset spanning brain regions, calcium indicators, species
 - A deep network that learns a new model (calcium -> spike probability) for each condition and noise level
 - A large set of pre-trained deep networks for various conditions
-- *(optional)* Tools to quantify the out-of-dataset generalization for a given model and noise level
-- *(optional)* A tool to transform spike probabilities into discrete spikes
+- Tools to quantify the out-of-dataset generalization for a given model and noise level
+- A tool to transform spike probabilities into discrete spikes
 
 
 
@@ -31,10 +31,10 @@ We recommend the following installation procedure, but many other options are po
 1. Download / clone the repository to your local computer
 2. Install the Python environment Anaconda with Python 3 (https://www.anaconda.com/distribution/)
 3. Use the Anaconda prompt (Windows) or the console to navigate to the main folder where you downloaded *Cascade*
-4. Create a new Anaconda environment with the required packages: ``conda env create -f XXX/Cascade.yaml``
+4. Create a new Anaconda environment with the required packages: ``conda create -n Cascade python=3.6 keras numpy scipy matplotlib seaborn numpy ruamel.yaml``. It's as simple as that! Other versions of python will work as well.
 5. Activate the new environment using ``conda activate Cascade`` in Ubuntu and ``activate Cascade`` on Windows
 6. Use your editor of choice (e.g., Spyder or PyCharm) to get started with the demo files type ``spyder`` in the console after activating the environment, or use the Jupyter demo Notebooks by typing ``jupyter notebook``
-7. Get started!
+7. Now you're ready to process your data!
 
 If you have an existing Python environment, you can also look into the yaml-file and simply install the missing dependencies. If you are interested in training models from scratch and speed up processing in general, you should buy a dedicated GPU and install a GPU-based version of the deep learning framework. This procedure can be challenging for beginners. You will find instructions for that via Google, but a good starting point is the tutorial provided by [DeepLabCut](https://github.com/DeepLabCut/DeepLabCut/blob/master/docs/installation.md).
 
