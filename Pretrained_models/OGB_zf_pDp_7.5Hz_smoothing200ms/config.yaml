@@ -1,0 +1,55 @@
+# Main parameter of this model:
+
+model_name: OGB_zf_pDp_7.5Hz_smoothing200ms                      # Name of the model
+sampling_rate: 7.5                                # Sampling rate in Hz
+    # Dataset of ground truth data (in folder 'Ground_truth')   Example: DS13-GCaMP6s-m-V1
+training_datasets:
+- DS03-OGB1-zf-pDp
+placeholder_1: 0           # protect formatting
+    # Noise levels for training (integers, normally 1-9)
+noise_levels:
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+placeholder_2: 0           # protect formatting
+    # Standard deviation of Gaussian smoothing in time (sec)
+smoothing: 0.2
+
+# Smoothing kernel is symmetric in time (0) or is causal (1)
+causal_kernel: 0
+
+# Additional parameters for model specification:
+
+
+windowsize: 64                       # Windowsize in timepoints
+before_frac: 0.5                     # Fraction of timepoints before prediction point (0-1)
+    # Filter sizes for each convolutional layer
+filter_sizes:
+- 31
+- 19
+- 5
+
+    # Filter numbers for each convolutional layer
+filter_numbers:
+- 30
+- 40
+- 50
+
+dense_expansion: 30                  # For dense layer
+loss_function: mean_squared_error         # gradient-descent loss function
+optimizer: Adagrad                        #                  optimizer
+nr_of_epochs: 10                     # Number of training epochs per model
+ensemble_size: 5                     # Number of models trained for one noise level
+batch_size: 8192                     # Batch size
+
+# Information about status of fitting
+
+training_finished: Running           # Yes / No / Running
+verbose: 1                           # level of status messages (0: minimal, 1: standard, 2: most, 3: all)
+
+
+# Additional parameter not specified in template
+

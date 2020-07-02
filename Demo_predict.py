@@ -32,6 +32,7 @@ checks.check_packages()
 
 import numpy as np
 import scipy.io as sio
+import ruamel.yaml as yaml
 
 from cascade2p import cascade # local folder
 from cascade2p.utils import plot_dFF_traces, plot_noise_level_distribution, plot_noise_matched_ground_truth
@@ -87,16 +88,32 @@ neuron_indices = np.random.randint(traces.shape[0], size=10)
 plot_dFF_traces(traces,neuron_indices,frame_rate)
 
 
+"""
+
+Load list of available models
+
+"""
+
+cascade.download_model( 'update_models',verbose = 1)
+
+yaml_file = open('Pretrained_models/available_models.yaml')
+X = yaml.load(yaml_file, Loader=yaml.Loader)
+list_of_models = list(X.keys())
+
+for model in list_of_models:
+  print(model)
+
 
 
 
 """
 
-Load pretrained model and apply to dF/F data
+Select pretrained model and apply to dF/F data
 
 """
 
-model_name = 'OGB_zf_pDp_7.5Hz'
+model_name = 'OGB_zf_pDp_7.5Hz_smoothing200ms'
+cascade.download_model( model_name,verbose = 1)
 
 spike_rates = cascade.predict( model_name, traces )
 

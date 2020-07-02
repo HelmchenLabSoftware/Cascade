@@ -226,6 +226,7 @@ def predict( model_name, traces, model_folder='Pretrained_models', threshold=0, 
     """
     import keras
     from cascade2p import utils
+    from tensorflow.keras.models import load_model
 
     model_path = os.path.join(model_folder, model_name)
     cfg_file = os.path.join( model_path, 'config.yaml')
@@ -243,13 +244,24 @@ def predict( model_name, traces, model_folder='Pretrained_models', threshold=0, 
 
     # extract values from config file into variables
     verbose = cfg['verbose']
+    training_data = cfg['training_datasets']
+    ensemble_size = cfg['ensemble_size']
     batch_size = cfg['batch_size']
     sampling_rate = cfg['sampling_rate']
     before_frac = cfg['before_frac']
     window_size = cfg['windowsize']
     noise_levels_model = cfg['noise_levels']
     smoothing = cfg['smoothing']
-
+    causal_kernel = cfg['causal_kernel']
+    
+    model_description = '\n \nThe selected model was trained on '+str(len(training_data))+' datasets, with '+str(ensemble_size)+' ensembles for each noise level, at a sampling rate of '+str(sampling_rate)+'Hz,'
+    if causal_kernel:
+      model_description += ' with a resampled ground truth that was smoothed with a causal kernel'
+    else:
+      model_description += ' with a resampled ground truth that was smoothed with a Gaussian kernel'
+    model_description += ' of a standard deviation of '+str(int(1000*smoothing))+' milliseconds. \n \n'
+    print(model_description)    
+    
     if verbose: print('Loaded model was trained at frame rate {} Hz'.format(sampling_rate))
     if verbose: print('Given argument traces contains {} neurons and {} frames.'.format( traces.shape[0], traces.shape[1]))
 
@@ -291,7 +303,7 @@ def predict( model_name, traces, model_folder='Pretrained_models', threshold=0, 
         # load keras models for the given noise level
         models = list()
         for model_path in model_dict[model_noise]:
-            models.append( keras.models.load_model( model_path ) )
+            models.append( load_model( model_path ) )
 
         # select neurons and merge neurons and timepoints into one dimension
         XX_sel = XX[neuron_idx, :, :]
@@ -439,7 +451,7 @@ def get_model_paths( model_path ):
 
 def download_model( model_name,
                     model_folder='Pretrained_models',
-                    info_file_link = 'https://drive.switch.ch/index.php/s/vi5cBz37BlztrtY/download',
+                    info_file_link = 'https://drive.switch.ch/index.php/s/lBJd2JfVrkmSSiN/download',
                     verbose = 1):
     """ Download and unzip pretrained model from the online repository
 
