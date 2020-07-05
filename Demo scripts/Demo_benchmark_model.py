@@ -5,7 +5,17 @@
 """
 Demo script to quantify out-of-dataset generalizaton for an already trained model:
   
-Documentation: to be improved
+The input of this script is an existing model. The output is the estimated performance
+of the model ('X') when applied to unseen data.
+
+To compute this estimate, models with all parameters identicial to model 'X' are trained,
+with all datasets except a single dataset, and then applied to the remaining dataset.
+For each model, correlation, error and bias will be computed.
+The distribution of these values is the estimate for performance on unseen datasets.
+
+Please be aware that this procedure involves training of many models (as many as datasets were
+used to train model 'X'), which can take a lot of time, also on computers equipped with good GPUs.
+
   
 """
 
@@ -20,7 +30,7 @@ Import python packages
 import os
 import shutil
 
-if 'Notebooks' in os.getcwd(): os.chdir('..')  # change to main directory
+if 'Demo scripts' in os.getcwd(): os.chdir('..')  # change to main directory
 print('Current directory: {}'.format( os.getcwd() ))
 
 import keras
@@ -43,7 +53,7 @@ Check which model to benchmark, and at which noise level
 
 """
 
-model_name =  'Universal_30Hz'
+model_name =  'Universal_30Hz_smoothing100ms'
 noise_level = 2
 
 

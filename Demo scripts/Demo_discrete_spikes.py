@@ -2,6 +2,21 @@
 # -*- coding: utf-8 -*-
 
 
+"""
+Demo script to convert spiking probabilities into discrete spikes.
+
+The input is a matrix (output of cascade predictions), the output are estimate
+discrete spike times. The main function is infer_discrete_spikes().
+
+The procedure is brute-force and not optimized for fast processing.
+
+Please be aware of the limitations of the prediction of single spikes, as 
+discussed in more detail in the paper.
+
+  
+"""
+
+
 
 """
 
@@ -10,7 +25,7 @@ Import python packages
 """
 
 import os
-if 'Notebooks' in os.getcwd(): os.chdir('..')  # change to main directory
+if 'Demo scripts' in os.getcwd(): os.chdir('..')  # change to main directory
 print('Current directory: {}'.format( os.getcwd() ))
 
 from cascade2p import checks
