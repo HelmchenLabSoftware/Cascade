@@ -1,15 +1,16 @@
-## CASCADE: Calibrated spike inference from calcium imaging data
+## Cascade: Calibrated spike inference from calcium imaging data
 
 ![Concept of supervised inference of spiking activity from calcium imaging data using deep networks](https://github.com/HelmchenLabSoftware/Calibrated-inference-of-spiking/blob/master/Figure%20concept.png)
 
 *Cascade* translates calcium imaging ΔF/F traces into spiking probabilities or discrete spikes.
 
-*Cascade* is described in detail in this preprint [link].
+*Cascade* is described in detail in this preprint [link will be posted when available!].
 
 *Cascade's* toolbox consists of
 
 - A large ground truth dataset spanning brain regions, calcium indicators, species
-- A deep network that learns a new model (calcium -> spike probability) for each condition and noise level
+- A deep network that is trained to predict spiking activity from calcium data
+- Procedures to resample the training ground truth such that noise levels and frame rates of calcium recordings are matched
 - A large set of pre-trained deep networks for various conditions
 - Tools to quantify the out-of-dataset generalization for a given model and noise level
 - A tool to transform spike probabilities into discrete spikes
@@ -20,39 +21,39 @@
 
 #### Without installation
 
-If you want to try out the algorithm, just open **this online Notebook [link]**. With the Notebook, you can apply the algorithm to some test datasets, or you can apply **pre-trained models** to **your own data**. No installation will be required since the entire algorithm runs in the cloud (Colaboratory Notebook hosted by Google servers). The entire Notebook is designed to be easily accessible also to researchers with little background in Python, but it is also the best starting point for experienced programmers. The Notebook also includes a comprehensive FAQ section. Try it out - **within less than 10 minutes**, you will have used the algorithm for the first time!
+If you want to try out the algorithm, just open **this online Notebook [link]**. With the Notebook, you can apply the algorithm to existing test datasets, or you can apply **pre-trained models** to **your own data**. No installation will be required since the entire algorithm runs in the cloud (Colaboratory Notebook hosted by Google servers). The entire Notebook is designed to be easily accessible for researchers with little background in Python, but it is also the best starting point for experienced programmers. The Notebook includes a comprehensive FAQ section. Try it out - within a couple of minutes, you can start using the algorithm!
 
 #### With a local installation
 
-If you want to modify the code, integrate the algorithm into your existing pipeline (e.g., with CaImAn or Suite2P), or train your own networks, an installation on your local machines is necessary. Important: Although *Cascade* is based on deep networks, **GPU-support is not necessary**, although it decreases processing time. Therefore, the installation is much easier than for deep learning-based toolboxes like DeepLabCut that require GPU-based processing.
+If you want to modify the code, if you want to integrate the algorithm into your existing pipeline (e.g., with CaImAn or Suite2P), or if you want to train your own networks, an installation on your local machine is necessary. Important: Although *Cascade* is based on deep networks, **GPU-support is not necessary**, it runs smoothly without (of course, GPUs speed up the processing). Therefore, the installation is much easier than for typical deep learning-based toolboxes that require GPU-based processing.
 
 We recommend the following installation procedure, but many other options are possible as well:
 
 1. Download / clone the repository to your local computer
 2. Install the Python environment Anaconda with Python 3 (https://www.anaconda.com/distribution/)
 3. Use the Anaconda prompt (Windows) or the console to navigate to the main folder where you downloaded *Cascade*
-4. Create a new Anaconda environment with the required packages: ``conda create -n Cascade python=3.6 keras numpy scipy matplotlib seaborn numpy ruamel.yaml``. It's as simple as that! Other versions of python will work as well.
+4. Create a new Anaconda environment with the required packages: ``conda create -n Cascade python=3.6 keras numpy scipy matplotlib seaborn numpy ruamel.yaml``. Other versions of python will work as well, we have mainly worked with Python 3.6 and 3.7.
 5. Activate the new environment using ``conda activate Cascade`` in Ubuntu and ``activate Cascade`` on Windows
-6. Use your editor of choice (e.g., Spyder or PyCharm) to get started with the demo files type ``spyder`` in the console after activating the environment, or use the Jupyter demo Notebooks by typing ``jupyter notebook``
+6. Use your editor of choice (e.g., Spyder or PyCharm) to get started with the demo files: type ``spyder`` in the console after activating the environment, or use the Jupyter demo Notebooks by typing ``jupyter notebook``.
 7. Now you're ready to process your data!
 
-If you have an existing Python environment, you can also look into the yaml-file and simply install the missing dependencies. If you are interested in training models from scratch and speed up processing in general, you should buy a dedicated GPU and install a GPU-based version of the deep learning framework. This procedure can be challenging for beginners. You will find instructions for that via Google, but a good starting point is the tutorial provided by [DeepLabCut](https://github.com/DeepLabCut/DeepLabCut/blob/master/docs/installation.md).
+If you have an existing Python environment, you can also simply install the missing dependencies. If you are interested in training models from scratch and speed up processing in general, you should use a dedicated GPU and install a GPU-based version of the deep learning framework (for the extensive analyses in the paper, we used a GeForce RTX 2080 Ti). This procedure can be challenging for beginners. You will find instructions for that via Google search, but a good starting point is the tutorial provided by [DeepLabCut](https://github.com/DeepLabCut/DeepLabCut/blob/master/docs/installation.md).
 
 
 ## Typical work flow
 
-The average user will only use pretrained models to produce predictions for his/her own data, and the Colaboratory Notebook should in most cases be sufficient. The description of the complete work flow is, however, helpful to understand what the algorithm does.
+The average user will only use pretrained models to produce predictions for his/her own data, and the Colaboratory Notebook should in most cases be sufficient. The description of the complete work flow (below) is, however, helpful to understand what the algorithm does.
 
 
-**(Optional) Train a model with ground truth**
+**Train a model with ground truth (optional)**
 
 This section can be reproduced with the ``Demo_train.py`` file.
 
 The user specifies the properties of the model: the sampling rate of the calcium imaging data, the ground truth datasets used for training, the range of noise levels, the smoothing of the ground truth and whether a causal kernel is used. For an explanation what the last two adjustments mean, please read the FAQ below.
 
-Then, a folder is created for the model, where the configuration parameters of the model and the trained deep networks are saved.
+Then, a folder is created, where the configuration parameters of the model and the trained deep networks are stored.
 
-Finally, the true training is started with ``cascade.train_model( model_name )``. For each noise level, the algorithm resamples the indicated ground truth datasets such that it matches the target noise level and imaging rate. The resampled ground truth is then used to train the deep network, and the trained network is saved onto disk. For each noise level, several models are trained to create more robust predictions (ensemble approach).
+Finally, the real training procedure is started with ``cascade.train_model( model_name )``. For each noise level, the algorithm resamples the indicated ground truth datasets such that the resampled ground truth matches the target noise level and imaging rate. The resampled ground truth is then used to train the deep network, and the trained network is saved to disk. For each noise level, several models are trained to create more robust predictions (ensemble approach).
 
 **Make predictions with your data**
 
@@ -66,23 +67,23 @@ Now, the user indicates the model of the (already trained) model and performs th
 
 Finally, the predictions are saved to disk.
 
-**(Optional) Convert to discrete spikes**
+**Convert to discrete spikes (optional)**
 
 This section can be reproduced with the ``Demo_discrete_spikes.py`` file.
 
 In this section, the output from the previous step (``spike_rates``) is loaded from disk. Single spikes are fitted into the smooth probabilities such that the most likely spike sequence is recovered. For optimal fitting, the parameters of the model used for spike predictions has to be loaded as well (``model_name``). The result of the procedure are spike times. They are given with the same temporal precision as the sampling rate of the calcium recording.
 
-We do not recommend discrete spike predictions except for outstanding high-quality recordings and refer to the FAQ and the paper (Fig. SXX) for a discussion. However, discrete spikes are powerful illustrations that remind us that action potentials are discrete events.
+We do not recommend discrete spike predictions except for outstanding high-quality recordings and refer to the FAQ and the paper ([link will be posted when available!], Fig. S19XX) for a discussion.
 
-**(Optional) Quantify expected performance of the model**
+**Quantify expected performance of the model (optional)**
 
 This section can be reproduced with the ``Demo_benchmark_model.py`` file.
 
-To understand how good predictions are, it is important to quantify the performance of a given trained model. As discussed in depth in the paper [link], this is best measured by quantifying the performance when training the deep network on all except one ground truth dataset and test it on the held-out dataset.
+To understand how good predictions are, it is important to quantify the performance of a given trained model. As discussed in depth in the paper [link will be posted when available!], this is best measured by quantifying the performance when training the deep network on all except one ground truth dataset and test it on the held-out dataset.
 
 To do this systematically, a lot of training and testing needs to performed, and we do not recommend this procedure for CPU-only installations.
 
-The input of this step is the model (``model_name``), while the output is a set of metrics (correlation, error, bias; compare the paper) that quantify the expected performance of the algorithm when applied to unseen datasets.
+The input of this step is the model (``model_name``), while the output is a set of metrics (correlation, error, bias; see the paper for discussion and details) that quantify the expected performance of the algorithm when applied to unseen datasets.
 
 ## Under the hood
 
@@ -90,11 +91,11 @@ If you want to understand how the code works, you will be surprised how simple t
 
 All main functions are described in the ``cascade2p/cascade.py`` file, including the functions ``cascade.train()`` and ``cascade.predict()``.
 
-Some helper functions to load the ground truth data for training (which is a bit more challenging due to the initial diversity of ground truth datasets) and to plot results are contained in the ``cascade2p/utils.py`` file. In addition, this file also contains the definition of the deep network ``define_model()``, which is only a few lines. If you want to use a different architecture for training (see Fig. SXX in the paper), it is very simple to modify or replace.
+Some helper functions to load the ground truth data for training (which is a bit more challenging due to the initial diversity of ground truth datasets) and to plot results are contained in the ``cascade2p/utils.py`` file. In addition, this file also contains the definition of the deep network ``define_model()``, which is only a few lines. If you want to use a different architecture for training (see Fig. S16 in the paper [link will be posted when available!]), it is very simple to modify or replace.
 
 Functions used to convert spiking probabilities into discrete spikes can be found in the file ``cascade/utils_discrete_spikes.py``. 
 
-The ``cascade/config.py`` contains the default model parameters. Fig. SXX shows that changing those parameters does not greatly affect the prediction quality, such that the user does not need to change any of the hyper-parameters.
+The ``cascade/config.py`` contains the default model parameters. Fig. S15 ([link will be posted when available!]) shows that changing those parameters does not greatly affect the prediction quality, such that the user does not need to change any of the hyper-parameters.
 
 The folder ``Ground_truth`` contains all ground truth datasets. The folder also contains a Matlab script and a Python script which can be used to explore the ground truth data. Highly recommended, it's very interesting!
 
