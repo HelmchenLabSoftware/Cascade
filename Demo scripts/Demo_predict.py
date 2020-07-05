@@ -24,7 +24,7 @@ Import python packages
 """
 
 import os
-if 'Notebooks' in os.getcwd(): os.chdir('..')  # change to main directory
+if 'Demo scripts' in os.getcwd(): os.chdir('..')  # change to main directory
 print('Current directory: {}'.format( os.getcwd() ))
 
 from cascade2p import checks
@@ -61,7 +61,7 @@ def load_neurons_x_time(file_path):
     
     traces = sio.loadmat(file_path)['dF_traces'] 
     
-    return traces.T/100
+    return traces/100
   
 
 
