@@ -206,7 +206,7 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 
 #### I would like to look at the ground truth data.
 
-> We actually recommend this to anybody who is doing calcium imaging at cellular resolution. Looking at the ground truth data of simultaneous calcium and juxtacellular recording is very enlightening. In the Github repository](https://github.com/HelmchenLabSoftware/Cascade), you will find scripts both for Python and Matlab to conveniently visualize ground truth recordings. Just download the Github repository and use the scripts in Matlab or Python (**to be done**).
+> We actually recommend this to anybody who is doing calcium imaging at cellular resolution. Looking at the ground truth data of simultaneous calcium and juxtacellular recording is very enlightening. In the [Github repository](https://github.com/HelmchenLabSoftware/Cascade), you will find scripts both for Python and Matlab to conveniently visualize ground truth recordings. Just download the Github repository and use the scripts in Matlab or Python (**to be done**).
 
 
 
