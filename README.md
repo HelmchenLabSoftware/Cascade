@@ -4,11 +4,11 @@
 
 *Cascade* translates calcium imaging ΔF/F traces into spiking probabilities or discrete spikes.
 
-*Cascade* is described in detail in this preprint [link will be posted when available!].
+*Cascade* is described in detail in **this preprint [link will be posted when available!]**.
 
 *Cascade's* toolbox consists of
 
-- A large ground truth dataset spanning brain regions, calcium indicators, species
+- A large ground truth database spanning brain regions, calcium indicators, species
 - A deep network that is trained to predict spiking activity from calcium data
 - Procedures to resample the training ground truth such that noise levels and frame rates of calcium recordings are matched
 - A large set of pre-trained deep networks for various conditions
@@ -132,15 +132,15 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 
 #### How precise and good are my predictions? 
 
->This depends mainly on the **shot noise level** of your dataset. If you want to compute how good the chosen model generalizes to unseen data for a given noise level, check out the Github repository and use the demo script XYZ.
+>This depends mainly on the **shot noise level** of your dataset. If you want to compute how good the chosen model generalizes to unseen data for a given noise level, check out the Github repository and use [the demo script](https://github.com/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Demo_benchmark_model.py) which computes the performance of a given model.
 >
->If you want to get a good idea about the quality of predictions, check out **Figures 3 and 4**, as well as the corresponding supplementary figures in the paper/preprint [link].
+>If you want to get a good idea about the quality of predictions, check out **Figures 3 and 4**, as well as the corresponding supplementary figures in the paper/preprint [link will be made available when online!].
 
 #### Why is the output of the algorithm a probability, why not discrete spikes?
 
 >Good question! We think that providing spike times instead of spiking probabilities is misleading, since it suggests a false precision and certainty of the spiking estimates. In addition, we found (**Fig. SXX** in the preprint) that single-spike precision could not achieved with any of the ground truth datasets.
 >
->However, for some cases, discrete spikes still might be a good approach. We provide a Python function that converts the spiking probability into discrete spikes (**demo_XXX** on Github).
+>However, for some cases, discrete spikes still might be a good approach. We provide a Python function that converts the spiking probability into discrete spikes (**[demo](https://github.com/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Demo_discrete_spikes.py)** on Github).
 
 
 #### Why are the first and last datapoints of the predictions NaNs?
@@ -150,7 +150,7 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 
 #### I get a certain noise level for my recordings. What is good or bad?
 
->For an illustration of different noise levels, check out Fig. SXX in the preprint. To give an example, the Allen Brain Observatory Visual Coding dataset is of very high imaging quality, with noise levels around **1, which is very good** (unit is percent x sqrt(seconds)). A noise level of **3-4 is still decent**, especially for population imaging with many neurons. Noise levels **above 5 indicates rather poor signal** levels. For a definition of the noise level, check out the Methods of the preprint.
+>For an illustration of different noise levels, check out Fig. SXX in the preprint. To give an example, the Allen Brain Observatory Visual Coding dataset is of very high imaging quality, with noise levels around **1, which is very good** (unit is percent / sqrt(seconds)). A noise level of **3-4 is still decent**, especially for population imaging with many neurons. Noise levels **above 5 indicates rather poor signal** levels. For a definition of the noise level, check out the Methods section of the preprint.
 >
 >However, even for excellent shot noise levels, the recording quality can be bad due to bad imaging resolution, **neuropil contamination** and, most importantly, **movement artifacts**. See Fig. S10 in the preprint and the associated text as well as the Discussion for more details .
 
@@ -183,7 +183,7 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 
 > First of all, is this really true? For example, if you have recorded at 30.5 Hz, you can also use a model trained at 30 Hz imaging rates. A deviation by less than 5\% of the imaging rate is totally okay in our experience!
 >
-> If however you want to use an entirely different model, for example a model trained at a sampling rate of 2 Hz, or a model only trained with a specific ground truth dataset, you have two options. 1) You go to the [Github page](https://github.com/HelmchenLabSoftware/Calibrated-inference-of-spiking) and follow the instructions on how to train you own model. This can be done even without GPU-support, but it will take some time (on the other hand, you only have to do this once). 2) You contact us via [e-Mail](p.t.r.rupprecht+cascade@gmail.com) and tell us what kind of model you would like to have. We will train it for you and upload it to our repository. Not only you, but everybody will then be able to use it further on.
+> If however you want to use an entirely different model, for example a model trained at a sampling rate of 2 Hz, or a model only trained with a specific ground truth dataset, you have two options. 1) You go to the [Github page](https://github.com/HelmchenLabSoftware/Cascade) and follow the instructions on how to train you own model. This can be done even without GPU-support, but it will take some time (on the other hand, you only have to do this once). 2) You contact us via [e-Mail](p.t.r.rupprecht+cascade@gmail.com) and tell us what kind of model you would like to have. We will train it for you and upload it to our repository. Not only you, but everybody will then be able to use it further on.
 
 
 
@@ -191,7 +191,7 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 
 > You have two options.
 >
-> Either you process the data yourself. You can inspect the ground truth datasets, which consist of Matlab structs saved as a file for each neuron from the [ground truth](https://github.com/HelmchenLabSoftware/Calibrated-inference-of-spiking/tree/master/Ground_truth). If you process your ground truth recordings into the same format, you can use it as a training set and train the model yourself. All instructions are indicated at the Github repository.
+> Either you process the data yourself. You can inspect the ground truth datasets, which consist of Matlab structs saved as a file for each neuron from the [ground truth](https://github.com/HelmchenLabSoftware/Cascade/Ground_truth). If you process your ground truth recordings into the same format, you can use it as a training set and train the model yourself. All instructions are indicated at the Github repository.
 >
 > Or you can contact us, and we help to process your dataset if it meets certain quality standards. We can process raw calcium and ephys recordings, but of course extracted dF/F traces and spike times would be even better. Yes, we will do the work for you. But only under the condition that the processed dataset will then be integrated into the published set of ground truth datasets, where it is openly accessible to everybody. Please get in touch with us to discuss options on how to get credit for the recording of the dataset, which we will discussed case by case.
 
@@ -202,16 +202,16 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 
 #### Can I use the algorithm also locally, *e.g.*, within [CaImAn](https://github.com/flatironinstitute/CaImAn), or in my own pipeline?
 
-> Sure! We have done this ourselves with CaImAn and our custom analysis pipelines. Your starting point to do this will not be this Colaboratory Notebook, but rather the [Github repository](https://github.com/HelmchenLabSoftware/Calibrated-inference-of-spiking). Check out the demo scripts. They are very easy to understand and will show you which functions you have to use and how. If you have successfully used this Colaboratory Notebook, understanding the demo scripts will be a piece of cake.
+> Sure! We have done this ourselves with CaImAn and our custom analysis pipelines. Your starting point to do this will not be this Colaboratory Notebook, but rather the [Github repository](https://github.com/HelmchenLabSoftware/Cascade). Check out the demo scripts. They are very easy to understand and will show you which functions you have to use and how. If you have successfully used this Colaboratory Notebook, understanding the demo scripts will be a piece of cake.
 
 #### I would like to look at the ground truth data.
 
-> We actually recommend this to anybody who is doing calcium imaging at cellular resolution. Looking at the ground truth data of simultaneous calcium and juxtacellular recording is very enlightening. In the Github repository](https://github.com/HelmchenLabSoftware/Calibrated-inference-of-spiking), you will find scripts both for Python and Matlab to conveniently visualize ground truth recordings. Just download the Github repository and use the scripts in Matlab or Python (to be done XYZ).
+> We actually recommend this to anybody who is doing calcium imaging at cellular resolution. Looking at the ground truth data of simultaneous calcium and juxtacellular recording is very enlightening. In the Github repository](https://github.com/HelmchenLabSoftware/Cascade), you will find scripts both for Python and Matlab to conveniently visualize ground truth recordings. Just download the Github repository and use the scripts in Matlab or Python (**to be done**).
 
 
 
 
 #### Which reference should I cite?
 
-> Please cite the preprint [link] as a reference.
+> Please cite the preprint [link will be posted when the preprint is online!] as a reference.
 
