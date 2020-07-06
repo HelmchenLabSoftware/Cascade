@@ -51,7 +51,7 @@ def load_neurons_x_time(file_path):
     
     traces = sio.loadmat(file_path)['dF_traces'] 
     
-    return traces.T/100
+    return traces/100
 
 def load_predictions(file_path):
     """Custom method to load spike predictions produced by "Demo_predict.py" """
@@ -70,7 +70,7 @@ Load dF/F traces and the parameters of the model/dataset
 
 example_file = 'Example_datasets/Multiplane-OGB1-zf-pDp-Rupprecht-7.5Hz/Calcium_traces_04.mat'
 example_file_predictions = 'Example_datasets/Multiplane-OGB1-zf-pDp-Rupprecht-7.5Hz/full_prediction_Calcium_traces_04.mat'
-model_name = 'OGB_zf_pDp_7.5Hz'
+model_name = 'OGB_zf_pDp_7.5Hz_smoothing200ms'
 frame_rate = 7.5
 
 traces = load_neurons_x_time(example_file)
