@@ -21,7 +21,7 @@
 
 #### Without installation
 
-If you want to try out the algorithm, just open **this online Notebook [link will be posted when available!]**. With the Notebook, you can apply the algorithm to existing test datasets, or you can apply **pre-trained models** to **your own data**. No installation will be required since the entire algorithm runs in the cloud (Colaboratory Notebook hosted by Google servers). The entire Notebook is designed to be easily accessible for researchers with little background in Python, but it is also the best starting point for experienced programmers. The Notebook includes a comprehensive FAQ section. Try it out - within a couple of minutes, you can start using the algorithm!
+If you want to try out the algorithm, just open **[this online Notebook](https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Calibrated_spike_inference_with_Cascade.ipynb)**. With the Notebook, you can apply the algorithm to existing test datasets, or you can apply **pre-trained models** to **your own data**. No installation will be required since the entire algorithm runs in the cloud (Colaboratory Notebook hosted by Google servers). The entire Notebook is designed to be easily accessible for researchers with little background in Python, but it is also the best starting point for experienced programmers. The Notebook includes a comprehensive FAQ section. Try it out - within a couple of minutes, you can start using the algorithm!
 
 #### With a local installation
 
@@ -42,7 +42,7 @@ If you have an existing Python environment, you can also try simply installing t
 
 ## Typical work flow
 
-The average user will only use pretrained models to produce predictions for his/her own data, and the Colaboratory Notebook should in most cases be sufficient. The description of the complete work flow (below) is, however, helpful to understand what the algorithm does.
+The average user will only use pretrained models to produce predictions for his/her own data, and the [Colaboratory Notebook](https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Calibrated_spike_inference_with_Cascade.ipynb) should in most cases be sufficient. The description of the complete work flow (below) is, however, helpful to understand what the algorithm does.
 
 
 **Train a model with ground truth (optional)**
