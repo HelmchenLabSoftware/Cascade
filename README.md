@@ -32,12 +32,22 @@ We recommend the following installation procedure, but many other options are po
 1. Download / clone the repository to your local computer
 2. Install the Python environment Anaconda with Python 3 (https://www.anaconda.com/distribution/)
 3. Use the Anaconda prompt (Windows) or the console to navigate to the main folder where you downloaded *Cascade*
-4. Create a new Anaconda environment with the required packages: ``conda create -n Cascade python=3.6 tensorflow==2.1.0 keras==2.3.1 numpy scipy matplotlib seaborn numpy ruamel.yaml spyder``. Other versions of python will work as well, we have mainly worked with Python 3.6 and 3.7.
+4. Create a new Anaconda environment with the required packages: ``conda create -n Cascade python=3.6 tensorflow==2.1.0 keras==2.3.1 numpy scipy matplotlib seaborn ruamel.yaml spyder``. Other versions of python will work as well, we have mainly worked with Python 3.6 and 3.7.
 5. Activate the new environment using ``conda activate Cascade`` in Ubuntu and ``activate Cascade`` on Windows
 6. Use your editor of choice (e.g., Spyder or PyCharm) to get started with the demo files: type ``spyder`` in the console after activating the environment.<br> If you want to use the Jupyter demo Notebooks, you have to install ipython via ``pip install ipython ipykernel`` and make it visible in the new environment via ``python -m ipykernel install --user --name Cascade``. Then start the Jupyter notebook in the browser from the activated environment via ``jupyter notebook``, and do not forget to select the environment in the menu (Kernel -> Change Kernel -> Cascade). If you encounter problems, the internet is your friend (for example,e [here](https://stackoverflow.com/questions/58068818/how-to-use-jupyter-notebooks-in-a-conda-environment))
 7. Now you're ready to process your data on your local computer!
 
 If you have an existing Python environment, you can also try simply installing the missing dependencies. If you are interested in training models from scratch and speed up processing in general, you should use a dedicated GPU and install a GPU-based version of the deep learning framework (for the extensive analyses in the paper, we used a GeForce RTX 2080 Ti). This procedure can be challenging for beginners. You will find instructions for that via Google search, but a good starting point is the tutorial provided by [DeepLabCut](https://github.com/DeepLabCut/DeepLabCut/blob/master/docs/installation.md).
+
+#### Local installation - macOS
+
+On macOS there is an issue with the Tensorflow build provided by Conda (see https://stackoverflow.com/questions/53014306/error-15-initializing-libiomp5-dylib-but-found-libiomp5-dylib-already-initial ). There are several workarounds, but it seems to be most reliable to install Tensorflow and Keras using `pip`. To do so, follow these steps:
+1. Create a new Anaconda environment with required base packages: `conda env create -f environment_mac.yml`
+2. Activate the environment: `conda activate Cascade`
+3. Install Tensorflow / Keras: `pip install -r requirements_mac.txt`
+4. If you want to use the Jupyter demo Notebooks, make the new environment visible in Jupyter: `ipython kernel install --user --name=Cascade`
+
+This recipe has been tested on macOS 10.15 (Catalina).
 
 
 ## Typical work flow
