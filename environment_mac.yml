@@ -1,6 +1,7 @@
 name: Cascade
 channels:
   - default
+  - nodefaults
 dependencies:
   - python=3.7
   - seaborn
