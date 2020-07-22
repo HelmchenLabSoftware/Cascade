@@ -6,3 +6,4 @@ dependencies:
   - seaborn
   - ruamel.yaml
   - jupyter
+  - spyder
