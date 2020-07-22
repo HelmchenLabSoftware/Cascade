@@ -39,6 +39,16 @@ We recommend the following installation procedure, but many other options are po
 
 If you have an existing Python environment, you can also try simply installing the missing dependencies. If you are interested in training models from scratch and speed up processing in general, you should use a dedicated GPU and install a GPU-based version of the deep learning framework (for the extensive analyses in the paper, we used a GeForce RTX 2080 Ti). This procedure can be challenging for beginners. You will find instructions for that via Google search, but a good starting point is the tutorial provided by [DeepLabCut](https://github.com/DeepLabCut/DeepLabCut/blob/master/docs/installation.md).
 
+#### Local installation - macOS
+
+On macOS there is an issue with the Tensorflow build provided by Conda (see https://stackoverflow.com/questions/53014306/error-15-initializing-libiomp5-dylib-but-found-libiomp5-dylib-already-initial ). There are several workarounds, but it seems to be most reliable to install Tensorflow and Keras using `pip`. To do so, follow these steps:
+1. Create a new Anaconda environment with required base packages: `conda env create -f environment_mac.yml`
+2. Activate the environment: `conda activate Cascade`
+3. Install Tensorflow / Keras: `pip install -r requirements_mac.txt`
+4. If you want to use the Jupyter demo Notebooks, make the new environment visible in Jupyter: `ipython kernel install --user --name=Cascade`
+
+This recipe has been tested on macOS 10.15 (Catalina).
+
 
 ## Typical work flow
 
