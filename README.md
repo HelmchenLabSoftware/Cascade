@@ -23,7 +23,7 @@
 
 If you want to try out the algorithm, just open **[this online Notebook](https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Calibrated_spike_inference_with_Cascade.ipynb)**. With the Notebook, you can apply the algorithm to existing test datasets, or you can apply **pre-trained models** to **your own data**. No installation will be required since the entire algorithm runs in the cloud (Colaboratory Notebook hosted by Google servers; a Google account is required). The entire Notebook is designed to be easily accessible for researchers with little background in Python, but it is also the best starting point for experienced programmers. The Notebook includes a comprehensive FAQ section. Try it out - within a couple of minutes, you can start using the algorithm!
 
-#### With a local installation
+#### With a local installation (Ubuntu/Windows)
 
 If you want to modify the code, if you want to integrate the algorithm into your existing pipeline (e.g., with CaImAn or Suite2P), or if you want to train your own networks, an installation on your local machine is necessary. Important: Although *Cascade* is based on deep networks, **GPU-support is not necessary**, it runs smoothly without (of course, GPUs speed up the processing). Therefore, the installation is much easier than for typical deep learning-based toolboxes that require GPU-based processing.
 
@@ -39,7 +39,7 @@ We recommend the following installation procedure, but many other options are po
 
 If you have an existing Python environment, you can also try simply installing the missing dependencies. If you are interested in training models from scratch and speed up processing in general, you should use a dedicated GPU and install a GPU-based version of the deep learning framework (for the extensive analyses in the paper, we used a GeForce RTX 2080 Ti). This procedure can be challenging for beginners. You will find instructions for that via Google search, but a good starting point is the tutorial provided by [DeepLabCut](https://github.com/DeepLabCut/DeepLabCut/blob/master/docs/installation.md).
 
-#### Local installation - macOS
+#### With a local installation (macOS)
 
 On macOS there is an issue with the Tensorflow build provided by Conda (see https://stackoverflow.com/questions/53014306/error-15-initializing-libiomp5-dylib-but-found-libiomp5-dylib-already-initial ). There are several workarounds, but it seems to be most reliable to install Tensorflow and Keras using `pip`. To do so, follow these steps:
 1. Create a new Anaconda environment with required base packages: `conda env create -f environment_mac.yml`
