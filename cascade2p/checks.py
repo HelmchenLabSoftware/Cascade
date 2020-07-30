@@ -18,8 +18,7 @@ def check_yaml():
     except ModuleNotFoundError:
         print('\nModuleNotFoundError: The package "ruamel.yaml" does not seem to be installed on this PC.',
               'This package is necessary to load the configuration files of the models.\n',
-              'Please install it following the instructions of the installation jupyter notebook "installation.ipynb"',
-              'or install it directly with "pip install ruamel.yaml"')
+              'Please install it with "pip install ruamel.yaml"')
         return
 
     print('\tYAML reader installed (version {}).'.format(ruamel.yaml.__version__))
@@ -30,15 +29,15 @@ def check_keras_version():
         import keras
     except ModuleNotFoundError:
         print('\nModuleNotFoundError: The package "keras" does not seem to be installed on this PC.',
-              'It is not possible to train models without keras.\n',
-              'Please install keras by following the instructions of the installation jupyter notebook "installation.ipynb"')
+              'It is not possible to train models or predict neural activity without keras.\n',
+              'Please install keras with "pip install keras==2.3.1".')
         return
 
     try:
         import tensorflow
     except ModuleNotFoundError:
         print('ModuleNotFoundError: The package "tensorflow" does not seem to be installed on this PC.',
-              'Please install tensorflow by following the instructions of the installation jupyter notebook "installation.ipynb"')
+              'Please install tensorflow with "pip install tensorflow==2.1.0".')
         return
 
     print('\tKeras installed (version {}).'.format(keras.__version__) )
