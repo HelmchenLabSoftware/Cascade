@@ -205,11 +205,12 @@ def predict( model_name, traces, model_folder='Pretrained_models', threshold=0, 
         Absolute or relative path, which defines the location of the specified model_name folder
         Default value 'Pretrained_models' assumes a current working directory in the Cascade folder
 
-    threshold : int
-        Allowed values: 0 or 1
+    threshold : int or boolean
+        Allowed values: 0, 1 or False
             0: All negative values are set to 0
-            1: Threshold signal to set every signal which is smaller than the expected signal size of an action potential
-               to zero (with dialated mask)
+            1 or True: Threshold signal to set every signal which is smaller than the expected signal size
+                       of an action potential to zero (with dialated mask)
+            False: No thresholding. The result can contain negative values as well
 
     padding : 0 or np.nan
         Value which is inserted for datapoints, where no prediction can be made (because of window around timepoint of prediction)
@@ -319,8 +320,12 @@ def predict( model_name, traces, model_folder='Pretrained_models', threshold=0, 
         # remove models from memory
         keras.backend.clear_session()
 
-    # Cut off noise floor (lower than 1/e of a single action potential);
-    if threshold:
+
+    if threshold is False:  # only if 'False' is passed as argument
+        if verbose: print('Skipping the thresholding. There can be negative values in the result.')
+
+    elif threshold == 1:     # (1 or True)
+      # Cut off noise floor (lower than 1/e of a single action potential)
 
       from scipy.ndimage.filters import gaussian_filter
       from scipy.ndimage.morphology import binary_dilation
@@ -340,12 +345,16 @@ def predict( model_name, traces, model_folder='Pretrained_models', threshold=0, 
         activity_mask = binary_dilation(activity_mask,iterations = int(smoothing*sampling_rate))
 
         Y_predict[neuron,~activity_mask] = 0
-        
+
         Y_predict[Y_predict<0] = 0  # set possible negative values in dilated mask to 0
-    else:
+
+    elif threshold == 0:
       # ignore warning because of nan's in Y_predict in comparison with value
       with np.errstate(invalid='ignore'):
           Y_predict[Y_predict<0] = 0
+
+    else:
+        raise Exception('Invalid value of threshold "{}". Only 0, 1 (or True) or False allowed'.format(threshold))
 
     # NaN or 0 for first and last datapoints, for which no predictions can be made
     Y_predict[:,0:int(before_frac*window_size)] = padding
