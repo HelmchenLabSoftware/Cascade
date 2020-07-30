@@ -1,6 +1,4 @@
 
-# if this results in an error, install the package with: pip install ruamel.yaml
-import ruamel.yaml as yaml   # install the package with: pip install ruamel.yaml
 import os
 
 config_template = """\
@@ -80,6 +78,8 @@ verbose : 1                      # level of status messages (0: minimal, 1: stan
 
 def read_config(config_yaml_file):
     """Read given yaml file and return dictionary with entries"""
+    # if this results in an error, install the package with: pip install ruamel.yaml
+    import ruamel.yaml as yaml   # install the package with: pip install ruamel.yaml
 
     # TODO: add handling of file not found error
 
@@ -92,6 +92,9 @@ def read_config(config_yaml_file):
 
 def write_config(config_dict, save_file):
     """Write config file from dictionary, use config_template string to define file structure"""
+
+    # if this results in an error, install the package with: pip install ruamel.yaml
+    import ruamel.yaml as yaml   # install the package with: pip install ruamel.yaml
 
     # TODO: some error handling in case of missing default values?
 
