@@ -645,3 +645,94 @@ def plot_noise_level_distribution(traces,frame_rate):
   plt.title('Histogram of noise levels across neurons')
 
   return noise_levels
+
+
+def load_recordings_from_file(file_path):
+    """ Load all recordings from a given file into list of dictionaries
+
+    Parameters
+    ----------
+    file_path : str
+        Absolute or relative path to the recorded ground truth file (*.mat)
+
+    Returns
+    --------
+    recording_list: list of dictionaries
+        List of recordings for given file
+        Each recording is a dictionary with 't', 'dff', 'spikes', 'frame_rate' as keys
+        'spikes' are the spike times in seconds, aligned to the time 't' and fluorescence 'dff'
+    """
+
+    data = sio.loadmat(file_path)['CAttached'][0]
+
+    recording_list = list()
+
+    for i,trial in enumerate(data):
+
+        keys = trial[0][0].dtype.descr
+        keys_unfolded = list(sum(keys, ()))
+
+        traces_index = int(keys_unfolded.index("fluo_mean")/2)
+        fluo_time_index = int(keys_unfolded.index("fluo_time")/2)
+        events_index = int(keys_unfolded.index("events_AP")/2)
+
+        # spikes
+        events = trial[0][0][events_index]
+        events = events[~np.isnan(events)] # exclude NaN entries for the Theis et al. data sets
+        ephys_sampling_rate = 1e4
+        event_time = events/ephys_sampling_rate
+
+        # fluorescence
+        fluo_times = np.squeeze(trial[0][0][fluo_time_index])
+        fluo_times = fluo_times[~np.isnan(fluo_times)]
+        frame_rate = 1/np.mean(np.diff(fluo_times))
+
+        traces_mean = np.squeeze(trial[0][0][traces_index])
+        traces_mean = traces_mean[:fluo_times.shape[0]]
+        traces_mean = traces_mean[~np.isnan(fluo_times)]
+
+
+        recording_list.append( dict(dff=traces_mean, t=fluo_times, spikes=event_time, frame_rate=frame_rate))
+
+    return recording_list
+
+
+def load_all_ground_truth(ground_truth_folder='Ground_truth'):
+    """ Load all ground truth datasets (fluorescence + spikes) without resampling
+
+    Parameters
+    ----------
+    ground_truth_folder : str
+        Absolute or relative path, which defines the location of the ground truth datasets
+        Default value 'Ground_truth'  assumes a current working directory in the Cascade folder
+
+    Returns
+    --------
+    dataset_dict: Dictionary
+        The keys of the dictionary are the names of the datasets (same as folder)
+        Each datasets contains a list with all recordings, combined from all files
+        Each recording is a dictionary with 't', 'dff', 'spikes', 'frame_rate' as keys
+        spikes are the spike times in seconds, aligned to the time 't' and fluorescence 'dff'
+    """
+
+    datasets = glob.glob( os.path.join( ground_truth_folder, '*'))
+
+    dataset_dict = dict()
+
+    for dataset in datasets:
+        files = glob.glob( os.path.join( dataset, '*'))
+        dataset_list = list()
+
+        for i, file in enumerate(files):
+            try:
+                dataset_list.extend( load_recordings_from_file(file) )
+            except:
+                pass
+                # TODO Peter: check for the problem in these two files:
+                #             Problem loading file 1 from Ground_truth/DS02-Cal520-m-S1
+                #             Problem loading file 9 from Ground_truth/DS10-GCaMP6f-m-V1-neuropil-corrected
+                #print('Problem loading file {} from {}'.format(i+1, dataset))
+
+        dataset_dict[os.path.basename(dataset)] = dataset_list
+
+    return dataset_dict
