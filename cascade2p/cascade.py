@@ -340,7 +340,8 @@ def predict( model_name, traces, model_folder='Pretrained_models', threshold=0, 
         activity_mask = binary_dilation(activity_mask,iterations = int(smoothing*sampling_rate))
 
         Y_predict[neuron,~activity_mask] = 0
-
+        
+        Y_predict[Y_predict<0] = 0  # set possible negative values in dilated mask to 0
     else:
       # ignore warning because of nan's in Y_predict in comparison with value
       with np.errstate(invalid='ignore'):
