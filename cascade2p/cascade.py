@@ -334,15 +334,17 @@ def predict( model_name, traces, model_folder='Pretrained_models', threshold=0, 
       # Set everything below threshold to zero.
       # Use binary dilation to avoid clipping of true events.
       for neuron in range(Y_predict.shape[0]):
-
-        activity_mask = Y_predict[neuron,:] > threshold_value
+        # ignore warning because of nan's in Y_predict in comparison with value
+        with np.errstate(invalid='ignore'):
+            activity_mask = Y_predict[neuron,:] > threshold_value
         activity_mask = binary_dilation(activity_mask,iterations = int(smoothing*sampling_rate))
 
         Y_predict[neuron,~activity_mask] = 0
 
     else:
-
-      Y_predict[Y_predict<0] = 0
+      # ignore warning because of nan's in Y_predict in comparison with value
+      with np.errstate(invalid='ignore'):
+          Y_predict[Y_predict<0] = 0
 
     # NaN or 0 for first and last datapoints, for which no predictions can be made
     Y_predict[:,0:int(before_frac*window_size)] = padding
