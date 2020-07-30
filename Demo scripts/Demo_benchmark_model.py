@@ -4,7 +4,7 @@
 
 """
 Demo script to quantify out-of-dataset generalizaton for an already trained model:
-  
+
 The input of this script is an existing model. The output is the estimated performance
 of the model ('X') when applied to unseen data.
 
@@ -16,7 +16,7 @@ The distribution of these values is the estimate for performance on unseen datas
 Please be aware that this procedure involves training of many models (as many as datasets were
 used to train model 'X'), which can take a lot of time, also on computers equipped with good GPUs.
 
-  
+
 """
 
 
@@ -30,7 +30,9 @@ Import python packages
 import os
 import shutil
 
-if 'Demo scripts' in os.getcwd(): os.chdir('..')  # change to main directory
+if 'Demo scripts' in os.getcwd():
+    sys.path.append( os.path.abspath('..') ) # add parent directory to path for imports
+    os.chdir('..')  # change to main directory
 print('Current directory: {}'.format( os.getcwd() ))
 
 import keras
@@ -99,21 +101,21 @@ for index in len(all_training_datasets):
 
   training_datasets = deepcopy(all_training_datasets)
   test_dataset = training_datasets.pop(index);
-  
+
   cfg['training_datasets'] = training_datasets
   cfg['model_name'] = 'temporary model'
   cfg['noise_levels'] = [noise_level]
-  
-  
+
+
   cascade.create_model_folder( cfg )
-  
+
   cascade.train_model( cfg['model_name'])
-  
-  
-  
+
+
+
   # extract values from config file into variables
   test_dataset = [os.path.join('Ground_truth', ds) for ds in [test_dataset]]
-  
+
   # test model with the one remaining test_dataset
   calcium, ground_truth = utils.preprocess_groundtruth_artificial_noise_balanced(
                               ground_truth_folders = test_dataset,
@@ -129,11 +131,11 @@ for index in len(all_training_datasets):
                               replicas = 0)
   calcium = calcium[:,32,]
   ground_truth = ground_truth[:,]
-  
+
   # perform predictions
   spike_rates = cascade.predict( model_name, calcium.T )
   spike_rates = np.squeeze(spike_rates)
-  
+
   # take only non-nan values
   nnan_ix = ~np.isnan(spike_rates)
   ground_truth = ground_truth[nnan_ix]
@@ -151,7 +153,7 @@ for index in len(all_training_datasets):
 
   error.append(error_total/signal)
   bias.append((error_pos+error_neg)/signal)
-  correlation.append(np.corrcoef(ground_truth,spike_rates,rowvar=False)[0,1]) 
+  correlation.append(np.corrcoef(ground_truth,spike_rates,rowvar=False)[0,1])
 
   # delete temporary model from disk
   model_path = os.path.join('Pretrained_models', cfg['model_name'])
@@ -169,5 +171,3 @@ Results
 m_correlation,std_correlation = np.nanmedian(correlation),np.nanstd(correlation)
 m_error,std_error = np.nanmedian(error),np.nanstd(error)
 m_bias,stdbias = np.nanmedian(bias),np.nanstd(bias)
-
-

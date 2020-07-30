@@ -10,10 +10,10 @@ discrete spike times. The main function is infer_discrete_spikes().
 
 The procedure is brute-force and not optimized for fast processing.
 
-Please be aware of the limitations of the prediction of single spikes, as 
+Please be aware of the limitations of the prediction of single spikes, as
 discussed in more detail in the paper.
 
-  
+
 """
 
 
@@ -25,7 +25,9 @@ Import python packages
 """
 
 import os
-if 'Demo scripts' in os.getcwd(): os.chdir('..')  # change to main directory
+if 'Demo scripts' in os.getcwd():
+    sys.path.append( os.path.abspath('..') ) # add parent directory to path for imports
+    os.chdir('..')  # change to main directory
 print('Current directory: {}'.format( os.getcwd() ))
 
 from cascade2p import checks
@@ -48,18 +50,18 @@ Define functions to load calcium recordings and spike rate predictions from disk
 
 def load_neurons_x_time(file_path):
     """Custom method to load data as 2d array with shape (neurons, nr_timepoints)"""
-    
-    traces = sio.loadmat(file_path)['dF_traces'] 
-    
+
+    traces = sio.loadmat(file_path)['dF_traces']
+
     return traces/100
 
 def load_predictions(file_path):
     """Custom method to load spike predictions produced by "Demo_predict.py" """
 
-    spike_rates = sio.loadmat(file_path)['spike_rates'] 
-    
+    spike_rates = sio.loadmat(file_path)['spike_rates']
+
     return spike_rates
-  
+
 
 
 """
@@ -111,7 +113,3 @@ save_path = os.path.join(folder, 'discrete_spikes_'+os.path.basename(example_fil
 # save as numpy file
 #np.save(save_path, spike_rates)
 sio.savemat(save_path, {'spike_rates':spike_rates,'discrete_approximation':discrete_approximation,'spike_time_estimates':spike_time_estimates})
-
-
-
-

@@ -4,7 +4,7 @@
 
 """
 Demo script to train a network based on:
-  
+
   - a range of noise levels
   - a given frame rate
   - a selection of ground truth data sets
@@ -27,7 +27,9 @@ Import python packages
 """
 
 import os
-if 'Demo scripts' in os.getcwd(): os.chdir('..')  # change to main directory
+if 'Demo scripts' in os.getcwd():
+    sys.path.append( os.path.abspath('..') ) # add parent directory to path for imports
+    os.chdir('..')  # change to main directory
 print('Current directory: {}'.format( os.getcwd() ))
 
 # perform checks to catch most likly import errors
@@ -44,10 +46,10 @@ Configure model and its parameters
 
 """
 
-cfg = dict( 
+cfg = dict(
     model_name = 'Universal_30Hz',    # Model name (and name of the save folder)
     sampling_rate = 30,    # Sampling rate in Hz (round to next integer)
-    
+
     training_datasets = ['DS02-Cal520-m-S1',
        'DS03-OGB1-zf-pDp',
        'DS04-Cal520-zf-pDp',
@@ -67,11 +69,11 @@ cfg = dict(
        'DS18-R-CaMP-m-S1',
        'DS19-jRCaMP1a-m-V1',
                        ],
-    
+
     noise_levels = [noise for noise in range(2,9)],  # int values of noise values (do not use numpy here => representer error!)
-    
+
     smoothing = 0.2,     # std of Gaussian smoothing in time (sec)
-    causal_kernel = 0,   # causal ground truth smoothing kernel 
+    causal_kernel = 0,   # causal ground truth smoothing kernel
     # Advanced:
     # For additional parameters, you can find their names in the helper_scripts/config.py
     # file in the config_template string
@@ -97,6 +99,3 @@ Train model for all datasets and noise levels
 
 model_name = cfg['model_name']
 cascade.train_model( model_name )
-
-
-
