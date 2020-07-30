@@ -49,7 +49,7 @@ from scipy.signal import resample, convolve
 from scipy.interpolate import interp1d
 from scipy.stats import invgauss
 
-from cascade2p import config
+from . import config
 
 
 def define_model(filter_sizes,filter_numbers,dense_expansion,windowsize,loss_function,optimizer):
@@ -541,13 +541,13 @@ def plot_dFF_traces(traces,neuron_indices,frame_rate,spiking=None,discrete_spike
     if spiking is not None:
 
       axs[subplot_ix].plot(time,spiking[neuron_index,:t_max]-1)
-    
+
     if discrete_spikes is not None:
-      
+
       for spike_time in discrete_spikes[neuron_index]:
 
         axs[subplot_ix].plot(np.array([spike_time,spike_time])/frame_rate+1/frame_rate,[-1.4, -1.2],'k')
-      
+
 
 
 
@@ -558,7 +558,6 @@ def plot_noise_matched_ground_truth( model_name, median_noise, frame_rate, nb_tr
   ground truth from the ground truth datasets used for training the model
 
   """
-  from cascade2p import utils
 
   model_folder = os.path.join('Pretrained_models', model_name)
 
@@ -569,7 +568,7 @@ def plot_noise_matched_ground_truth( model_name, median_noise, frame_rate, nb_tr
   training_folders = [os.path.join('Ground_truth', ds) for ds in cfg['training_datasets']]
 
   # extract ground truth
-  X,Y = utils.preprocess_groundtruth_artificial_noise_balanced(
+  X,Y = preprocess_groundtruth_artificial_noise_balanced(
                               ground_truth_folders = training_folders,
                               before_frac = cfg['before_frac'],
                               windowsize = cfg['windowsize'],

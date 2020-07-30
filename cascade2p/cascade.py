@@ -35,7 +35,7 @@ import os
 import time
 import numpy as np
 
-from cascade2p import config
+from . import config, utils
 
 
 
@@ -70,7 +70,6 @@ def train_model( model_name, model_folder='Pretrained_models', ground_truth_fold
 
     """
     import keras
-    from cascade2p import utils
 
     model_path = os.path.join(model_folder, model_name)
     cfg_file = os.path.join( model_path, 'config.yaml')
@@ -225,7 +224,6 @@ def predict( model_name, traces, model_folder='Pretrained_models', threshold=0, 
 
     """
     import keras
-    from cascade2p import utils
     from tensorflow.keras.models import load_model
 
     model_path = os.path.join(model_folder, model_name)
@@ -253,15 +251,15 @@ def predict( model_name, traces, model_folder='Pretrained_models', threshold=0, 
     noise_levels_model = cfg['noise_levels']
     smoothing = cfg['smoothing']
     causal_kernel = cfg['causal_kernel']
-    
+
     model_description = '\n \nThe selected model was trained on '+str(len(training_data))+' datasets, with '+str(ensemble_size)+' ensembles for each noise level, at a sampling rate of '+str(sampling_rate)+'Hz,'
     if causal_kernel:
       model_description += ' with a resampled ground truth that was smoothed with a causal kernel'
     else:
       model_description += ' with a resampled ground truth that was smoothed with a Gaussian kernel'
     model_description += ' of a standard deviation of '+str(int(1000*smoothing))+' milliseconds. \n \n'
-    print(model_description)    
-    
+    print(model_description)
+
     if verbose: print('Loaded model was trained at frame rate {} Hz'.format(sampling_rate))
     if verbose: print('Given argument traces contains {} neurons and {} frames.'.format( traces.shape[0], traces.shape[1]))
 
