@@ -63,7 +63,7 @@ def load_neurons_x_time(file_path):
 
     traces = sio.loadmat(file_path)['dF_traces']
 
-    return traces/100
+    return traces
 
 
 
