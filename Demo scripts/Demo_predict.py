@@ -23,9 +23,11 @@ Import python packages
 
 """
 
-import os
-if 'Demo scripts' in os.getcwd(): os.chdir('..')  # change to main directory
-print('Current directory: {}'.format( os.getcwd() ))
+import os, sys
+if 'Demo scripts' in os.getcwd():
+    sys.path.append( os.path.abspath('..') ) # add parent directory to path for imports
+    os.chdir('..')  # change to main directory
+print('Current working directory: {}'.format( os.getcwd() ))
 
 from cascade2p import checks
 checks.check_packages()
@@ -46,23 +48,23 @@ Define function to load dF/F traces from disk
 
 def load_neurons_x_time(file_path):
     """Custom method to load data as 2d array with shape (neurons, nr_timepoints)"""
-    
+
     # replace this with your own code if necessary
     # traces = np.load(file_path)
-    
+
     # # here numpy dictionary with key 'dff'
 #    traces = np.load(file_path, allow_pickle=True).item()['dff']
-    
+
     # # In case your data is in another format:
     # traces = traces.T        # transpose, if loaded matrix has shape (time, neurons)
     # traces = traces / 100    # normalize to fractions, in case df/f is in Percent
-    
+
     # traces should be 2d array with shape (neurons, nr_timepoints)
-    
-    traces = sio.loadmat(file_path)['dF_traces'] 
-    
-    return traces/100
-  
+
+    traces = sio.loadmat(file_path)['dF_traces']
+
+    return traces
+
 
 
 """
@@ -71,7 +73,7 @@ Load dF/F traces, define frame rate and plot example traces
 
 """
 
-  
+
 example_file = 'Example_datasets/Multiplane-OGB1-zf-pDp-Rupprecht-7.5Hz/Calcium_traces_04.mat'
 frame_rate = 7.5 # in Hz
 
@@ -159,4 +161,3 @@ median_noise = np.round(np.median(noise_levels))
 nb_traces = 8
 duration = 50 # seconds
 plot_noise_matched_ground_truth( model_name, median_noise, frame_rate, nb_traces, duration )
-
