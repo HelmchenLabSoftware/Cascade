@@ -1,6 +1,6 @@
 ## Cascade: Calibrated spike inference from calcium imaging data
 
-![Concept of supervised inference of spiking activity from calcium imaging data using deep networks](https://github.com/HelmchenLabSoftware/Calibrated-inference-of-spiking/blob/master/Figure%20concept.png)
+![Concept of supervised inference of spiking activity from calcium imaging data using deep networks](https://github.com/HelmchenLabSoftware/Calibrated-inference-of-spiking/blob/master/etc/Figure%20concept.png)
 
 *Cascade* translates calcium imaging ΔF/F traces into spiking probabilities or discrete spikes.
 
