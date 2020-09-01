@@ -228,8 +228,10 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 
 #### Which reference should I cite?
 
+
 > Please cite the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1) as a reference:
-> P Rupprecht, S Carta, A Hoffmann, M Echizen, K Kitamura, F Helmchen*, RW Friedrich* (* = co-senior authors)
-> "A deep learning toolbox for noise-optimized, generalized spike inference from calcium imaging data"
-> https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1
+
+> P Rupprecht, S Carta, A Hoffmann, M Echizen, K Kitamura, F Helmchen\*, RW Friedrich\*, *A deep learning toolbox for noise-optimized, generalized spike inference from calcium imaging data*, bioRxiv, 2020.
+>
+>(\* = co-senior authors)
 
