@@ -4,7 +4,7 @@
 
 *Cascade* translates calcium imaging ΔF/F traces into spiking probabilities or discrete spikes.
 
-*Cascade* is described in detail in **this preprint [link will be posted when available!]**.
+*Cascade* is described in detail in **[this preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1)**.
 
 *Cascade's* toolbox consists of
 
@@ -83,13 +83,13 @@ This section can be reproduced with the ``Demo_discrete_spikes.py`` file.
 
 In this section, the output from the previous step (``spike_rates``) is loaded from disk. Single spikes are fitted into the smooth probabilities such that the most likely spike sequence is recovered. For optimal fitting, the parameters of the model used for spike predictions has to be loaded as well (``model_name``). The result of the procedure are spike times. They are given with the same temporal precision as the sampling rate of the calcium recording.
 
-We do not recommend discrete spike predictions except for outstanding high-quality recordings and refer to the FAQ and the paper ([link will be posted when available!], Fig. S19XX) for a discussion.
+We do not recommend discrete spike predictions except for outstanding high-quality recordings and refer to the FAQ and the paper ([link](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1), Fig. S11 and supplementary notes) for a discussion.
 
 **Quantify expected performance of the model (optional)**
 
 This section can be reproduced with the ``Demo_benchmark_model.py`` file.
 
-To understand how good predictions are, it is important to quantify the performance of a given trained model. As discussed in depth in the paper [link will be posted when available!], this is best measured by quantifying the performance when training the deep network on all except one ground truth dataset and test it on the held-out dataset.
+To understand how good predictions are, it is important to quantify the performance of a given trained model. As discussed in depth in the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1), this is best measured by quantifying the performance when training the deep network on all except one ground truth dataset and test it on the held-out dataset.
 
 To do this systematically, a lot of training and testing needs to performed, and we do not recommend this procedure for CPU-only installations.
 
@@ -101,11 +101,11 @@ If you want to understand how the code works, you will be surprised how simple t
 
 All main functions are described in the ``cascade2p/cascade.py`` file, including the functions ``cascade.train()`` and ``cascade.predict()``.
 
-Some helper functions to load the ground truth data for training (which is a bit more challenging due to the initial diversity of ground truth datasets) and to plot results are contained in the ``cascade2p/utils.py`` file. In addition, this file also contains the definition of the deep network ``define_model()``, which is only a few lines. If you want to use a different architecture for training (see Fig. S16 in the paper [link will be posted when available!]), it is very simple to modify or replace.
+Some helper functions to load the ground truth data for training (which is a bit more challenging due to the initial diversity of ground truth datasets) and to plot results are contained in the ``cascade2p/utils.py`` file. In addition, this file also contains the definition of the deep network ``define_model()``, which is only a few lines. If you want to use a different architecture for training (see Fig. S8 in the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1), it is very simple to modify or replace.
 
 Functions used to convert spiking probabilities into discrete spikes can be found in the file ``cascade/utils_discrete_spikes.py``. 
 
-The ``cascade/config.py`` contains the default model parameters. Fig. S15 ([link will be posted when available!]) shows that changing those parameters does not greatly affect the prediction quality, such that the user does not need to change any of the hyper-parameters.
+The ``cascade/config.py`` contains the default model parameters. Fig. S7 in the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1) shows that changing those parameters does not greatly affect the prediction quality, such that the user does not need to change any of the hyper-parameters.
 
 The folder ``Ground_truth`` contains all ground truth datasets. The folder also contains a Matlab script and a Python script which can be used to explore the ground truth data. Highly recommended, it's very interesting!
 
@@ -146,11 +146,11 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 
 >This depends mainly on the **shot noise level** of your dataset. If you want to compute how good the chosen model generalizes to unseen data for a given noise level, check out the Github repository and use [the demo script](https://github.com/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Demo_benchmark_model.py) which computes the performance of a given model.
 >
->If you want to get a good idea about the quality of predictions, check out **Figures 3 and 4**, as well as the corresponding supplementary figures in the paper/preprint [link will be made available when online!].
+>If you want to get a good idea about the quality of predictions, check out **Figures 3 and 4** in the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1), as well as the corresponding supplementary figures.
 
 #### Why is the output of the algorithm a probability, why not discrete spikes?
 
->Good question! We think that providing spike times instead of spike rates or spiking probabilities is misleading, since it suggests a false precision and certainty of the spiking estimates. In addition, we found (**Fig. S11** in the preprint) that single-spike precision could not achieved with any of the ground truth datasets.
+>Good question! We think that providing spike times instead of spike rates or spiking probabilities is misleading, since it suggests a false precision and certainty of the spiking estimates. In addition, we found (**Fig. S11** in the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1)) that single-spike precision could not achieved with any of the ground truth datasets.
 >
 >However, for some cases, discrete spikes still might be a good approach. We provide a Python function that converts the spiking probability into discrete spikes (**[demo](https://github.com/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Demo_discrete_spikes.py)** on Github).
 
@@ -164,7 +164,7 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 
 >For an illustration of different noise levels, check out Fig. S3 in the preprint. To give an example, the Allen Brain Observatory Visual Coding dataset is of very high imaging quality, with noise levels around **1, which is very good** (unit is $\% \cdot s^{-1/2}$). A noise level of **3-4 is still decent**, especially for population imaging with many neurons. Noise levels **above 5 indicates rather poor signal** levels. For a definition of the noise level, check out the Methods section of the preprint.
 >
->However, even for excellent shot noise levels, the recording quality can be bad due to bad imaging resolution, **neuropil contamination** and, most importantly, **movement artifacts**. See Fig. S9 in the preprint and the associated text as well as the Discussion for more details .
+>However, even for excellent shot noise levels, the recording quality can be bad due to bad imaging resolution, **neuropil contamination** and, most importantly, **movement artifacts**. See Fig. S9 in the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1) and the associated text as well as the Discussion for more details .
 
 
 #### How do I select an appropriate model for my data?
@@ -188,7 +188,7 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 
 > By default, the ground truth is smoothed symmetrically in time. This means, also the predicted spike probabilities are symetrically distributed in time around the true time point. In some cases, this can be a problem because this predicts non-zero neuronal spiking probability before the calcium event had even started. Especially when you want to analyze stimulus-triggered activity patterns, this is an important issue and a common problem for all deconvolution algorithms.
 > 
-> However, if the ground truth is smoothed not with a symmetric Gaussian but with a smooth causal kernel, this limitation can be circumvented (discussed in detail in Fig. S18 in the preprint), and spiking activity is almost exclusively assigned to time points after the calcium event started. It must be noted that this reliable causal re-assignment of activity works well for high-quality datasets, but in case of higher noise levels, any deconvolution algorithm will assign activity to non-causal time points. Good to keep in mind when you interpret your results!
+> However, if the ground truth is smoothed not with a symmetric Gaussian but with a smooth causal kernel, this limitation can be circumvented (discussed in detail in Fig. S18 in the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1)), and spiking activity is almost exclusively assigned to time points after the calcium event started. It must be noted that this reliable causal re-assignment of activity works well for high-quality datasets, but in case of higher noise levels, any deconvolution algorithm will assign activity to non-causal time points. Good to keep in mind when you interpret your results!
 
 
 #### None of the models is good for me. What can I do?
@@ -228,5 +228,8 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 
 #### Which reference should I cite?
 
-> Please cite the preprint [link will be posted when the preprint is online!] as a reference.
+> Please cite the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1) as a reference:
+> P Rupprecht, S Carta, A Hoffmann, M Echizen, K Kitamura, F Helmchen*, RW Friedrich* (* = co-senior authors)
+> "A deep learning toolbox for noise-optimized, generalized spike inference from calcium imaging data"
+> https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1
 
