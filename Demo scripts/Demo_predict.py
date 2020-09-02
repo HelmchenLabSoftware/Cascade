@@ -132,13 +132,7 @@ save_path = os.path.join(folder, 'full_prediction_'+os.path.basename(example_fil
 
 # save as numpy file
 #np.save(save_path, spike_rates)
-sio.savemat(save_path, {'spike_rates':spike_rates})
-
-# save as .mat file
-# import scipy
-# scipy.io.savemat(save_path, {'spike_rates': spike_rates})
-
-
+sio.savemat(save_path+'.mat', {'spike_rates':spike_rates})
 
 """
 
