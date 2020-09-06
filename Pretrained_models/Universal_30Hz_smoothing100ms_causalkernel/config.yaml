@@ -10,7 +10,7 @@ training_datasets:
 - DS04-Cal520-zf-pDp
 - DS05-GCaMP6f-zf-aDp
 - DS06-GCaMP6f-zf-dD
-- DS07-GCaMP6f-zf-dD
+- DS07-GCaMP6f-zf-OB
 - DS08-GCaMP6f-m-V1
 - DS09-GCaMP6f-m-V1-neuropil-corrected
 - DS10-GCaMP6f-m-V1-neuropil-corrected
