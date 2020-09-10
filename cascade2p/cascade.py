@@ -34,7 +34,7 @@ Additional functions in this file are used to navigate different models ('get_mo
 import os
 import time
 import numpy as np
-
+import warnings
 from . import config, utils
 
 
@@ -406,14 +406,17 @@ def create_model_folder( config_dictionary, model_folder='Pretrained_models' ):
 
     if not os.path.exists( model_path ):
         # create folder
-        os.mkdir(model_path)
-        print('Created new directory "{}"'.format( os.path.abspath(model_path) ))
+        try:
+            os.mkdir(model_path)
+            print('Created new directory "{}"'.format( os.path.abspath(model_path) ))
+        except:
+            print(model_path+' already exists')        
 
         # save config file into the folder
         config.write_config(cfg, os.path.join(model_path, 'config.yaml') )
 
     else:
-        raise Warning('There is already a folder called {}. '.format(cfg['model_name']) + \
+        warnings.warn('There is already a folder called {}. '.format(cfg['model_name']) + \
               'Please rename your model.')
 
 
