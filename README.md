@@ -229,7 +229,7 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 #### Which reference should I cite?
 
 
-> Please cite the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1) as a reference for Cascade, and also as a reference when using datasets \#2-7 and \#17-18.:
+> Please cite the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1) as a reference for Cascade, and also as a reference when directly using datasets \#2-7 and \#17-18:
 >
 > Rupprecht P, Carta S, Hoffmann A, Echizen M, Kitamura K, Helmchen F\*, Friedrich RW\*, *A deep learning toolbox for noise-optimized, generalized spike inference from calcium imaging data*, bioRxiv, 2020.
 >
