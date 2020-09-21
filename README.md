@@ -229,9 +229,25 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 #### Which reference should I cite?
 
 
-> Please cite the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1) as a reference:
-
-> P Rupprecht, S Carta, A Hoffmann, M Echizen, K Kitamura, F Helmchen\*, RW Friedrich\*, *A deep learning toolbox for noise-optimized, generalized spike inference from calcium imaging data*, bioRxiv, 2020.
+> Please cite the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1) as a reference for Cascade, and also as a reference when using datasets \#2-7 and \#17-18.:
 >
->(\* = co-senior authors)
-
+> Rupprecht P, Carta S, Hoffmann A, Echizen M, Kitamura K, Helmchen F\*, Friedrich RW\*, *A deep learning toolbox for noise-optimized, generalized spike inference from calcium imaging data*, bioRxiv, 2020.
+>
+> (\* = co-senior authors)
+>
+> If you use the respective ground truth datasets directly, please also refer to the original papers and the associated dataset:
+> 
+> Chen TW, Wardill TJ, Sun Y, Pulver SR, Renninger SL, Baohan A, Schreiter ER, Kerr RA, Orger MB, Jayaraman V, Looger LL. Ultrasensitive fluorescent proteins for imaging neuronal activity, Nature (2013), for datasets \#8 and \#13.
+>
+> Huang L, Knoblich U, Ledochowitsch P, Lecoq J, Reid RC, de Vries SE, Buice MA, Murphy GJ, Waters J, Koch C, Zeng H. Relationship between simultaneously recorded spiking activity and fluorescence signal in GCaMP6 transgenic mice, bioRxiv (2019), for datasets \#9, \#10, \#11 and \#12.
+>
+> Berens P, et al. Community-based benchmarking improves spike rate inference from two-photon calcium imaging data, PLoS Comp Biol (2018), for datasets \#1, \#14, \#15.
+> 
+> Akerboom J, Chen TW, Wardill TJ, Tian L, Marvin JS, Mutlu S, Calderón NC, Esposti F, Borghuis BG, Sun XR, Gordus A. Optimization of a GCaMP calcium indicator for neural activity imaging, J Neuroscience (2012), for dataset \#16.
+> 
+> Bethge P, Carta S, Lorenzo DA, Egolf L, Goniotaki D, Madisen L, Voigt FF, Chen JL, Schneider B, Ohkura M, Nakai J. An R-CaMP1.07 reporter mouse for cell-type-specific expression of a sensitive red fluorescent calcium indicator, PloS ONE (2017), for dataset \#18.
+>
+> Tada M, Takeuchi A, Hashizume M, Kitamura K, Kano M. A highly sensitive fluorescent indicator dye for calcium imaging of neural activity in vitro and in vivo. EJN (2014), for dataset \#2.
+> 
+> Dana H, Mohar B, Sun Y, Narayan S, Gordus A, Hasseman JP, Tsegaye G, Holt GT, Hu A, Walpita D, Patel R. Sensitive red protein calcium indicators for imaging neural activity, Elife (2016), for datasets \#19 and \#20.
+>
