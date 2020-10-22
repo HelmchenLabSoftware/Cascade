@@ -228,8 +228,6 @@ def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sam
 
         traces_mean = traces_mean[~np.isnan(fluo_times)]
         fluo_times = fluo_times[~np.isnan(fluo_times)]
-        fluo_times = fluo_times[~np.isnan(traces_mean)]
-        traces_mean = traces_mean[~np.isnan(traces_mean)]
 
         # Compute the baseline noise level for this recording
         base_noise = np.nanmedian(np.abs(np.diff(traces_mean)))*100/np.sqrt(frame_rate)
