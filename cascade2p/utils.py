@@ -547,8 +547,8 @@ def plot_dFF_traces(traces,neuron_indices,frame_rate,spiking=None,discrete_spike
       for spike_time in discrete_spikes[neuron_index]:
 
         axs[subplot_ix].plot(np.array([spike_time,spike_time])/frame_rate+1/frame_rate,[-1.4, -1.2],'k')
-
-
+     
+    return time
 
 
 def plot_noise_matched_ground_truth( model_name, median_noise, frame_rate, nb_traces, duration ):
