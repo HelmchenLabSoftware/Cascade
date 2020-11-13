@@ -596,7 +596,7 @@ def plot_noise_matched_ground_truth( model_name, median_noise, frame_rate, nb_tr
 
   time_indices = np.random.randint(X.shape[0]-duration_datapoints, size=nb_traces)
 
-  time = np.arange(0,duration*frame_rate)/frame_rate
+  time = np.arange(0,int(duration*frame_rate))/frame_rate
 
   fig, axs = plt.subplots(int(np.ceil(nb_traces/2)), 2,  sharex=True, sharey=True)
   fig.add_subplot(111, frameon=False)
