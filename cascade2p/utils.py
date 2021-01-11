@@ -130,8 +130,9 @@ def preprocess_traces(neurons_x_time, before_frac, window_size):
     """
     dF_traces = neurons_x_time
     start = int(before_frac * window_size)
-    end = dF_traces.shape[1] - start
-    window_indexes = (np.expand_dims(np.arange(window_size), 0) + np.expand_dims(np.arange(dF_traces.shape[1] - window_size), 0).T)
+    end = dF_traces.shape[1] - start + 1
+    # extract a moving window from the calcium trace
+    window_indexes = (np.expand_dims(np.arange(window_size), 0) + np.expand_dims(np.arange(dF_traces.shape[1] - window_size + 1), 0).T)
     X = np.full(shape=(dF_traces.shape[0], dF_traces.shape[1], window_size), fill_value=np.nan)
     X[:, start:end, :] = dF_traces[:, window_indexes]
     return X
@@ -614,15 +615,8 @@ def plot_noise_level_distribution(traces,frame_rate):
   except:
     pass
 
-  nb_neurons = traces.shape[0]
-
-  noise_levels = np.nan*np.zeros((nb_neurons,))
-  for neuron in range(nb_neurons):
-
-    noise_levels[neuron] = np.nanmedian(np.abs(np.diff(traces[neuron,:])))/np.sqrt(frame_rate)*100
-
-  noise_levels = noise_levels[~np.isnan(noise_levels)]
-
+  noise_levels = calculate_noise_levels(traces, frame_rate)
+  
   percent999 = np.percentile(noise_levels,99.9)
 
   plt.figure(1121); plt.hist(noise_levels,density=True, bins=100)
