@@ -109,13 +109,7 @@ def calculate_noise_levels(neurons_x_time, frame_rate):
 
     """
     dF_traces = neurons_x_time
-
-    nb_neurons = dF_traces.shape[0]
-    noise_levels = np.zeros( nb_neurons )
-
-    for neuron in range(nb_neurons):
-        noise_levels[neuron] = np.nanmedian( np.abs(np.diff(dF_traces[neuron,:])))/np.sqrt(frame_rate)
-
+    noise_levels = np.nanmedian(np.abs(np.diff(dF_traces, axis=-1)), axis=-1) / np.sqrt(frame_rate)
     return noise_levels * 100     # scale noise levels to percent
 
 
@@ -134,20 +128,12 @@ def preprocess_traces(neurons_x_time, before_frac, window_size):
     output: X, a matrix with nb_neurons x time_points x window_size
 
     """
-    before = int( before_frac * window_size )
-
     dF_traces = neurons_x_time
-
-    nb_neurons = dF_traces.shape[0]
-    nb_timepoints = dF_traces.shape[1]
-
-    X = np.zeros( (nb_neurons,nb_timepoints,window_size) ) * np.nan
-
-    for neuron in range(nb_neurons):
-        for timepoint in range(nb_timepoints-window_size):
-
-            X[neuron,timepoint+before,:] = dF_traces[neuron, timepoint:(timepoint+window_size)]
-
+    start = int(before_frac * window_size)
+    end = dF_traces.shape[1] - start
+    window_indexes = (np.expand_dims(np.arange(window_size), 0) + np.expand_dims(np.arange(dF_traces.shape[1] - window_size), 0).T)
+    X = np.full(shape=(dF_traces.shape[0], dF_traces.shape[1], window_size), fill_value=np.nan)
+    X[:, start:end, :] = dF_traces[:, window_indexes]
     return X
 
 
