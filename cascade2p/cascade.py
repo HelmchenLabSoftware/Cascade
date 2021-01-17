@@ -145,7 +145,12 @@ def train_model( model_name, model_folder='Pretrained_models', ground_truth_fold
                                 verbose = cfg['verbose'],
                                 replicas=1,
                                 causal_kernel=cfg['causal_kernel'])
+            
+            if cfg['sampling_rate'] > 30:
+                
+                cfg['windowsize'] = int(np.power(cfg['sampling_rate']/30,0.25)*64)
 
+                print('Window size enlarged to '+str(cfg['windowsize']) +' time points due to the high calcium imaging sampling rate('+str(cfg['sampling_rate']+').')
 
             model = utils.define_model(
                                 filter_sizes = cfg['filter_sizes'],
