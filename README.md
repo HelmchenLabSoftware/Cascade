@@ -231,13 +231,13 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 
 > Please cite the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1) as a reference for Cascade:
 >
-> Rupprecht P, Carta S, Hoffmann A, Echizen M, Kitamura K, Helmchen F\*, Friedrich RW\*, *A deep learning toolbox for noise-optimized, generalized spike inference from calcium imaging data*, bioRxiv, 2020.
+> Rupprecht P, Carta S, Hoffmann A, Echizen M, Kitamura K, Helmchen F\*, Friedrich RW\*, *A deep learning toolbox for noise-optimized, generalized spike inference from calcium imaging data*, bioRxiv (2020).
 >
 > (\* = co-senior authors)
 >
 > If you use the respective ground truth datasets directly, please also refer to the original papers and the associated dataset:
 > 
-> Rupprecht P, Carta S, Hoffmann A, Echizen M, Kitamura K, Helmchen F\*, Friedrich RW\*, *A deep learning toolbox for noise-optimized, generalized spike inference from calcium imaging data*, bioRxiv, 2020, for datasets \#3-8, \#18-19 and \#27.
+> Rupprecht P, Carta S, Hoffmann A, Echizen M, Kitamura K, Helmchen F\*, Friedrich RW\*, *A deep learning toolbox for noise-optimized, generalized spike inference from calcium imaging data*, bioRxiv (2020), for datasets \#3-8, \#18-19 and \#27.
 > 
 > Chen TW, Wardill TJ, Sun Y, Pulver SR, Renninger SL, Baohan A, Schreiter ER, Kerr RA, Orger MB, Jayaraman V, Looger LL. Ultrasensitive fluorescent proteins for imaging neuronal activity, Nature (2013), for datasets \#9 and \#14.
 >
@@ -249,7 +249,7 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 > 
 > Bethge P, Carta S, Lorenzo DA, Egolf L, Goniotaki D, Madisen L, Voigt FF, Chen JL, Schneider B, Ohkura M, Nakai J. An R-CaMP1.07 reporter mouse for cell-type-specific expression of a sensitive red fluorescent calcium indicator, PloS ONE (2017), for dataset \#19.
 >
-> Tada M, Takeuchi A, Hashizume M, Kitamura K, Kano M. A highly sensitive fluorescent indicator dye for calcium imaging of neural activity in vitro and in vivo. EJN (2014), for dataset \#3.
+> Tada M, Takeuchi A, Hashizume M, Kitamura K, Kano M. A highly sensitive fluorescent indicator dye for calcium imaging of neural activity in vitro and in vivo, EJN (2014), for dataset \#3.
 > 
 > Dana H, Mohar B, Sun Y, Narayan S, Gordus A, Hasseman JP, Tsegaye G, Holt GT, Hu A, Walpita D, Patel R. Sensitive red protein calcium indicators for imaging neural activity, Elife (2016), for datasets \#20 and \#21.
 >
