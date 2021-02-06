@@ -9,7 +9,7 @@ config_template = """\
 model_name: YOUR_MODEL_NAME                   # Name of the model
 sampling_rate: YOUR_SAMPLING_RATE             # Sampling rate in Hz
 
-# Dataset of ground truth data (in folder 'Ground_truth')   Example: DS13-GCaMP6s-m-V1
+# Dataset of ground truth data (in folder 'Ground_truth')   Example: DS14-GCaMP6s-m-V1
 training_datasets:
 - placeholder_1
 - placeholder_2
@@ -56,15 +56,15 @@ filter_numbers:
 - 40
 - 50
 
-dense_expansion: 30              # For dense layer
+dense_expansion: 10              # For dense layer
 
 
 loss_function: mean_squared_error     # gradient-descent loss function
 optimizer: Adagrad                    #                  optimizer
 
-nr_of_epochs: 10                 # Number of training epochs per model
+nr_of_epochs: 20                 # Number of training epochs per model
 ensemble_size: 5                 # Number of models trained for one noise level
-batch_size: 8192                 # Batch size
+batch_size: 1024                 # Batch size
 
 ## Information about status of fitting
 
