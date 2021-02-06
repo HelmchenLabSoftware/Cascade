@@ -534,7 +534,7 @@ def download_model( model_name,
 
     # unzip the model and save in the corresponding folder
     with zipfile.ZipFile( tmp_file, 'r') as zip_ref:
-        zip_ref.extractall( path=model_folder)
+        zip_ref.extractall( path=os.path.join(model_folder,model_name))
 
     os.remove(tmp_file)
 
