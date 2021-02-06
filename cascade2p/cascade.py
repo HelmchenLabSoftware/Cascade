@@ -69,7 +69,7 @@ def train_model( model_name, model_folder='Pretrained_models', ground_truth_fold
         All results are saved in the folder model_name as .h5 files containing the trained model
 
     """
-    import keras
+    import tensorflow.keras
 
     model_path = os.path.join(model_folder, model_name)
     cfg_file = os.path.join( model_path, 'config.yaml')
@@ -228,7 +228,7 @@ def predict( model_name, traces, model_folder='Pretrained_models', threshold=0, 
         This array can contain NaNs if the value 'padding' was np.nan as input argument
 
     """
-    import keras
+    import tensorflow.keras
     from tensorflow.keras.models import load_model
 
     model_path = os.path.join(model_folder, model_name)
@@ -323,7 +323,7 @@ def predict( model_name, traces, model_folder='Pretrained_models', threshold=0, 
             Y_predict[neuron_idx,:] += prediction / len(models)  # average predictions
 
         # remove models from memory
-        keras.backend.clear_session()
+        tensorflow.keras.backend.clear_session()
 
 
     if threshold is False:  # only if 'False' is passed as argument
