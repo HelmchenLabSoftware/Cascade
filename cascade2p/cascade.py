@@ -472,7 +472,7 @@ def get_model_paths( model_path ):
 
 def download_model( model_name,
                     model_folder='Pretrained_models',
-                    info_file_link = 'https://drive.switch.ch/index.php/s/lBJd2JfVrkmSSiN/download',
+                    info_file_link = 'https://drive.switch.ch/index.php/s/IJWlhwjDT3aw2ro/download',
                     verbose = 1):
     """ Download and unzip pretrained model from the online repository
 
