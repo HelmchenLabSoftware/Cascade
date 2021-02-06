@@ -293,7 +293,6 @@ def predict( model_name, traces, model_folder='Pretrained_models', threshold=0, 
 
         if verbose: print('\nPredictions for noise level {}:'.format(model_noise))
 
-        # TODO make more general (e.g. argmin(abs(diff)))
         # select neurons which have this noise level:
         if i == 0:   # lowest noise
             neuron_idx = np.where( trace_noise_levels < model_noise + 0.5 )[0]
