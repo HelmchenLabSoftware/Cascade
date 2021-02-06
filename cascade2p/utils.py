@@ -53,6 +53,7 @@ from scipy.stats import invgauss
 from . import config
 
 
+
 def define_model(filter_sizes,filter_numbers,dense_expansion,windowsize,loss_function,optimizer):
 
   """"
@@ -69,6 +70,7 @@ def define_model(filter_sizes,filter_numbers,dense_expansion,windowsize,loss_fun
 
   from keras.layers import Dense, Flatten, MaxPooling1D, Conv1D, Input
   from keras import Model
+  from keras.optimizers import Adagrad
 
   inputs = Input(shape=(windowsize,1))
 
@@ -84,6 +86,7 @@ def define_model(filter_sizes,filter_numbers,dense_expansion,windowsize,loss_fun
   outX = Flatten()(outX)
   predictions = Dense(1,activation='linear')(outX)
   model = Model(inputs=[inputs],outputs=predictions)
+  optimizer = Adagrad(learning_rate=0.05)
   model.compile(loss=loss_function, optimizer=optimizer)
 
   return model
