@@ -160,9 +160,12 @@ def train_model( model_name, model_folder='Pretrained_models', ground_truth_fold
                                 loss_function = cfg['loss_function'],
                                 optimizer = cfg['optimizer']
                                         )
-
+            
+            optimizer = Adagrad(learning_rate=0.05)
             model.compile( loss = cfg['loss_function'],
-                           optimizer = cfg['optimizer'] )
+                           optimizer = optimizer)
+
+            cfg['nr_of_epochs'] = np.minimum(cfg['nr_of_epochs'], np.int(10 * np.floor(5e6/ len(X))))
 
             model.fit(X,Y,
                       batch_size = cfg['batch_size'],
