@@ -70,7 +70,7 @@ def define_model(filter_sizes,filter_numbers,dense_expansion,windowsize,loss_fun
 
   from tensorflow.keras.layers import Dense, Flatten, MaxPooling1D, Conv1D, Input
   from tensorflow.keras import Model
-  from tensorflow.skeras.optimizers import Adagrad
+  from tensorflow.keras.optimizers import Adagrad
 
   inputs = Input(shape=(windowsize,1))
 
