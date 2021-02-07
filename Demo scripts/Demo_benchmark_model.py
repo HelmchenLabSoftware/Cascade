@@ -55,7 +55,7 @@ Check which model to benchmark, and at which noise level
 
 """
 
-model_name =  'Universal_30Hz_smoothing100ms'
+model_name =  'Global_EXC_30Hz_smoothing100ms'
 noise_level = 2
 
 
