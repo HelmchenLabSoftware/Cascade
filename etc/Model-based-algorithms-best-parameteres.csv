@@ -1,10 +1,7 @@
-"Ideal parameters for the ground 
-truth datasets, found via grid search.",,,,,,,,,,,,,,,,,,,,,,,,,,
+"Ideal parameters for the ground <br> truth datasets, found via grid search.",,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,
-Datasets are deposited at: 
-https://github.com/HelmchenLabSoftware/Cascade,,,,,,,,,,,,,,,,,,,,,,,,,,
-Questions or comments? 
-p.t.r.rupprecht+cascade@gmail.com,,,,,,,,,,,,,,,,,,,,,,,,,,
+Datasets are deposited at: https://github.com/HelmchenLabSoftware/Cascade,,,,,,,,,,,,,,,,,,,,,,,,,,
+Questions or comments? p.t.r.rupprecht+cascade@gmail.com,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,
 NOISE LEVEL 2,,DS01,DS02,DS04,DS05,DS06,DS07,DS08,DS09,DS010,DS011,DS012,DS013,DS014,DS015,DS016,DS017,DS018,DS019,DS020,DS021,DS022,DS023,DS024,DS025,DS026
