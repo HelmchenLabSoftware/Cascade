@@ -1,4 +1,4 @@
-"Ideal parameters for the ground truth datasets, found via grid search. Note that the more complex algorithms (MLSpike and Peeling) use additional parameters, which were not systematically optimized with grid search.",,,,,,,,,,,,,,,,,,,,,,,,,,
+"Ideal parameters for the ground truth datasets, found via grid search.",,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,
 Datasets are deposited at: https://github.com/HelmchenLabSoftware/Cascade,,,,,,,,,,,,,,,,,,,,,,,,,,
 Questions or comments? p.t.r.rupprecht+cascade@gmail.com,,,,,,,,,,,,,,,,,,,,,,,,,,
