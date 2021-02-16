@@ -558,6 +558,26 @@ def plot_noise_matched_ground_truth( model_name, median_noise, frame_rate, nb_tr
   # extract values from config file into variables
   training_folders = [os.path.join('Ground_truth', ds) for ds in cfg['training_datasets']]
 
+  # rename training folder names for models that were trained before change of nomenclature (beginning of 2021)
+  training_folders = [w.replace('Ground_truth/DS02-Cal520-m-S1','Ground_truth/DS03-Cal520-m-S1') for w in training_folders]
+  training_folders = [w.replace('Ground_truth/DS03-OGB1-zf-pDp','Ground_truth/DS04-OGB1-zf-pDp') for w in training_folders]
+  training_folders = [w.replace('Ground_truth/DS04-Cal520-zf-pDp','Ground_truth/DS05-Cal520-zf-pDp') for w in training_folders]
+  training_folders = [w.replace('Ground_truth/DS05-GCaMP6f-zf-aDp','Ground_truth/DS06-GCaMP6f-zf-aDp') for w in training_folders]
+  training_folders = [w.replace('Ground_truth/DS06-GCaMP6f-zf-dD','Ground_truth/DS07-GCaMP6f-zf-dD') for w in training_folders]
+  training_folders = [w.replace('Ground_truth/DS07-GCaMP6f-zf-OB','Ground_truth/DS08-GCaMP6f-zf-OB') for w in training_folders]
+  training_folders = [w.replace('Ground_truth/DS08-GCaMP6f-m-V1','Ground_truth/DS09-GCaMP6f-m-V1') for w in training_folders]
+  training_folders = [w.replace('Ground_truth/DS15-GCaMP6s-m-V1','Ground_truth/DS16-GCaMP6s-m-V1') for w in training_folders]
+  training_folders = [w.replace('Ground_truth/DS14-GCaMP6s-m-V1','Ground_truth/DS15-GCaMP6s-m-V1',) for w in training_folders]
+  training_folders = [w.replace('Ground_truth/DS13-GCaMP6s-m-V1','Ground_truth/DS14-GCaMP6s-m-V1') for w in training_folders]
+  training_folders = [w.replace('Ground_truth/DS10-GCaMP6f-m-V1-neuropil-corrected','Ground_truth/DS11-GCaMP6f-m-V1-neuropil-corrected') for w in training_folders]
+  training_folders = [w.replace('Ground_truth/DS09-GCaMP6f-m-V1-neuropil-corrected','Ground_truth/DS10-GCaMP6f-m-V1-neuropil-corrected') for w in training_folders]
+  training_folders = [w.replace('Ground_truth/DS12-GCaMP6s-m-V1-neuropil-corrected','Ground_truth/DS13-GCaMP6s-m-V1-neuropil-corrected') for w in training_folders]
+  training_folders = [w.replace('Ground_truth/DS11-GCaMP6s-m-V1-neuropil-corrected','Ground_truth/DS12-GCaMP6s-m-V1-neuropil-corrected') for w in training_folders]
+  training_folders = [w.replace('Ground_truth/DS16-GCaMP5k-m-V1','Ground_truth/DS17-GCaMP5k-m-V1') for w in training_folders]
+  training_folders = [w.replace('Ground_truth/DS17-R-CaMP-m-CA3','Ground_truth/DS18-R-CaMP-m-CA3') for w in training_folders]
+  training_folders = [w.replace('Ground_truth/DS18-R-CaMP-m-S1','Ground_truth/DS19-R-CaMP-m-S1') for w in training_folders]
+  training_folders = [w.replace('Ground_truth/DS19-jRCaMP1a-m-V1','Ground_truth/DS20-jRCaMP1a-m-V1') for w in training_folders]
+  
   # extract ground truth
   X,Y = preprocess_groundtruth_artificial_noise_balanced(
                               ground_truth_folders = training_folders,
