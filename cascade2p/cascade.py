@@ -179,8 +179,8 @@ def train_model( model_name, model_folder='Pretrained_models', ground_truth_fold
             print('Saved model:', file_name)
 
     # Update model fitting status
-    cfg['training_finished'] = 'Yes'
-    config.write_config(cfg, os.path.join( model_path, 'config.yaml' ))
+    # cfg['training_finished'] = 'Yes'
+    # config.write_config(cfg, os.path.join( model_path, 'config.yaml' ))
 
     print('\n\nDone!')
     print('Runtime: {:.0f} min'.format((time.time() - start)/60))
