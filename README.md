@@ -15,11 +15,17 @@
 - Tools to quantify the out-of-dataset generalization for a given model and noise level
 - A tool to transform inferred spike rates into discrete spikes
 
-We provide two *Colaboratory Notebooks* that can be used without local installation for [spike inference from calcium data](https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Calibrated_spike_inference_with_Cascade.ipynb) and for [exploration of the ground truth database](https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Explore_ground_truth_datasets.ipynb). Just click on the links!
+We provide two *Colaboratory Notebooks* that can be used without local installation for [spike inference from calcium data](https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Calibrated_spike_inference_with_Cascade.ipynb):
+
+Placeholder for image
+
+And for [exploration of the ground truth database](https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Explore_ground_truth_datasets.ipynb):
 
 <p align="center">
 <a href="https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Explore_ground_truth_datasets.ipynb" rel="Tool for the exploration of the ground truth database"><img src="https://github.com/HelmchenLabSoftware/Calibrated-inference-of-spiking/blob/master/etc/Exploration%20tool.gif"  width="85%"></a>
 </p>
+
+Just click on the links or the images!
 
 
 ## Getting started
