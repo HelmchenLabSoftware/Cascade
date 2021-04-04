@@ -120,7 +120,7 @@ Any more questions? Probably you will find the answer below!
 
 #### What does the output of the algorithm mean?
 
->The output is the estimated probability of action potentials (spikes), at the same resolution as the original calcium recording. If you sum over the trace in time, you will get the estimated **number of spikes**. If you multiply the trace with the frame rate, you will get an estimate of the **instantaneous spike rate**. Spike probability and spike rates can therefore be converted by multiplication with the frame rate.
+>The output is the estimated probability of action potentials (spikes), at the same resolution as the original calcium recording. If you sum over the trace in time, you will get the estimated **number of spikes**. If you multiply the trace with the frame rate, you will get an estimate of the **instantaneous spike rate**. Spike probability (the output of the toolbox) can therefore be converted into spike rates by multiplication with the frame rate.
 
 #### How large would a single spike be?
 >This depends on your frame rate (Hz) and on the smoothing (standard deviation, milliseconds) of your model. Use the following script to compute the spike probability shape for given parameters.
@@ -144,7 +144,7 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 
 #### How precise and good are my predictions? 
 
->This depends mainly on the **shot noise level** of your dataset. If you want to compute how good the chosen model generalizes to unseen data for a given noise level, check out the Github repository and use [the demo script](https://github.com/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Demo_benchmark_model.py) which computes the performance of a given model.
+>This depends mainly on the **shot noise level** of your dataset. If you want to compute how well the chosen model generalizes to unseen data for a given noise level, check out the Github repository and use [the demo script](https://github.com/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Demo_benchmark_model.py) which computes the performance of a given model.
 >
 >If you want to get a good idea about the quality of predictions, check out **Figures 3 and 4** in the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1), as well as the corresponding supplementary figures.
 
@@ -152,7 +152,7 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 
 >Good question! We think that providing spike times instead of spike rates or spiking probabilities is misleading, since it suggests a false precision and certainty of the spiking estimates. In addition, we found (**Fig. S11** in the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1)) that single-spike precision could not achieved with any of the ground truth datasets.
 >
->However, for some cases, discrete spikes still might be a good approach. We provide a Python function that converts the spiking probability into discrete spikes (**[demo](https://github.com/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Demo_discrete_spikes.py)** on Github).
+>However, for some cases, discrete spikes still might be a good approach. We provide a Python function that converts the spiking probability into the most likely underlying discrete spikes (**[demo](https://github.com/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Demo_discrete_spikes.py)** on Github).
 
 
 #### Why are the first and last datapoints of the predictions NaNs?
@@ -179,7 +179,7 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 
 > The ground truth which has been used to train the model has been slightly smoothed with a Gaussian kernel. This is a processing step which helps the deep network to learn quicker and more reliably. However, this also means that the predictions will be smoothed in a similar fashion. How to choose these parameters optimally?
 >
-> From our experience, at a frame rate of 7.5 Hz, a smoothing kernel with standard deviation of 200 ms is appropriate. At 30 Hz, a smoothing kernel of 50 ms works well. If the calcium imaging quality is not ideal, it can make sense to increase the smoothing kernel standard deviation. In the end, it is always a trade-off between reliability and optimal learning (more smoothing) and temporal precision (less smoothing of the ground truth).
+> From our experience, at a frame rate of 7.5 Hz, a smoothing kernel with standard deviation of 100-200 ms is appropriate. At 30 Hz, a smoothing kernel of 50 ms works well. If the calcium imaging quality is not ideal, it can make sense to increase the smoothing kernel standard deviation. In the end, it is always a trade-off between reliability and optimal learning (more smoothing) and temporal precision (less smoothing of the ground truth).
 >
 > If you use our suggested default specifications, you should be good!
 
