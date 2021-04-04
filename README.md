@@ -15,11 +15,15 @@
 - Tools to quantify the out-of-dataset generalization for a given model and noise level
 - A tool to transform inferred spike rates into discrete spikes
 
-We provide the following two *Colaboratory Notebooks*:
+Get started quickly with the following two *Colaboratory Notebooks*:
 
 #### [Spike inference from calcium data](https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Calibrated_spike_inference_with_Cascade.ipynb)
 
-Upload the calcium data, process the data with the network, download the inferred spike rates. No parameter tuning, no installation!
+Upload your calcium data, use Cascade to process the data, download the inferred spike rates.
+
+No parameter tuning, no installation required.
+
+You will get started within few minutes.
 
 <p align="center">
 <a href="https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Calibrated_spike_inference_with_Cascade.ipynb" rel="Spike inference from calcium data, showing activations of intermediate network layers"><img src="https://github.com/HelmchenLabSoftware/Calibrated-inference-of-spiking/blob/master/etc/Network_activations_output.gif "  width="85%"></a>
@@ -27,7 +31,13 @@ Upload the calcium data, process the data with the network, download the inferre
 
 #### [Exploration of the ground truth database](https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Explore_ground_truth_datasets.ipynb)
 
-Explore the 27 ground truth data sets, browse through all 298 neurons, zoom into single events and observe calcium responses (or lack thereof) to single spikes.
+Explore the 27 ground truth data sets and browse through the 298 neurons.
+
+Zoom into single events and observe calcium responses (or lack thereof) to single spikes.
+
+Indicators: GCaMP6f, GCaMP6s, R-CaMP, jRCaMP, jRGECO GCaMP5k, OGB-1, Cal-520.
+
+Mouse cortex pyramidal cells in visual and somatosensory cortex, interneurons, hippocampal principal cells; zebrafish forebrain and olfactory bulb.
 
 <p align="center">
 <a href="https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Explore_ground_truth_datasets.ipynb" rel="Tool for the exploration of the ground truth database"><img src="https://github.com/HelmchenLabSoftware/Calibrated-inference-of-spiking/blob/master/etc/Exploration%20tool.gif"  width="85%"></a>
