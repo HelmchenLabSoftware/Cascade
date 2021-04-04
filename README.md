@@ -21,6 +21,8 @@ Get started quickly with the following two *Colaboratory Notebooks*:
 
 Upload your calcium data, use Cascade to process the data, download the inferred spike rates.
 
+Improves the temporal resolution, denoises the recording and provides an absolute spike rate estimate.
+
 No parameter tuning, no installation required.
 
 You will get started within few minutes.
