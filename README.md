@@ -27,6 +27,8 @@ No parameter tuning, no installation required.
 
 You will get started within few minutes.
 
+[Spike inference from calcium data](https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Calibrated_spike_inference_with_Cascade.ipynb)
+
 <p align="center">
 <a href="https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Calibrated_spike_inference_with_Cascade.ipynb" rel="Spike inference from calcium data, showing activations of intermediate network layers"><img src="https://github.com/HelmchenLabSoftware/Calibrated-inference-of-spiking/blob/master/etc/Network_activations_output.gif "  width="85%"></a>
 </p>
@@ -40,6 +42,8 @@ Zoom into single events and observe calcium responses (or lack thereof) to singl
 Indicators: GCaMP6f, GCaMP6s, R-CaMP, jRCaMP, jRGECO GCaMP5k, OGB-1, Cal-520.
 
 Mouse cortex pyramidal cells in visual and somatosensory cortex, interneurons, hippocampal principal cells; zebrafish forebrain and olfactory bulb.
+
+[Exploration of the ground truth database](https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Explore_ground_truth_datasets.ipynb)
 
 <p align="center">
 <a href="https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Explore_ground_truth_datasets.ipynb" rel="Tool for the exploration of the ground truth database"><img src="https://github.com/HelmchenLabSoftware/Calibrated-inference-of-spiking/blob/master/etc/Exploration%20tool.gif"  width="85%"></a>
