@@ -21,7 +21,7 @@ Get started quickly with the following two *Colaboratory Notebooks*:
 
 Upload your calcium data, use Cascade to process the data, download the inferred spike rates.
 
-Improves the temporal resolution, denoises the recording and provides an absolute spike rate estimate.
+Spike inference with Cascade improves the temporal resolution, denoises the recording and provides an absolute spike rate estimate.
 
 No parameter tuning, no installation required.
 
@@ -39,9 +39,9 @@ Explore the 27 ground truth data sets and browse through the 298 neurons.
 
 Zoom into single events and observe calcium responses (or lack thereof) to single spikes.
 
-Indicators: GCaMP6f, GCaMP6s, R-CaMP, jRCaMP, jRGECO GCaMP5k, OGB-1, Cal-520.
+Indicators: GCaMP6f, GCaMP6s, R-CaMP, jRCaMP, jRGECO, GCaMP5k, OGB-1, Cal-520.
 
-Mouse cortex pyramidal cells in visual and somatosensory cortex, interneurons, hippocampal principal cells; zebrafish forebrain and olfactory bulb.
+Mouse pyramidal cells in visual and somatosensory cortices, interneurons, hippocampal principal cells; zebrafish forebrain and olfactory bulb.
 
 [Exploration of the ground truth database](https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Explore_ground_truth_datasets.ipynb)
 
