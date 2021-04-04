@@ -4,7 +4,7 @@
 
 *Cascade* translates calcium imaging ΔF/F traces into spiking probabilities or discrete spikes.
 
-*Cascade* is described in detail in **[this preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1)**.
+*Cascade* is described in detail in **[this preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v2)**.
 
 *Cascade's* toolbox consists of
 
@@ -52,7 +52,7 @@ This recipe has been tested on macOS 10.15 (Catalina).
 
 ## Typical work flow
 
-The average user will only use pretrained models to produce predictions for his/her own data, and the [Colaboratory Notebook](https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Calibrated_spike_inference_with_Cascade.ipynb) should in most cases be sufficient. The description of the complete work flow (below) is, however, helpful to understand what the algorithm does.
+The average user will only use pretrained models to produce predictions for his/her own data, and the [Colaboratory Notebook](https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Calibrated_spike_inference_with_Cascade.ipynb) should in most cases be sufficient. The description of the complete work flow (below) is not necessary but helpful to understand what the algorithm does.
 
 
 **Train a model with ground truth (optional)**
@@ -89,7 +89,7 @@ We do not recommend discrete spike predictions except for outstanding high-quali
 
 This section can be reproduced with the ``Demo_benchmark_model.py`` file.
 
-To understand how good predictions are, it is important to quantify the performance of a given trained model. As discussed in depth in the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1), this is best measured by quantifying the performance when training the deep network on all except one ground truth dataset and test it on the held-out dataset.
+To understand how good predictions are, it is important to quantify the performance of a given trained model. As discussed in depth in the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v2), this is best measured by quantifying the performance when training the deep network on all except one ground truth dataset and test it on the held-out dataset.
 
 To do this systematically, a lot of training and testing needs to performed, and we do not recommend this procedure for CPU-only installations.
 
@@ -101,11 +101,11 @@ If you want to understand how the code works, you will be surprised how simple t
 
 All main functions are described in the ``cascade2p/cascade.py`` file, including the functions ``cascade.train()`` and ``cascade.predict()``.
 
-Some helper functions to load the ground truth data for training (which is a bit more challenging due to the initial diversity of ground truth datasets) and to plot results are contained in the ``cascade2p/utils.py`` file. In addition, this file also contains the definition of the deep network ``define_model()``, which is only a few lines. If you want to use a different architecture for training (see Fig. S8 in the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1), it is very simple to modify or replace.
+Some helper functions to load the ground truth data for training (which is a bit more challenging due to the initial diversity of ground truth datasets) and to plot results are contained in the ``cascade2p/utils.py`` file. In addition, this file also contains the definition of the deep network ``define_model()``, which is only a few lines. If you want to use a different architecture for training (see Fig. S8 in the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v2), it is very simple to modify or replace.
 
 Functions used to convert spiking probabilities into discrete spikes can be found in the file ``cascade/utils_discrete_spikes.py``. 
 
-The ``cascade/config.py`` contains the default model parameters. Fig. S7 in the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v1) shows that changing those parameters does not greatly affect the prediction quality, such that the user does not need to change any of the hyper-parameters.
+The ``cascade/config.py`` contains the default model parameters. Fig. S7 in the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v2) shows that changing those parameters does not greatly affect the prediction quality, such that the user does not need to change any of the hyper-parameters.
 
 The folder ``Ground_truth`` contains all ground truth datasets. The folder also contains a Matlab script and a Python script which can be used to explore the ground truth data. Highly recommended, it's very interesting!
 
