@@ -19,6 +19,10 @@ We provide the following two *Colaboratory Notebooks* that can be used without l
 
 #### [Spike inference from calcium data](https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Calibrated_spike_inference_with_Cascade.ipynb)
 
+<p align="center">
+<a href="https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Calibrated_spike_inference_with_Cascade.ipynb" rel="Spike inference from calcium data, showing activations of intermediate network layers"><img src="https://github.com/HelmchenLabSoftware/Calibrated-inference-of-spiking/blob/master/etc/Network_activations_output.gif "  width="85%"></a>
+</p>
+
 Placeholder for image
 
 #### [Exploration of the ground truth database](https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Explore_ground_truth_datasets.ipynb)
