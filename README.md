@@ -210,6 +210,12 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 >
 >There are two additional model specifications that you can choose, "causal" kernels and "smoothing". The choice of these specifications does not make a model better or worse, but better or less well suited for your needs. See the following two questions!
 
+#### What does the "Global EXC" for some of the models mean?
+
+> "Global EXC" indicates that the model has been trained on a diverse set of ground truth datasets. It should work very well on unseen data without any retraining (as described in Fig. 3 in the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v2)).
+> 
+>  The datasets used to train the "Global EXC model" include diverse indicators (GCaMP6f, GCaMP6s, OGB-1, GCaMP5k, Cal-520, R-CaMP1.07 and jRCaMP) and diverse brain regions (visual cortex, somatosensory cortex, hippocampus, several areas in the zebrafish forebrain and olfactory bulb). The olfactory bulb dataset also includes some inhibitory neurons, which were included in the training dataset because their spike-to-calcium relationship is similar to the excitatory datasets. Interneuron datasets (datasets #22-#26) were not included in the training dataset because their inclusion compromised the overall performance of the global model for excitatory neurons.
+
 #### What does the "smoothing" for some of the models mean?
 
 > The ground truth which has been used to train the model has been slightly smoothed with a Gaussian kernel. This is a processing step which helps the deep network to learn quicker and more reliably. However, this also means that the predictions will be smoothed in a similar fashion. How to choose these parameters optimally?
