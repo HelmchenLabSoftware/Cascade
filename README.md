@@ -212,9 +212,9 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 
 #### What does the "Global EXC" for some of the models mean?
 
-> "Global EXC" indicates that the model has been trained on a diverse set of ground truth datasets. It should work very well on unseen data without any retraining (as described in Fig. 3 in the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v2)).
+> "Global EXC" indicates that the model has been trained on a diverse set of ground truth datasets from excitatory neurons. It should work very well on unseen data from excitatory neurons without any retraining (as described in Fig. 3 in the [preprint](https://www.biorxiv.org/content/10.1101/2020.08.31.272450v2)).
 > 
->  The datasets used to train the "Global EXC model" include diverse indicators (GCaMP6f, GCaMP6s, OGB-1, GCaMP5k, Cal-520, R-CaMP1.07 and jRCaMP) and diverse brain regions (visual cortex, somatosensory cortex, hippocampus, several areas in the zebrafish forebrain and olfactory bulb). The olfactory bulb dataset also includes some inhibitory neurons, which were included in the training dataset because their spike-to-calcium relationship is similar to the excitatory datasets. Interneuron datasets (datasets #22-#26) were not included in the training dataset because their inclusion compromised the overall performance of the global model for excitatory neurons.
+>  The datasets used to train the "Global EXC model" include diverse indicators (GCaMP6f, GCaMP6s, OGB-1, GCaMP5k, Cal-520, R-CaMP1.07 and jRCaMP) and diverse brain regions (visual cortex, somatosensory cortex, hippocampus, several areas in the zebrafish forebrain and olfactory bulb). The olfactory bulb dataset also includes some inhibitory neurons, which were included in the training dataset because their spike-to-calcium relationship is similar to the excitatory datasets. Interneuron datasets (datasets #22-#26) were not included in the training dataset because their inclusion would compromise the overall performance of the global model for excitatory neurons.
 
 #### What does the "smoothing" for some of the models mean?
 
