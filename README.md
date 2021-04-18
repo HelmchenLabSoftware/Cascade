@@ -218,9 +218,9 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 
 #### What does the "smoothing" for some of the models mean?
 
-> The ground truth which has been used to train the model has been slightly smoothed with a Gaussian kernel. This is a processing step which helps the deep network to learn quicker and more reliably. However, this also means that the predictions will be smoothed in a similar fashion. How to choose these parameters optimally?
+> The ground truth used to train the model has been slightly smoothed with a Gaussian kernel. This is a processing step which helps the deep network to learn quicker and more reliably. However, this also means that the predictions will be smoothed in a similar fashion. How to choose these parameters optimally?
 >
-> From our experience, at a frame rate of 7.5 Hz, a smoothing kernel with standard deviation of 100-200 ms is appropriate. At 30 Hz, a smoothing kernel of 50 ms works well. If the calcium imaging quality is not ideal, it can make sense to increase the smoothing kernel standard deviation. In the end, it is always a trade-off between reliability and optimal learning (more smoothing) and temporal precision (less smoothing of the ground truth).
+> From our experience, at a frame rate of 7.5 Hz, a smoothing kernel with standard deviation of 100-200 ms is appropriate. At 30 Hz, a smoothing kernel of 50 ms works well. If the calcium imaging quality is not ideal, it can make sense to increase the standard deviation of the smoothing kernel. In the end, one has to make a trade-off between reliability and optimal learning (more smoothing) and temporal precision (less smoothing of the ground truth).
 >
 > If you use our suggested default specifications, you should be good!
 
