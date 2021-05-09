@@ -69,14 +69,6 @@ Load model and parameters
 model_path = os.path.join('Pretrained_models', model_name)
 cfg_file = os.path.join( model_path, 'config.yaml')
 
-# check if configuration file can be found
-if not os.path.isfile(cfg_file):
-    m = 'The configuration file "config.yaml" can not be found at the location "{}".\n'.format( os.path.abspath(cfg_file) ) + \
-        'You have provided the model "{}" at the absolute or relative path "{}".\n'.format( model_name, model_folder) + \
-        'Please check if there is a folder for model "{}" at the location "{}".'.format( model_name, os.path.abspath(model_folder))
-    print(m)
-    raise Exception(m)
-
 # Load config file
 cfg = config.read_config( cfg_file )
 
