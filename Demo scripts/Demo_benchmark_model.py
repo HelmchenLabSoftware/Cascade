@@ -97,7 +97,7 @@ correlation = []
 error = []
 bias = []
 
-for index in len(all_training_datasets):
+for index in range(len(all_training_datasets)):
 
   training_datasets = deepcopy(all_training_datasets)
   test_dataset = training_datasets.pop(index);
