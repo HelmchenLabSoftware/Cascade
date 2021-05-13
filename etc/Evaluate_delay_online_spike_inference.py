@@ -1,4 +1,16 @@
 
+"""
+
+This script evaluates spike inference as a function of the number of data points after the time point of interest. For the purpose of online processing, it would be desirable to keep the number of used data points after the time point of interest as low as possible, to reduce possible delays during closed-loop processing.
+
+More context and the results of this script are describe in this blog post: https://gcamp6f.com/2021/05/13/online-spike-rate-inference-with-cascade/
+
+Peter Rupprecht, 2021-05-13
+
+
+"""
+
+
 
 """
 
