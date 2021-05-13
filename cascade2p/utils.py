@@ -133,8 +133,8 @@ def preprocess_traces(neurons_x_time, before_frac, window_size):
 
     """
     dF_traces = neurons_x_time
-    start = int(before_frac * window_size)
-    end = dF_traces.shape[1] - start + 1
+    start = int(before_frac * window_size -1)
+    end = dF_traces.shape[1] - window_size + start + 1
     # extract a moving window from the calcium trace
     window_indexes = (np.expand_dims(np.arange(window_size), 0) + np.expand_dims(np.arange(dF_traces.shape[1] - window_size + 1), 0).T)
     X = np.full(shape=(dF_traces.shape[0], dF_traces.shape[1], window_size), fill_value=np.nan)
