@@ -269,6 +269,9 @@ def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sam
 
           [events_binned,event_bins] = np.histogram(events/ephys_sampling_rate, bins=fluo_times_bin_edges)
 
+          # Limit number of replicas for longer recordings
+          nb_subROIs = int(np.minimum(8e5,len(dataset_neuron_all)*len(fluo_times_resampled)*nb_subROIs)/len(fluo_times_resampled))/len(dataset_neuron_all)
+
           # Generate a noisified trace in each iteration of the for-loop
           # Noise is scaled with the square root of the mean fluorescence (fluo_level),
           # corresponding to POisson noise
