@@ -279,7 +279,9 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 >
 > If you use the respective ground truth datasets directly, please also refer to the original papers and the associated dataset:
 > 
-> Rupprecht P, Carta S, Hoffmann A, Echizen M, Kitamura K, Helmchen F\*, Friedrich RW\*, *A deep learning toolbox for noise-optimized, generalized spike inference from calcium imaging data*, bioRxiv (2020), for datasets \#3-8, \#18-19 and \#27.
+> Rupprecht P, Carta S, Hoffmann A, Echizen M, Kitamura K, Helmchen F\*, Friedrich RW\*, *A deep learning toolbox for noise-optimized, generalized spike inference from calcium imaging data*, bioRxiv (2020), for datasets \#3-8, \#19 and \#27.
+> 
+> Schoenfeld G, Carta S, Rupprecht P, Ayaz A, Helmchen F, *In vivo calcium imaging of CA3 pyramidal neuron populations in adult mouse hippocampus*, eNeuro (2021), for dataset \#18.
 > 
 > Chen TW, Wardill TJ, Sun Y, Pulver SR, Renninger SL, Baohan A, Schreiter ER, Kerr RA, Orger MB, Jayaraman V, Looger LL. Ultrasensitive fluorescent proteins for imaging neuronal activity, Nature (2013), for datasets \#9 and \#14.
 >
