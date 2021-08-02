@@ -198,16 +198,16 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 
 #### I get a certain noise level for my recordings. What is good or bad?
 
->For an illustration of different noise levels, check out Fig. S3 in the preprint. To give an example, the Allen Brain Observatory Visual Coding dataset is of very high imaging quality, with noise levels around **1, which is very good** (unit is $\% \cdot s^{-1/2}$). A noise level of **3-4 is still decent**, especially for population imaging with many neurons. Noise levels **above 5 indicates rather poor signal** levels. For a definition of the noise level, check out the Methods section of the preprint.
+>For an illustration of different noise levels, check out Extended Data Fig. 3 in the [paper](https://www.nature.com/articles/s41593-021-00895-5). To give an example, the Allen Brain Observatory Visual Coding dataset is of very high imaging quality, with noise levels around **1, which is very good** (unit: $\small \%·s^{-1/2}$ ). A noise level of **3-4 is still decent**, especially for population imaging with many neurons. Noise levels **above 5 indicates rather poor signal** levels. For a definition of the noise level, check out the Methods of the preprint.
 >
->However, even for excellent shot noise levels, the recording quality can be bad due to bad imaging resolution, **neuropil contamination** and, most importantly, **movement artifacts**. See Extended Data Fig. 5 in the [paper](https://www.nature.com/articles/s41593-021-00895-5) and the associated text as well as the Discussion for more details .
+>However, even for excellent shot noise levels, the recording quality can be bad due to bad imaging resolution, **neuropil contamination** and, most importantly, **movement artifacts**. See Extended Data Fig. 5 in the [paper](https://www.nature.com/articles/s41593-021-00895-5) and the associated text as well as the Discussion for more details.
 
 
 #### How do I select an appropriate model for my data?
 
-> Each model is trained on a resampled ground truth dataset. The training dataset is resampled at the desired frame rate and at multiple noise levels. The model automatically chooses the model with matching noise-levels for each neuron. You only have to select the correct frame rate (which is indicated in the model name).
+> Each model is trained on a resampled ground truth dataset, as described in the preprint. The training dataset is resampled at the desired frame rate and at multiple noise levels. The model automatically chooses the model with matching noise-levels for each neuron. You only have to select the correct frame rate (which is indicated in the model name).
 >
->If you do not have a specific ground truth for your dataset, it is typically best (see Fig. 3 and the associated discussion in the paper) to use a model that has been trained on all available datasets (called 'Universal Model').
+>If you do not have a specific ground truth for your dataset, it is typically best (see Fig. 3 and the associated discussion in the [paper](https://www.nature.com/articles/s41593-021-00895-5)) to use a model that has been trained on all available datasets (called 'Global EXC Model').
 >
 >There are two additional model specifications that you can choose, "causal" kernels and "smoothing". The choice of these specifications does not make a model better or worse, but better or less well suited for your needs. See the following two questions!
 
@@ -217,13 +217,13 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 > 
 >  The datasets used to train the "Global EXC model" include diverse indicators (GCaMP6f, GCaMP6s, OGB-1, GCaMP5k, Cal-520, R-CaMP1.07 and jRCaMP) and diverse brain regions (visual cortex, somatosensory cortex, hippocampus, several areas in the zebrafish forebrain and olfactory bulb). The olfactory bulb dataset also includes some inhibitory neurons, which were included in the training dataset because their spike-to-calcium relationship is similar to the excitatory datasets. Interneuron datasets (datasets #22-#26) were not included in the training dataset because their inclusion would compromise the overall performance of the global model for excitatory neurons.
 
-#### What does the "smoothing" for some of the models mean?
+#### What does the **smoothing** parameter for the models mean?
 
-> The ground truth used to train the model has been slightly smoothed with a Gaussian kernel. This is a processing step which helps the deep network to learn quicker and more reliably. However, this also means that the predictions will be smoothed in a similar fashion. How to choose these parameters optimally?
+> The ground truth which has been used to train the model has been slightly smoothed with a Gaussian kernel. This is a processing step which helps the deep network to learn quicker and more reliably. However, this also means that the predictions will be smoothed in a similar fashion. How to choose these parameters optimally?
 >
-> From our experience, at a frame rate of 7.5 Hz, a smoothing kernel with standard deviation of 100-200 ms is appropriate. At 30 Hz, a smoothing kernel of 50 ms works well. If the calcium imaging quality is not ideal, it can make sense to increase the standard deviation of the smoothing kernel. In the end, one has to make a trade-off between reliability and optimal learning (more smoothing) and temporal precision (less smoothing of the ground truth).
+> From our experience, at a frame rate of 7.5 Hz, a smoothing kernel with standard deviation of 200 ms is appropriate. At 30 Hz, a smoothing kernel of 50 ms works well. If the calcium imaging quality is not ideal, it can make sense to increase the smoothing kernel standard deviation. In the end, it is always a trade-off between reliability and optimal learning (more smoothing) and temporal precision (less smoothing of the ground truth). The impact of temporal smoothing on the quality of the inference is discussed in Extended Data Fig. 9 in the [paper](https://www.nature.com/articles/s41593-021-00895-5).
 >
-> If you use our suggested default specifications, you should be good!
+> However, if you use our suggested default specifications, you should be good!
 
 
 #### What does the "causal" mean for some of the models?
