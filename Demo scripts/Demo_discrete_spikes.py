@@ -58,9 +58,9 @@ def load_neurons_x_time(file_path):
 def load_predictions(file_path):
     """Custom method to load spike predictions produced by "Demo_predict.py" """
 
-    spike_rates = sio.loadmat(file_path)['spike_rates']
+    spike_prob = sio.loadmat(file_path)['spike_prob']
 
-    return spike_rates
+    return spike_prob
 
 
 
@@ -76,7 +76,7 @@ model_name = 'OGB_zf_pDp_7.5Hz_smoothing200ms'
 frame_rate = 7.5
 
 traces = load_neurons_x_time(example_file)
-spike_rates = load_predictions(example_file_predictions)
+spike_prob = load_predictions(example_file_predictions)
 
 
 
@@ -87,7 +87,7 @@ Fill up probabilities (output of the network) with discrete spikes
 
 """
 
-discrete_approximation, spike_time_estimates = infer_discrete_spikes(spike_rates,model_name)
+discrete_approximation, spike_time_estimates = infer_discrete_spikes(spike_prob,model_name)
 
 
 
@@ -97,8 +97,8 @@ Plot example predictions together with discrete spikes
 
 """
 
-neuron_indices = np.random.randint(spike_rates.shape[0], size=10)
-plot_dFF_traces(traces,neuron_indices,frame_rate,spiking=spike_rates,discrete_spikes=spike_time_estimates )
+neuron_indices = np.random.randint(spike_prob.shape[0], size=10)
+plot_dFF_traces(traces,neuron_indices,frame_rate,spiking=spike_prob,discrete_spikes=spike_time_estimates )
 
 
 """
@@ -111,5 +111,5 @@ folder = os.path.dirname(example_file)
 save_path = os.path.join(folder, 'discrete_spikes_'+os.path.basename(example_file))
 
 # save as numpy file
-#np.save(save_path, spike_rates)
-sio.savemat(save_path, {'spike_rates':spike_rates,'discrete_approximation':discrete_approximation,'spike_time_estimates':spike_time_estimates})
+#np.save(save_path, spike_prob)
+sio.savemat(save_path, {'spike_prob':spike_prob,'discrete_approximation':discrete_approximation,'spike_time_estimates':spike_time_estimates})
