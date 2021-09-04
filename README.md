@@ -109,7 +109,7 @@ First, a function is defined that loads the calcium traces. In the default confi
 
 Next, the user indicates the path of the file that should be processed and the frame rate. We recommend to plot example traces to see whether everything went well.
 
-Now, the user indicates the model of the (already trained) model and performs the spike inference with the command ``spike_rates = cascade.predict( model_name, traces )``. The input (``traces``) is processed by the model (``model_name``) to produce the spiking probabilities as output (``spike_rates``). The spiking probabilities are given at the same sampling rate as the input calcium recording.
+Now, the user indicates the model of the (already trained) model and performs the spike inference with the command ``spike_prob = cascade.predict( model_name, traces )``. The input (``traces``) is processed by the model (``model_name``) to produce the spiking probabilities as output (``spike_prob``). The spiking probabilities are given at the same sampling rate as the input calcium recording.
 
 Finally, the predictions are saved to disk.
 
@@ -117,7 +117,7 @@ Finally, the predictions are saved to disk.
 
 This section can be reproduced with the ``Demo_discrete_spikes.py`` file.
 
-In this section, the output from the previous step (``spike_rates``) is loaded from disk. Single spikes are fitted into the smooth probabilities such that the most likely spike sequence is recovered. For optimal fitting, the parameters of the model used for spike predictions has to be loaded as well (``model_name``). The result of the procedure are spike times. They are given with the same temporal precision as the sampling rate of the calcium recording.
+In this section, the output from the previous step (``spike_prob``) is loaded from disk. Single spikes are fitted into the smooth probabilities such that the most likely spike sequence is recovered. For optimal fitting, the parameters of the model used for spike predictions has to be loaded as well (``model_name``). The result of the procedure are spike times. They are given with the same temporal precision as the sampling rate of the calcium recording.
 
 We do not recommend discrete spike predictions except for outstanding high-quality recordings and refer to the FAQ and the paper ([link](https://www.nature.com/articles/s41593-021-00895-5), Fig. S7 and Supplementary Note 3) for a discussion.
 
