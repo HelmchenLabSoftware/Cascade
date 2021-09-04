@@ -9,7 +9,7 @@ Demo script to predict spiking activity from calcium imaging data
 The function "load_neurons_x_time()" loads the input data as a matrix. It can
 be modified to load npy-files, mat-files or any other standard format.
 
-The line "spike_rates = cascade.predict( model_name, traces )" performs the
+The line "spike_prob = cascade.predict( model_name, traces )" performs the
 predictions. As input, it uses the loaded calcium recordings ('traces') and
 the pretrained model ('model_name'). The output is a matrix with the inferred spike rates.
 
@@ -117,7 +117,7 @@ Select pretrained model and apply to dF/F data
 model_name = 'OGB_zf_pDp_7.5Hz_smoothing200ms'
 cascade.download_model( model_name,verbose = 1)
 
-spike_rates = cascade.predict( model_name, traces )
+spike_prob = cascade.predict( model_name, traces )
 
 
 """
@@ -131,8 +131,8 @@ folder = os.path.dirname(example_file)
 save_path = os.path.join(folder, 'full_prediction_'+os.path.basename(example_file))
 
 # save as numpy file
-#np.save(save_path, spike_rates)
-sio.savemat(save_path+'.mat', {'spike_rates':spike_rates})
+#np.save(save_path, spike_prob)
+sio.savemat(save_path+'.mat', {'spike_prob':spike_prob})
 
 """
 
@@ -141,7 +141,7 @@ Plot example predictions
 """
 
 neuron_indices = np.random.randint(traces.shape[0], size=10)
-plot_dFF_traces(traces,neuron_indices,frame_rate,spike_rates)
+plot_dFF_traces(traces,neuron_indices,frame_rate,spike_prob)
 
 
 
