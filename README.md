@@ -1,5 +1,5 @@
 [![DOI](https://zenodo.org/badge/241174650.svg)](https://zenodo.org/badge/latestdoi/241174650)
-[![License](https://img.shields.io/badge/License-GPL--3.0-brightgreen)](https://github.com/HelmchenLabSoftware/Cascade/LICENSE)
+[![License](https://img.shields.io/badge/License-GPL--3.0-brightgreen)](https://github.com/HelmchenLabSoftware/Cascade/blob/master/LICENSE)
 [![Size](https://img.shields.io/github/repo-size/HelmchenLabSoftware/Cascade?style=plastic)](https://img.shields.io/github/repo-size/HelmchenLabSoftware/Cascade?style=plastic)
 [![Language](https://img.shields.io/github/languages/top/HelmchenLabSoftware/Cascade?style=plastic)](https://github.com/HelmchenLabSoftware/Cascade)
 
