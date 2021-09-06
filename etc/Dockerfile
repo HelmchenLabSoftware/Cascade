@@ -3,7 +3,7 @@
 # See README_Docker.md for instructions
 
 
-ARG BASE_CONTAINER=jupyter/scipy-notebook
+ARG BASE_CONTAINER=scipy-notebook:9b87b1625445
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Henry Luetcke <hluetcke@ethz.ch>"
