@@ -1,3 +1,9 @@
+[![DOI](https://zenodo.org/badge/241174650.svg)](https://zenodo.org/badge/latestdoi/241174650)
+[![License](https://img.shields.io/badge/License-GPL--3.0-brightgreen)](https://github.com/HelmchenLabSoftware/Cascade/LICENSE)
+[![Generic badge](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](docs/contribute.md)
+[![Size](https://img.shields.io/github/repo-size/HelmchenLabSoftware/Cascade?style=plastic)](https://img.shields.io/github/repo-size/HelmchenLabSoftware/Cascade?style=plastic)
+[![Language](https://img.shields.io/github/languages/top/HelmchenLabSoftware/Cascade?style=plastic)](https://github.com/HelmchenLabSoftware/Cascade)
+
 ## Cascade: Calibrated spike inference from calcium imaging data
 
 <!---![Concept of supervised inference of spiking activity from calcium imaging data using deep networks](https://github.com/HelmchenLabSoftware/Calibrated-inference-of-spiking/blob/master/etc/Figure%20concept.png)--->
