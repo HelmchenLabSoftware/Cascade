@@ -131,6 +131,11 @@ def train_model( model_name, model_folder='Pretrained_models', ground_truth_fold
             print('\nFitting model {} with noise level {} (total {} out of {}).'.format(
                     ensemble+1, noise_level, curr_model_nr, nr_model_fits))
 
+            if cfg['sampling_rate'] > 30:
+                
+                cfg['windowsize'] = int(np.power(cfg['sampling_rate']/30,0.25)*64)
+
+                print('Window size enlarged to '+str(cfg['windowsize']) +' time points due to the high calcium imaging sampling rate('+str(cfg['sampling_rate'])+').')
 
             # preprocess dataset to get uniform dataset for training
             X,Y = utils.preprocess_groundtruth_artificial_noise_balanced(
@@ -147,12 +152,7 @@ def train_model( model_name, model_folder='Pretrained_models', ground_truth_fold
                                 replicas=1,
                                 causal_kernel=cfg['causal_kernel'])
             
-            if cfg['sampling_rate'] > 30:
-                
-                cfg['windowsize'] = int(np.power(cfg['sampling_rate']/30,0.25)*64)
-
-                print('Window size enlarged to '+str(cfg['windowsize']) +' time points due to the high calcium imaging sampling rate('+str(cfg['sampling_rate'])+').')
-
+            
             model = utils.define_model(
                                 filter_sizes = cfg['filter_sizes'],
                                 filter_numbers = cfg['filter_numbers'],
