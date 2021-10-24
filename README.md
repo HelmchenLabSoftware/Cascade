@@ -161,7 +161,7 @@ Any more questions? Probably you will find the answer below!
 
 #### What does the output of the algorithm mean?
 
->The output is the estimated probability of action potentials (spikes), at the same resolution as the original calcium recording. If you sum over the trace in time, you will get the estimated **number of spikes**. If you multiply the trace with the frame rate, you will get an estimate of the **instantaneous spike rate**. Spike probability (the output of the toolbox) can therefore be converted into spike rates by multiplication with the frame rate.
+>The output **spike_prob** is the _expected number of spikes_ in this time bin, at the same resolution as the original calcium recording. This metric is also called _spike probability_ for brevity in the paper and elsewhere. If you sum over the trace in time, you will get the estimated **number of spikes**. If you multiply the trace with the frame rate, you will get an estimate of the instantaneous **spike rate**. Spike probability and spike rates can therefore be converted by multiplication with the frame rate.
 
 #### How large would a single spike be?
 >This depends on your frame rate (Hz) and on the smoothing (standard deviation, milliseconds) of your model. Use the following script to compute the spike probability shape for given parameters.
