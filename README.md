@@ -163,6 +163,10 @@ Any more questions? Probably you will find the answer below!
 
 >The output **spike_prob** is the _expected number of spikes_ in this time bin, at the same resolution as the original calcium recording. This metric is also called _spike probability_ for brevity in the paper and elsewhere. If you sum over the trace in time, you will get the estimated **number of spikes**. If you multiply the trace with the frame rate, you will get an estimate of the instantaneous **spike rate**. Spike probability and spike rates can therefore be converted by multiplication with the frame rate.
 
+#### Can **spike_prob** be larger than 1?
+
+>Yes. As described above ("What does the output of the algorithm mean?"), the output of the algorithm is strictly speaking not a probability and therefore not restricted to values between 0 and 1. A value >1 indicates that the estimated number of spikes in the time bin is larger than 1. 
+
 #### How large would a single spike be?
 >This depends on your frame rate (Hz) and on the smoothing (standard deviation, milliseconds) of your model. Use the following script to compute the spike probability shape for given parameters.
 > 
