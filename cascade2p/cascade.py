@@ -234,7 +234,7 @@ def predict(
     The model (frame rate, noise levels, ground truth datasets) should be chosen
       to match the properties of the calcium recordings in 'traces'.
     An ensemble of 5 models is loaded for each noise level.
-    These models are used to predict spiking activitz of neurons from 'traces' with the same noise levels.
+    These models are used to predict spiking activity of neurons from 'traces' with the same noise levels.
     The predictions are made in the line with 'model.predict()'.
     The predictions are returned as a matrix 'Y_predict'.
 
@@ -258,7 +258,7 @@ def predict(
         Allowed values: 0, 1 or False
             0: All negative values are set to 0
             1 or True: Threshold signal to set every signal which is smaller than the expected signal size
-                       of an action potential to zero (with dialated mask)
+                       of an action potential to zero (with dilated mask)
             False: No thresholding. The result can contain negative values as well
 
     padding : 0 or np.nan
