@@ -73,7 +73,17 @@ We recommend the following installation procedure, but many other options are po
 1. Download / clone the repository to your local computer
 2. Install the Python environment Anaconda with Python 3 (https://www.anaconda.com/distribution/)
 3. Use the Anaconda prompt (Windows) or the console to navigate to the main folder where you downloaded *Cascade*
-4. Create a new Anaconda environment with the required packages: ``conda create -n Cascade python=3.6 tensorflow==2.1.0 keras==2.3.1 h5py==2.10.0 numpy scipy matplotlib seaborn ruamel.yaml spyder``. Other versions of python will work as well, we have mainly worked with Python 3.6 and 3.7, and versions of Tensorflow up to 2.3 so far.
+4. Create a new Anaconda environment with the required packages:
+
+    * For a CPU installation (slow):
+
+         ``conda create -n Cascade python=3.6 tensorflow==2.1.0 keras==2.3.1 h5py==2.10.0 numpy scipy matplotlib seaborn ruamel.yaml spyder``. 
+    * For a GPU installation (faster): 
+        
+        ``conda create -n Cascade python=3.6 tensorflow-gpu==2.1.0 keras==2.3.1 h5py==2.10.0 numpy scipy matplotlib seaborn ruamel.yaml spyder``
+
+    Other versions of python will work as well, we have mainly worked with Python 3.6 and 3.7, and versions of Tensorflow up to 2.3 so far.
+
 5. Activate the new environment using ``conda activate Cascade`` in Ubuntu and ``activate Cascade`` on Windows
 6. Use your editor of choice (e.g., Spyder or PyCharm) to get started with the demo files: type ``spyder`` in the console after activating the environment.<br> If you want to use the Jupyter demo Notebooks, you have to install ipython via ``pip install ipython ipykernel`` and make it visible in the new environment via ``python -m ipykernel install --user --name Cascade``. Then start the Jupyter notebook in the browser from the activated environment via ``jupyter notebook``, and do not forget to select the environment in the menu (Kernel -> Change Kernel -> Cascade). If you encounter problems, the internet is your friend (for example, [here](https://stackoverflow.com/questions/58068818/how-to-use-jupyter-notebooks-in-a-conda-environment))
 7. Now you're ready to process your data on your local computer!
