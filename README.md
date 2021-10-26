@@ -75,10 +75,10 @@ We recommend the following installation procedure, but many other options are po
 3. Use the Anaconda prompt (Windows) or the console to navigate to the main folder where you downloaded *Cascade*
 4. Create a new Anaconda environment with the required packages:
 
-    * For a CPU installation (slow):
+    * For a CPU installation (slower, recommended if you will not train a network):
 
          ``conda create -n Cascade python=3.6 tensorflow==2.1.0 keras==2.3.1 h5py==2.10.0 numpy scipy matplotlib seaborn ruamel.yaml spyder``. 
-    * For a GPU installation (faster): 
+    * For a GPU installation (faster, recommended if you will train networks): 
         
         ``conda create -n Cascade python=3.6 tensorflow-gpu==2.1.0 keras==2.3.1 h5py==2.10.0 numpy scipy matplotlib seaborn ruamel.yaml spyder``
 
