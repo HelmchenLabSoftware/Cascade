@@ -6,9 +6,6 @@
 
 
 
-OGB_zf_pDp_7.5Hz_smoothing200ms_causalkernel:
-    Link: https://drive.switch.ch/index.php/s/Z82Z6UJ6VRZjH8I/download
-    Info:
 Global_EXC_30Hz_smoothing50ms_asymmetric_window_1_frame:
     Link: https://drive.switch.ch/index.php/s/d7KCX4R2RUGClEg/download
     Info:
@@ -29,6 +26,9 @@ GCaMP6f_mouse_30Hz_smoothing200ms:
     Info:
 OGB_zf_pDp_7.5Hz_smoothing200ms:
     Link: https://drive.switch.ch/index.php/s/z3BdtlXXj9W1uqJ/download
+    Info:
+OGB_zf_pDp_7.5Hz_smoothing200ms_causalkernel:
+    Link: https://drive.switch.ch/index.php/s/t4secylUuZTrimj/download
     Info:
 Global_EXC_5Hz_smoothing200ms:
     Link: https://drive.switch.ch/index.php/s/nCyQMLhjiHA8e86/download
