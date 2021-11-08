@@ -646,7 +646,7 @@ def plot_noise_level_distribution(traces,frame_rate):
 
   noise_levels = calculate_noise_levels(traces, frame_rate)
   
-  percent999 = np.percentile(noise_levels,99.9)
+  percent999 = np.nanpercentile(noise_levels,99.9)
 
   plt.figure(1121); plt.hist(noise_levels,density=True, bins=100)
   plt.xlim([0, percent999])
