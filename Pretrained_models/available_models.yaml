@@ -6,6 +6,7 @@
 
 
 
+
 Global_EXC_30Hz_smoothing50ms_asymmetric_window_1_frame:
     Link: https://drive.switch.ch/index.php/s/d7KCX4R2RUGClEg/download
     Info:
@@ -29,6 +30,18 @@ OGB_zf_pDp_7.5Hz_smoothing200ms:
     Info:
 OGB_zf_pDp_7.5Hz_smoothing200ms_causalkernel:
     Link: https://drive.switch.ch/index.php/s/t4secylUuZTrimj/download
+    Info:
+Global_EXC_3Hz_smoothing400ms:
+    Link: https://drive.switch.ch/index.php/s/ZTAtoekfVSRHTg0/download
+    Info:
+Global_EXC_3Hz_smoothing400ms_causalkernel:
+    Link: https://drive.switch.ch/index.php/s/3M1JxkaVf1O2yhF/download
+    Info:
+Global_EXC_4.25Hz_smoothing300ms:
+    Link: https://drive.switch.ch/index.php/s/nsjSB55BVZFhstp/download
+    Info:
+Global_EXC_4.25Hz_smoothing300ms_causalkernel:
+    Link: https://drive.switch.ch/index.php/s/j4D74cblkUCbXaw/download
     Info:
 Global_EXC_5Hz_smoothing200ms:
     Link: https://drive.switch.ch/index.php/s/nCyQMLhjiHA8e86/download
