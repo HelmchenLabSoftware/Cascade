@@ -57,6 +57,15 @@ Mouse pyramidal cells in visual and somatosensory cortices, interneurons, hippoc
 
 Just click on the links or the images!
 
+**Updates to the database**:
+
+*2021-12-01* - Spike times for dataset #1 were found to be misaligned (see issue [#28](https://github.com/HelmchenLabSoftware/Cascade/issues/28)). The corrected dataset was uploaded and replaced the previous dataset #1.
+
+*2021-12-01* - Some neurons in dataset #15 exhibited a systematic delay with calcium signals with respect to spike times. This delay was corrected based on inspection of spike-triggered averages. Dataset #15 was replaced with the corrected dataset.
+
+
+
+
 
 ## Getting started
 
