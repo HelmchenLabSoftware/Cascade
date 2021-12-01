@@ -51,11 +51,11 @@ Mouse pyramidal cells in visual and somatosensory cortices, interneurons, hippoc
 
 [Exploration of the ground truth database](https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Explore_ground_truth_datasets.ipynb)
 
+Just click on the link or the images!
+
 <p align="center">
 <a href="https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Explore_ground_truth_datasets.ipynb" rel="Tool for the exploration of the ground truth database"><img src="https://github.com/HelmchenLabSoftware/Calibrated-inference-of-spiking/blob/master/etc/Exploration%20tool.gif"  width="85%"></a>
 </p>
-
-Just click on the links or the images!
 
 **Updates to the database**:
 
