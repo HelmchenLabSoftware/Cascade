@@ -63,8 +63,7 @@ Just click on the link or the images!
 
 *2021-12-01* - Some neurons in dataset #15 exhibited a systematic delay with calcium signals with respect to spike times. This delay was corrected based on inspection of spike-triggered averages. Dataset #15 was replaced with the corrected dataset.
 
-
-
+*2021-12-11* - Neuron #8 in dataset #20 was removed since calcium signals were found to be unrelated to simultaneously recorded spike patterns. Most likely, calcium imaging and electrophysiology were performed from two different neurons.
 
 
 ## Getting started
