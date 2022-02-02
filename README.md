@@ -85,12 +85,14 @@ We recommend the following installation procedure, but many other options are po
 
     * For a CPU installation (slower, recommended if you will not train a network):
 
-         ``conda create -n Cascade python=3.6 tensorflow==2.3 keras==2.3.1 h5py==2.10.0 numpy scipy matplotlib seaborn ruamel.yaml spyder``. 
+         ``conda create -n Cascade python=3.7 tensorflow==2.3 keras==2.3.1 h5py numpy scipy matplotlib seaborn ruamel.yaml spyder``. 
     * For a GPU installation (faster, recommended if you will train networks): 
         
-        ``conda create -n Cascade python=3.6 tensorflow-gpu==2.3 keras==2.3.1 h5py==2.10.0 numpy scipy matplotlib seaborn ruamel.yaml spyder``
+        ``conda create -n Cascade python=3.7 tensorflow-gpu==2.4.1 keras h5py numpy scipy matplotlib seaborn ruamel.yaml spyder`` (Linux)
 
-    Other versions of python will work as well, we have mainly worked with Python 3.6 and 3.7. Tensorflow 2.1 works as well but might cause problems for models trained with newer versions of Tensorflow.
+        ``conda create -n Cascade python=3.7 tensorflow-gpu==2.3.0 keras h5py numpy scipy matplotlib seaborn ruamel.yaml spyder`` (Windows)
+
+    Conda environments with Python 3.8 seem to work equally well. Earlier versions of Cascade (pre-2022) were based on Tensorflow 2.1. Installations with Tensorflow 2.1 can still work, but are deprecated, since there might arise problems when using newer pretrained models.
 
 5. Activate the new environment using ``conda activate Cascade`` in Ubuntu and ``activate Cascade`` on Windows
 6. Use your editor of choice (e.g., Spyder or PyCharm) to get started with the demo files: type ``spyder`` in the console after activating the environment.<br> If you want to use the Jupyter demo Notebooks, you have to install ipython via ``pip install ipython ipykernel`` and make it visible in the new environment via ``python -m ipykernel install --user --name Cascade``. Then start the Jupyter notebook in the browser from the activated environment via ``jupyter notebook``, and do not forget to select the environment in the menu (Kernel -> Change Kernel -> Cascade). If you encounter problems, the internet is your friend (for example, [here](https://stackoverflow.com/questions/58068818/how-to-use-jupyter-notebooks-in-a-conda-environment))
