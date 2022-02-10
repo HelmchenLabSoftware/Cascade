@@ -12,7 +12,7 @@ setup(
         "numpy",
         "scipy",
         "matplotlib",
-        "tensorflow==2.3",  # pip install CPU and GPU tensorflow
+        "tensorflow==2.5.3",  # pip install CPU and GPU tensorflow
         "keras==2.3.1",
         "h5py",
         "seaborn",
