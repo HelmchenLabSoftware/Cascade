@@ -225,7 +225,7 @@ def train_model(
 
 
 def predict(
-    model_name, traces, model_folder="Pretrained_models", threshold=0, padding=np.nan
+    model_name, traces, model_folder="Pretrained_models", threshold=0, padding=np.nan, verbosity=1
 ):
 
     """Use a specific trained neural network ('model_name') to predict spiking activity for calcium traces ('traces')
@@ -299,6 +299,8 @@ def predict(
 
     # extract values from config file into variables
     verbose = cfg["verbose"]
+    if verbosity == 0:
+      verbose = 0
     training_data = cfg["training_datasets"]
     ensemble_size = cfg["ensemble_size"]
     batch_size = cfg["batch_size"]
