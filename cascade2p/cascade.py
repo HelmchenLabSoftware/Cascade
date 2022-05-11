@@ -333,7 +333,8 @@ def predict(
         + str(int(1000 * smoothing))
         + " milliseconds. \n \n"
     )
-    print(model_description)
+    if verbose:
+        print(model_description)
 
     if verbose:
         print("Loaded model was trained at frame rate {} Hz".format(sampling_rate))
@@ -347,12 +348,13 @@ def predict(
     # calculate noise levels for each trace
     trace_noise_levels = utils.calculate_noise_levels(traces, sampling_rate)
 
-    print(
-        "Noise levels (mean, std; in standard units): "
-        + str(int(np.nanmean(trace_noise_levels * 100)) / 100)
-        + ", "
-        + str(int(np.nanstd(trace_noise_levels * 100)) / 100)
-    )
+    if verbose:
+        print(
+            "Noise levels (mean, std; in standard units): "
+            + str(int(np.nanmean(trace_noise_levels * 100)) / 100)
+            + ", "
+            + str(int(np.nanstd(trace_noise_levels * 100)) / 100)
+        )
 
     # Get model paths as dictionary (key: noise_level) with lists of model
     # paths for the different ensembles
@@ -469,7 +471,7 @@ def predict(
     Y_predict[:, 0 : int(before_frac * window_size)] = padding
     Y_predict[:, -int((1 - before_frac) * window_size) :] = padding
 
-    print("Done")
+    print("Spike rate inference done.")
 
     return Y_predict
 
