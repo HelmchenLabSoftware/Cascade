@@ -265,6 +265,10 @@ def predict(
         Value which is inserted for datapoints, where no prediction can be made (because of window around timepoint of prediction)
         Default value: np.nan, another recommended value would be 0 which circumvents some problems with following analysis.
 
+    vebosity : 0 or 1
+        If set to 0, the output of predict() during inference in the console is suppressed
+        Default value: 1
+
     Returns
     --------
     predicted_activity: 2d numpy array (neurons x nr_timepoints)
