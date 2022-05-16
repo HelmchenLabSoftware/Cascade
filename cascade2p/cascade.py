@@ -368,6 +368,10 @@ def predict(
     )
     Y_predict = np.zeros((XX.shape[0], XX.shape[1]))
 
+    # Compute difference of noise levels between each neuron and each model; find the best fit
+    differences = np.array(trace_noise_levels)[:,None] - np.array(noise_levels_model)[None,:]
+    best_model_for_each_neuron = np.argmin(np.abs(differences),axis=1)
+    
     # Use for each noise level the matching model
     for i, model_noise in enumerate(noise_levels_model):
 
@@ -375,16 +379,8 @@ def predict(
             print("\nPredictions for noise level {}:".format(model_noise))
 
         # select neurons which have this noise level:
-        if i == 0:  # lowest noise
-            neuron_idx = np.where(trace_noise_levels < model_noise + 0.5)[0]
-        elif i == len(noise_levels_model) - 1:  # highest noise
-            neuron_idx = np.where(trace_noise_levels >= model_noise - 0.5)[0]
-        else:
-            neuron_idx = np.where(
-                (trace_noise_levels >= model_noise - 0.5)
-                & (trace_noise_levels < model_noise + 0.5)
-            )[0]
-
+        neuron_idx = np.where(best_model_for_each_neuron == i)[0]
+        
         if len(neuron_idx) == 0:  # no neurons were selected
             if verbose:
                 print("\tNo neurons for this noise level")
