@@ -1,7 +1,7 @@
 ###
 ### Download links for available models
 ###
-### Last update: November 8th 2021
+### Last update: July 14th 2022
 
 
 
@@ -153,5 +153,14 @@ Global_INH_30Hz_smoothing50ms:
     Info:
 Global_INH_30Hz_smoothing100ms:
     Link: https://drive.switch.ch/index.php/s/NmuHLq5CL4gqsCa/download
+    Info:
+Global_EXC_1Hz_smoothing500ms:
+    Link: https://drive.switch.ch/index.php/s/uc9vj6bEHIwCd1F/download
+    Info:
+Global_EXC_1Hz_smoothing1000ms:
+    Link: https://drive.switch.ch/index.php/s/NNWhvllu4GCJSNn/download
+    Info:
+Zebrafish_1Hz_smoothing1000ms:
+    Link: https://drive.switch.ch/index.php/s/vwa1ekjwa7hdj7c/download
     Info:
 
