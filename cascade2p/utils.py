@@ -224,12 +224,12 @@ def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sam
         base_noise = np.nanmedian(np.abs(np.diff(traces_mean)))*100/np.sqrt(frame_rate)
         # Test how much artificial noise must be added to reach the target noise level
         # THe output of this procedure is 'noise_std'
-        test_noise = np.zeros((20,))
-        for test_i in np.arange(20):
+        test_noise = np.zeros((40,))
+        for test_i in np.arange(40):
           noise_trace = np.random.normal(0,test_i/100*np.sqrt(frame_rate), traces_mean.shape)
           test_noise[test_i] = np.nanmedian(np.abs(np.diff(noise_trace+traces_mean)))*100/np.sqrt(frame_rate)
 
-        interpolating_function = interp1d(test_noise,np.arange(20), kind='linear')
+        interpolating_function = interp1d(test_noise,np.arange(40), kind='linear')
 
         if noise_level >= test_noise[0]:
 
