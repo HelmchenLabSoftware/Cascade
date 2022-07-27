@@ -40,6 +40,9 @@ Global_EXC_3Hz_smoothing400ms_causalkernel:
 Global_EXC_4.25Hz_smoothing300ms:
     Link: https://drive.switch.ch/index.php/s/nsjSB55BVZFhstp/download
     Info:
+Global_EXC_4.25Hz_smoothing300ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/dofZyF2srp5It59/download
+    Info:
 Global_EXC_4.25Hz_smoothing300ms_causalkernel:
     Link: https://drive.switch.ch/index.php/s/j4D74cblkUCbXaw/download
     Info:
