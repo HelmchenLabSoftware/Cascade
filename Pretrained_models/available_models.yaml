@@ -1,10 +1,7 @@
 ###
 ### Download links for available models
 ###
-### Last update: July 14th 2022
-
-
-
+### Last update: August 4th 2022
 
 
 Global_EXC_30Hz_smoothing50ms_asymmetric_window_1_frame:
@@ -63,6 +60,12 @@ Global_EXC_7.5Hz_smoothing200ms:
     Info:
 Global_EXC_7.5Hz_smoothing200ms_causalkernel:
     Link: https://drive.switch.ch/index.php/s/eIE80WOsjnOvRlc/download
+    Info:
+Global_EXC_10Hz_smoothing50ms:
+    Link: https://drive.switch.ch/index.php/s/vU7bUlVmmcGQ4mM/download
+    Info:
+Global_EXC_10Hz_smoothing50ms_causalkernel:
+    Link: https://drive.switch.ch/index.php/s/4Oe8LtpTzssy0XR/download
     Info:
 Global_EXC_10Hz_smoothing100ms:
     Link: https://drive.switch.ch/index.php/s/gg7i2Vm239bflNG/download
