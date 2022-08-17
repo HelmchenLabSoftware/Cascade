@@ -75,6 +75,23 @@ cfg = config.read_config( cfg_file )
 all_training_datasets = cfg['training_datasets']
 
 
+# Find the corresponding filename of the training dataset
+# This additional step is due to name changes of ground truth folders
+# Discussed on Github issue #42 on https://github.com/HelmchenLabSoftware/Cascade/issues/42
+
+ground_truth_folders = glob.glob(os.path.join('Ground_truth','DS*'))
+ground_truth_folders_filename = [os.path.basename(element) for element in ground_truth_folders]
+ground_truth_folders_short = [element[5:] for element in ground_truth_folders_filename]
+
+# Find matching list indices between training datasets and available ground truth datasets
+re_index = np.zeros((len(all_training_datasets),),'int')
+for k,this_dataset in enumerate(all_training_datasets):
+    re_index[k] = ground_truth_folders_short.index(this_dataset[5:])
+    
+# Extract the correct ground truth dataset names
+all_training_datasets_updated = [ground_truth_folders_filename[index] for index in re_index]
+
+
 
 """
 
@@ -89,9 +106,9 @@ correlation = []
 error = []
 bias = []
 
-for index in range(len(all_training_datasets)):
+for index in range(len(all_training_datasets_updated)):
 
-  training_datasets = deepcopy(all_training_datasets)
+  training_datasets = deepcopy(all_training_datasets_updated)
   test_dataset = training_datasets.pop(index);
 
   cfg['training_datasets'] = training_datasets
