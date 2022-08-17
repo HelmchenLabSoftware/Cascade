@@ -1,32 +1,16 @@
 ###
 ### Download links for available models
 ###
-### Last update: August 4th 2022
+### Last update: August 13th 2022
 
-
-Global_EXC_30Hz_smoothing50ms_asymmetric_window_1_frame:
-    Link: https://drive.switch.ch/index.php/s/d7KCX4R2RUGClEg/download
+Global_EXC_1Hz_smoothing500ms:
+    Link: https://drive.switch.ch/index.php/s/ZAc2kNO0aqSO3ja/download
     Info:
-Global_EXC_30Hz_smoothing50ms_asymmetric_window_2_frames:
-    Link: https://drive.switch.ch/index.php/s/O7wmJreDtAN31N4/download
+Global_EXC_1Hz_smoothing1000ms:
+    Link: https://drive.switch.ch/index.php/s/cxwBirzdpe5OXVF/download
     Info:
-Global_EXC_30Hz_smoothing50ms_asymmetric_window_4_frames:
-    Link: https://drive.switch.ch/index.php/s/NBbQajQ05qPvPSd/download
-    Info:
-Global_EXC_30Hz_smoothing50ms_asymmetric_window_6_frames:
-    Link: https://drive.switch.ch/index.php/s/bfla0Jk4czskWH4/download
-    Info:
-Global_EXC_30Hz_smoothing50ms_asymmetric_window_8_frames:
-    Link: https://drive.switch.ch/index.php/s/vzb8fNMFTyDqjg8/download
-    Info:
-GCaMP6f_mouse_30Hz_smoothing200ms:
-    Link: https://drive.switch.ch/index.php/s/hiT8cJdBMzeZNRB/download
-    Info:
-OGB_zf_pDp_7.5Hz_smoothing200ms:
-    Link: https://drive.switch.ch/index.php/s/z3BdtlXXj9W1uqJ/download
-    Info:
-OGB_zf_pDp_7.5Hz_smoothing200ms_causalkernel:
-    Link: https://drive.switch.ch/index.php/s/t4secylUuZTrimj/download
+Zebrafish_1Hz_smoothing1000ms:
+    Link: https://drive.switch.ch/index.php/s/ptoUxWIj1i4LH7r/download
     Info:
 Global_EXC_3Hz_smoothing400ms:
     Link: https://drive.switch.ch/index.php/s/ZTAtoekfVSRHTg0/download
@@ -64,6 +48,12 @@ Global_EXC_7.5Hz_smoothing200ms:
 Global_EXC_7.5Hz_smoothing200ms_causalkernel:
     Link: https://drive.switch.ch/index.php/s/eIE80WOsjnOvRlc/download
     Info:
+OGB_zf_pDp_7.5Hz_smoothing200ms:
+    Link: https://drive.switch.ch/index.php/s/z3BdtlXXj9W1uqJ/download
+    Info:
+OGB_zf_pDp_7.5Hz_smoothing200ms_causalkernel:
+    Link: https://drive.switch.ch/index.php/s/t4secylUuZTrimj/download
+    Info:
 Global_EXC_10Hz_smoothing50ms:
     Link: https://drive.switch.ch/index.php/s/vU7bUlVmmcGQ4mM/download
     Info:
@@ -94,6 +84,12 @@ Global_EXC_12.5Hz_smoothing200ms:
 Global_EXC_12.5Hz_smoothing200ms_causalkernel:
     Link: https://drive.switch.ch/index.php/s/kT3IaGq8apVyR5t/download
     Info:
+Global_EXC_15Hz_smoothing50ms:
+    Link: https://drive.switch.ch/index.php/s/JjHmm5IxDsXzGQW/download
+    Info:
+Global_EXC_15Hz_smoothing50ms_causalkernel:
+    Link: https://drive.switch.ch/index.php/s/ogdSZYy6J54KSfY/download
+    Info:
 Global_EXC_15Hz_smoothing100ms:
     Link: https://drive.switch.ch/index.php/s/DH44cNbpxorMf0q/download
     Info:
@@ -105,6 +101,9 @@ Global_EXC_15Hz_smoothing200ms:
     Info:
 Global_EXC_15Hz_smoothing200ms_causalkernel:
     Link: https://drive.switch.ch/index.php/s/bupyxSmuwGaX5rD/download
+    Info:
+Global_INH_15Hz_smoothing100ms:
+    Link: https://drive.switch.ch/index.php/s/eJe58mObvhITVY9/download
     Info:
 Global_EXC_17.5Hz_smoothing100ms:
     Link: https://drive.switch.ch/index.php/s/vbl6PSDSGVfoJAq/download
@@ -139,6 +138,18 @@ Global_EXC_25Hz_smoothing50ms:
 Global_EXC_25Hz_smoothing50ms_causalkernel:
     Link: https://drive.switch.ch/index.php/s/dsKn7xOAAbi4L7i/download
     Info:
+Global_EXC_30Hz_smoothing25ms:
+    Link: https://drive.switch.ch/index.php/s/qKf5Eqn9IOc7bFt/download
+    Info:
+Global_EXC_30Hz_smoothing25ms_causalkernel:
+    Link: https://drive.switch.ch/index.php/s/8nvQ0zDRflshnEQ/download
+    Info:
+Global_EXC_30Hz_smoothing50ms:
+    Link: https://drive.switch.ch/index.php/s/4wVuOV8YlOZprXU/download
+    Info:
+Global_EXC_30Hz_smoothing50ms_causalkernel:
+    Link: https://drive.switch.ch/index.php/s/lR2zjb9VhWj8w3I/download
+    Info:
 Global_EXC_30Hz_smoothing100ms:
     Link: https://drive.switch.ch/index.php/s/zi6QBF6WZWkX3db/download
     Info:
@@ -148,28 +159,30 @@ Global_EXC_30Hz_smoothing100ms_causalkernel:
 Global_EXC_30Hz_smoothing200ms:
     Link: https://drive.switch.ch/index.php/s/Ax1kaxNFJgpbr5v/download
     Info:
-Global_EXC_30Hz_smoothing50ms:
-    Link: https://drive.switch.ch/index.php/s/4wVuOV8YlOZprXU/download
-    Info:
-Global_EXC_30Hz_smoothing50ms_causalkernel:
-    Link: https://drive.switch.ch/index.php/s/lR2zjb9VhWj8w3I/download
-    Info:
-Global_INH_15Hz_smoothing100ms:
-    Link: https://drive.switch.ch/index.php/s/eJe58mObvhITVY9/download
-    Info:
 Global_INH_30Hz_smoothing50ms:
     Link: https://drive.switch.ch/index.php/s/0H64nUtf5zZlvK1/download
     Info:
 Global_INH_30Hz_smoothing100ms:
     Link: https://drive.switch.ch/index.php/s/NmuHLq5CL4gqsCa/download
     Info:
-Global_EXC_1Hz_smoothing500ms:
-    Link: https://drive.switch.ch/index.php/s/ZAc2kNO0aqSO3ja/download
+Global_EXC_30Hz_smoothing50ms_asymmetric_window_1_frame:
+    Link: https://drive.switch.ch/index.php/s/d7KCX4R2RUGClEg/download
     Info:
-Global_EXC_1Hz_smoothing1000ms:
-    Link: https://drive.switch.ch/index.php/s/cxwBirzdpe5OXVF/download
+Global_EXC_30Hz_smoothing50ms_asymmetric_window_2_frames:
+    Link: https://drive.switch.ch/index.php/s/O7wmJreDtAN31N4/download
     Info:
-Zebrafish_1Hz_smoothing1000ms:
-    Link: https://drive.switch.ch/index.php/s/ptoUxWIj1i4LH7r/download
+Global_EXC_30Hz_smoothing50ms_asymmetric_window_4_frames:
+    Link: https://drive.switch.ch/index.php/s/NBbQajQ05qPvPSd/download
     Info:
+Global_EXC_30Hz_smoothing50ms_asymmetric_window_6_frames:
+    Link: https://drive.switch.ch/index.php/s/bfla0Jk4czskWH4/download
+    Info:
+Global_EXC_30Hz_smoothing50ms_asymmetric_window_8_frames:
+    Link: https://drive.switch.ch/index.php/s/vzb8fNMFTyDqjg8/download
+    Info:
+GCaMP6f_mouse_30Hz_smoothing200ms:
+    Link: https://drive.switch.ch/index.php/s/hiT8cJdBMzeZNRB/download
+    Info:
+
+    
 
