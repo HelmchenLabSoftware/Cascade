@@ -198,118 +198,122 @@ def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sam
       # ground truth recording of a single neuron
       for i,trial in enumerate(dataset_neuron_all):
 
-        # Find the relevant elements in the data structure
-        # (dF/F traces; spike events; time stamps of fluorescence recording)
-        keys = trial[0][0].dtype.descr
-        keys_unfolded = list(sum(keys, ()))
-
-        traces_index = int(keys_unfolded.index("fluo_mean")/2)
-        fluo_time_index = int(keys_unfolded.index("fluo_time")/2)
-        events_index = int(keys_unfolded.index("events_AP")/2)
-
-        events = trial[0][0][events_index]
-        events = events[~np.isnan(events)] # exclude NaN entries for the Theis et al. data sets
-        ephys_sampling_rate = 1e4
-
-        fluo_times = np.squeeze(trial[0][0][fluo_time_index])
-        frame_rate = 1/np.nanmean(np.diff(fluo_times))
-
-        traces_mean = np.squeeze(trial[0][0][traces_index])
-        traces_mean = traces_mean[:fluo_times.shape[0]]
-
-        traces_mean = traces_mean[~np.isnan(fluo_times)]
-        fluo_times = fluo_times[~np.isnan(fluo_times)]
-
-        # Compute the baseline noise level for this recording
-        base_noise = np.nanmedian(np.abs(np.diff(traces_mean)))*100/np.sqrt(frame_rate)
-        # Test how much artificial noise must be added to reach the target noise level
-        # THe output of this procedure is 'noise_std'
-        test_noise = np.zeros((60,))
-        for test_i in np.arange(60):
-          noise_trace = np.random.normal(0,test_i/100*np.sqrt(frame_rate), traces_mean.shape)
-          test_noise[test_i] = np.nanmedian(np.abs(np.diff(noise_trace+traces_mean)))*100/np.sqrt(frame_rate)
-
-        interpolating_function = interp1d(test_noise,np.arange(60), kind='linear')
-
-        if noise_level >= test_noise[0]:
-
-          noise_std = interpolating_function(noise_level)/100*np.sqrt(frame_rate)
-          # Get as many artificial noisified replica traces such that natural noise (which
-          # is correlated across replicas is not dominant; this is a heuristic procedure.
-          # Limit the maximum number of replicas per ground truth trace to 500.
-          nb_subROIs = np.minimum(500,np.ceil( 1.2*(noise_level/base_noise)**2 ))
-
-          if not replicas:
-
-            nb_subROIs = 1
-
-        else:
-
-          nb_subROIs = 0
-
-        if nb_subROIs >= 1:
-
-          # Resampling is not necessary if sampling rates of ground truth and
-          # target sampling rate are similar (<5% relative difference)
-          if np.abs(sampling_rate - frame_rate)/frame_rate > 0.05:
-
-            num_samples = int(round(traces_mean.shape[0]*sampling_rate/frame_rate))
-            (traces_mean,fluo_times_resampled) = resample(traces_mean,num_samples,np.squeeze(fluo_times),axis=0)
-            noise_std = noise_std*np.sqrt(sampling_rate/frame_rate)
-
-          else:
-
-            fluo_times_resampled = fluo_times
-
-          frame_rate = 1/np.nanmean(np.diff(fluo_times_resampled))
-
-          # Bin the ground truth (spike times) into time bins determined by the resampled calcium recording
-          fluo_times_bin_centers = fluo_times_resampled
-          fluo_times_bin_edges = np.append(fluo_times_bin_centers,fluo_times_bin_centers[-1]+1/frame_rate/2) - 1/frame_rate/2
-
-          [events_binned,event_bins] = np.histogram(events/ephys_sampling_rate, bins=fluo_times_bin_edges)
-
-          # Limit number of replicas for longer recordings
-          nb_subROIs = int(np.minimum(8e5,len(dataset_neuron_all)*len(fluo_times_resampled)*nb_subROIs)/len(fluo_times_resampled))/len(dataset_neuron_all)
-
-          # Generate a noisified trace in each iteration of the for-loop
-          # Noise is scaled with the square root of the mean fluorescence (fluo_level),
-          # corresponding to POisson noise
-          for iii in range(int(nb_subROIs)):
-
-            fluo_level = np.sqrt(np.abs(traces_mean + 1))
-            fluo_level /= np.median(fluo_level)
-
-            noise_additional = np.random.normal(0,noise_std*fluo_level, traces_mean.shape)
-            sub_traces_single = traces_mean + noise_additional
-
-            # 'sub_traces' are sub-sampled replica traces from the same mean trace 'traces_mean';
-            # 'sub_traces_events' are the corresponding ground truth action potentials
-
-            # If 'sub_traces' exists already, append the subROI-trace; else, generate it
-            # The nested if-clause covers edge cases in some ground truth data sets where
-            # different trials of the same neuron have variable numbers of time points
-            if np.any(sub_traces):
-
-              if sub_traces.shape[0]-len(sub_traces_single) >= 0:
-
-                sub_traces_single = np.append(sub_traces_single, np.zeros(sub_traces.shape[0]-len(sub_traces_single)) + np.nan )
-                events_binned = np.append(events_binned, np.zeros(sub_traces_events.shape[0]-len(events_binned)) + np.nan )
-
-              else:
-                sub_traces = np.append(sub_traces,np.zeros((len(sub_traces_single)-sub_traces.shape[0],sub_traces.shape[1])) + np.nan, axis=0)
-                sub_traces_events = np.append(sub_traces_events,np.zeros((len(events_binned)-sub_traces_events.shape[0],sub_traces_events.shape[1])) + np.nan, axis=0)
-
-              sub_traces = np.append(sub_traces,sub_traces_single.reshape(-1, 1),axis=1)
-              sub_traces_events = np.append(sub_traces_events,events_binned.reshape(-1, 1),axis=1)
-
+          try:
+            # Find the relevant elements in the data structure
+            # (dF/F traces; spike events; time stamps of fluorescence recording)
+            keys = trial[0][0].dtype.descr
+            keys_unfolded = list(sum(keys, ()))
+    
+            traces_index = int(keys_unfolded.index("fluo_mean")/2)
+            fluo_time_index = int(keys_unfolded.index("fluo_time")/2)
+            events_index = int(keys_unfolded.index("events_AP")/2)
+    
+            events = trial[0][0][events_index]
+            events = events[~np.isnan(events)] # exclude NaN entries for the Theis et al. data sets
+            ephys_sampling_rate = 1e4
+    
+            fluo_times = np.squeeze(trial[0][0][fluo_time_index])
+            frame_rate = 1/np.nanmean(np.diff(fluo_times))
+    
+            traces_mean = np.squeeze(trial[0][0][traces_index])
+            traces_mean = traces_mean[:fluo_times.shape[0]]
+    
+            traces_mean = traces_mean[~np.isnan(fluo_times)]
+            fluo_times = fluo_times[~np.isnan(fluo_times)]
+    
+            # Compute the baseline noise level for this recording
+            base_noise = np.nanmedian(np.abs(np.diff(traces_mean)))*100/np.sqrt(frame_rate)
+            # Test how much artificial noise must be added to reach the target noise level
+            # THe output of this procedure is 'noise_std'
+            test_noise = np.zeros((60,))
+            for test_i in np.arange(60):
+              noise_trace = np.random.normal(0,test_i/100*np.sqrt(frame_rate), traces_mean.shape)
+              test_noise[test_i] = np.nanmedian(np.abs(np.diff(noise_trace+traces_mean)))*100/np.sqrt(frame_rate)
+    
+            interpolating_function = interp1d(test_noise,np.arange(60), kind='linear')
+    
+            if noise_level >= test_noise[0]:
+    
+              noise_std = interpolating_function(noise_level)/100*np.sqrt(frame_rate)
+              # Get as many artificial noisified replica traces such that natural noise (which
+              # is correlated across replicas is not dominant; this is a heuristic procedure.
+              # Limit the maximum number of replicas per ground truth trace to 500.
+              nb_subROIs = np.minimum(500,np.ceil( 1.2*(noise_level/base_noise)**2 ))
+    
+              if not replicas:
+    
+                nb_subROIs = 1
+    
             else:
-
-              sub_traces = sub_traces_single.reshape(-1, 1)
-              sub_traces_events = events_binned.reshape(-1, 1)
-
-            events_all[file_index][counter] = events/ephys_sampling_rate
-            counter += 1
+    
+              nb_subROIs = 0
+    
+            if nb_subROIs >= 1:
+    
+              # Resampling is not necessary if sampling rates of ground truth and
+              # target sampling rate are similar (<5% relative difference)
+              if np.abs(sampling_rate - frame_rate)/frame_rate > 0.05:
+    
+                num_samples = int(round(traces_mean.shape[0]*sampling_rate/frame_rate))
+                (traces_mean,fluo_times_resampled) = resample(traces_mean,num_samples,np.squeeze(fluo_times),axis=0)
+                noise_std = noise_std*np.sqrt(sampling_rate/frame_rate)
+    
+              else:
+    
+                fluo_times_resampled = fluo_times
+    
+              frame_rate = 1/np.nanmean(np.diff(fluo_times_resampled))
+    
+              # Bin the ground truth (spike times) into time bins determined by the resampled calcium recording
+              fluo_times_bin_centers = fluo_times_resampled
+              fluo_times_bin_edges = np.append(fluo_times_bin_centers,fluo_times_bin_centers[-1]+1/frame_rate/2) - 1/frame_rate/2
+    
+              [events_binned,event_bins] = np.histogram(events/ephys_sampling_rate, bins=fluo_times_bin_edges)
+    
+              # Limit number of replicas for longer recordings
+              nb_subROIs = int(np.minimum(8e5,len(dataset_neuron_all)*len(fluo_times_resampled)*nb_subROIs)/len(fluo_times_resampled))/len(dataset_neuron_all)
+    
+              # Generate a noisified trace in each iteration of the for-loop
+              # Noise is scaled with the square root of the mean fluorescence (fluo_level),
+              # corresponding to POisson noise
+              for iii in range(int(nb_subROIs)):
+    
+                fluo_level = np.sqrt(np.abs(traces_mean + 1))
+                fluo_level /= np.median(fluo_level)
+    
+                noise_additional = np.random.normal(0,noise_std*fluo_level, traces_mean.shape)
+                sub_traces_single = traces_mean + noise_additional
+    
+                # 'sub_traces' are sub-sampled replica traces from the same mean trace 'traces_mean';
+                # 'sub_traces_events' are the corresponding ground truth action potentials
+    
+                # If 'sub_traces' exists already, append the subROI-trace; else, generate it
+                # The nested if-clause covers edge cases in some ground truth data sets where
+                # different trials of the same neuron have variable numbers of time points
+                if np.any(sub_traces):
+    
+                  if sub_traces.shape[0]-len(sub_traces_single) >= 0:
+    
+                    sub_traces_single = np.append(sub_traces_single, np.zeros(sub_traces.shape[0]-len(sub_traces_single)) + np.nan )
+                    events_binned = np.append(events_binned, np.zeros(sub_traces_events.shape[0]-len(events_binned)) + np.nan )
+    
+                  else:
+                    sub_traces = np.append(sub_traces,np.zeros((len(sub_traces_single)-sub_traces.shape[0],sub_traces.shape[1])) + np.nan, axis=0)
+                    sub_traces_events = np.append(sub_traces_events,np.zeros((len(events_binned)-sub_traces_events.shape[0],sub_traces_events.shape[1])) + np.nan, axis=0)
+    
+                  sub_traces = np.append(sub_traces,sub_traces_single.reshape(-1, 1),axis=1)
+                  sub_traces_events = np.append(sub_traces_events,events_binned.reshape(-1, 1),axis=1)
+    
+                else:
+    
+                  sub_traces = sub_traces_single.reshape(-1, 1)
+                  sub_traces_events = events_binned.reshape(-1, 1)
+    
+                events_all[file_index][counter] = events/ephys_sampling_rate
+                counter += 1
+            
+          except:
+              pass
 
           # Write the subROI-traces for each neuron into a list item of 'sub_traces_all'
           # (calcium) and 'sub_traces_events_all' (spikes)
@@ -327,7 +331,18 @@ def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sam
     return sub_traces_all, sub_traces_events_all, framerate_all, events_all
 
 
-
+# ground_truth_folders=training_folders,
+# before_frac=cfg["before_frac"],
+# windowsize=cfg["windowsize"],
+# after_frac=1 - cfg["before_frac"],
+# noise_level=noise_level,
+# sampling_rate=cfg["sampling_rate"],
+# smoothing=cfg["smoothing"] * cfg["sampling_rate"],
+# omission_list=[],
+# permute=1,
+# verbose=cfg["verbose"],
+# replicas=1,
+# causal_kernel=cfg["causal_kernel"]
 
 
 def preprocess_groundtruth_artificial_noise_balanced(ground_truth_folders,before_frac,windowsize,after_frac,noise_level,sampling_rate,smoothing,omission_list=[],permute=1,maximum_traces=5000000,verbose=3,replicas=1,causal_kernel=0):
