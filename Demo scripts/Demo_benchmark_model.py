@@ -79,18 +79,13 @@ all_training_datasets = cfg['training_datasets']
 # This additional step is due to name changes of ground truth folders
 # Discussed on Github issue #42 on https://github.com/HelmchenLabSoftware/Cascade/issues/42
 
-ground_truth_folders = glob.glob(os.path.join('Ground_truth','DS*'))
-ground_truth_folders_filename = [os.path.basename(element) for element in ground_truth_folders]
-ground_truth_folders_short = [element[5:] for element in ground_truth_folders_filename]
-
-# Find matching list indices between training datasets and available ground truth datasets
-re_index = np.zeros((len(all_training_datasets),),'int')
-for k,this_dataset in enumerate(all_training_datasets):
-    re_index[k] = ground_truth_folders_short.index(this_dataset[5:])
+all_training_datasets_new = all_training_datasets
+if 'DS08-GCaMP6f-m-V1' in all_training_datasets:
     
-# Extract the correct ground truth dataset names
-all_training_datasets_updated = [ground_truth_folders_filename[index] for index in re_index]
-
+    for k,this_dataset in enumerate(all_training_datasets):
+        
+        temporary_string = f'{int(this_dataset[2:4])+1:02}' 
+        all_training_datasets_new[k] = this_dataset[0:2]+temporary_string+this_dataset[4:]
 
 
 """
