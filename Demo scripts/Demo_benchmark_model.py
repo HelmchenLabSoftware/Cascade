@@ -101,9 +101,9 @@ correlation = []
 error = []
 bias = []
 
-for index in range(len(all_training_datasets_updated)):
+for index in range(len(all_training_datasets_new)):
 
-  training_datasets = deepcopy(all_training_datasets_updated)
+  training_datasets = deepcopy(all_training_datasets_new)
   test_dataset = training_datasets.pop(index);
 
   cfg['training_datasets'] = training_datasets
