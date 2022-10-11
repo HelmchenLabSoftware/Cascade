@@ -21,7 +21,7 @@ from . import config
 
 
 
-def infer_discrete_spikes(spike_rates,model_name,model_folder='Pretrained_models'):
+def infer_discrete_spikes(spike_rates,model_name,model_folder='Pretrained_models',verbosity=1):
 
   """
 
@@ -51,8 +51,8 @@ def infer_discrete_spikes(spike_rates,model_name,model_folder='Pretrained_models
   approximations_all = np.nan*np.ones(spike_rates.shape)
 
   for neuron in range(spike_rates.shape[0]):
-
-    print('Infer spikes for neuron '+str(neuron+1)+' out of '+str(spike_rates.shape[0]))
+    if verbosity:
+      print('Infer spikes for neuron '+str(neuron+1)+' out of '+str(spike_rates.shape[0]))
 
     prob_density = spike_rates[neuron,:]
 
