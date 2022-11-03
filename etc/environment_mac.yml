@@ -4,7 +4,8 @@ channels:
   - nodefaults
 dependencies:
   - python=3.7
-  - seaborn
-  - ruamel.yaml
-  - jupyter
-  - spyder
+  - tensorflow=2.4
+  - keras=2.4
+  - seaborn=0.12
+  - ruamel.yaml=0.17
+  - jupyterlab=3.5
