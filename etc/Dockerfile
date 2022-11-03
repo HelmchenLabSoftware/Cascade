@@ -3,15 +3,21 @@
 # See README_Docker.md for instructions
 
 
-ARG BASE_CONTAINER=jupyter/scipy-notebook:9b87b1625445
+ARG BASE_CONTAINER=jupyter/scipy-notebook:latest
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Henry Luetcke <hluetcke@ethz.ch>"
 
 # install the Python dependencies
-COPY requirements_mac.txt environment_mac.yml /tmp/
-RUN conda env update -q -f /tmp/environment_mac.yml && \
-	pip install --quiet --no-cache-dir -r /tmp/requirements_mac.txt && \
-	conda clean -y --all && \
+COPY environment_mac.yml /tmp/
+RUN conda env create -f /tmp/environment_mac.yml
+
+# Make RUN commands use the new environment:
+SHELL ["conda", "run", "-n", "Cascade", "/bin/bash", "-c"]
+
+RUN conda clean -y --all && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
+
+# The code to run when container is started:
+ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "Cascade", "jupyter", "notebook"]
