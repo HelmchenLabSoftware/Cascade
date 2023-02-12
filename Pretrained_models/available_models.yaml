@@ -189,3 +189,6 @@ Global_EXC_30Hz_smoothing50ms_asymmetric_window_8_frames:
 GCaMP6f_mouse_30Hz_smoothing200ms:
     Link: https://drive.switch.ch/index.php/s/hiT8cJdBMzeZNRB/download
     Info:
+model_only_DS30-GCaMP8f-m-V1:
+    Link: https://drive.google.com/file/d/1zRGQhYXkAC16WJeG2QgbmWde6C6CszH7/view?usp=share_link
+    Info:
