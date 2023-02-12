@@ -571,7 +571,7 @@ def get_model_paths(model_path):
 def download_model(
     model_name,
     model_folder="Pretrained_models",
-    info_file_link="https://drive.switch.ch/index.php/s/kjGm0qsZdofY629/download",
+    info_file_link="https://raw.githubusercontent.com/HelmchenLabSoftware/Cascade/master/Pretrained_models/available_models.yaml",
     verbose=1,
 ):
     """Download and unzip pretrained model from the online repository
