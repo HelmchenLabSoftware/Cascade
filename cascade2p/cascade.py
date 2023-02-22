@@ -157,14 +157,12 @@ def train_model(
 
             if cfg["sampling_rate"] > 30:
 
-                cfg["windowsize"] = int(np.power(cfg["sampling_rate"] / 30, 0.25) * 64)
-                # write again the config file to update the adjusted window size value
-                config.write_config(cfg, os.path.join(model_path, "config.yaml"))
+                windowsize_suggestion = int(np.power(cfg["sampling_rate"] / 30, 0.25) * 64)
 
                 print(
-                    "Window size enlarged to "
-                    + str(cfg["windowsize"])
-                    + " time points due to the high calcium imaging sampling rate("
+                    "Window size should be enlarged to "
+                    + str(windowsize_suggestion)
+                    + " time points (if not done already) due to the high calcium imaging sampling rate ("
                     + str(cfg["sampling_rate"])
                     + ")."
                 )
