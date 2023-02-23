@@ -1,7 +1,7 @@
 ###
 ### Download links for available models
 ###
-### Last update: September 29th 2022
+### Last update: February 23rd 2023
 
 Global_EXC_1Hz_smoothing500ms:
     Link: https://drive.switch.ch/index.php/s/ZAc2kNO0aqSO3ja/download
@@ -114,6 +114,9 @@ Global_INH_15Hz_smoothing100ms:
 Global_EXC_17.5Hz_smoothing100ms:
     Link: https://drive.switch.ch/index.php/s/vbl6PSDSGVfoJAq/download
     Info: 
+Global_EXC_17.5Hz_smoothing100ms_causalkernel:
+    Link: https://drive.switch.ch/index.php/s/uKbnx2eWzEZr0fS/download
+    Info:
 Global_EXC_17.5Hz_smoothing200ms:
     Link: https://drive.switch.ch/index.php/s/PdTOGZT1Rnq6mJT/download
     Info:
@@ -165,6 +168,18 @@ Global_EXC_30Hz_smoothing100ms_causalkernel:
 Global_EXC_30Hz_smoothing200ms:
     Link: https://drive.switch.ch/index.php/s/Ax1kaxNFJgpbr5v/download
     Info:
+Global_EXC_40Hz_smoothing25ms_causalkernel:
+    Link: https://drive.switch.ch/index.php/s/Y2SIf1bIZfQIyaM/download
+    Info:
+Global_EXC_40Hz_smoothing25ms:
+    Link: https://drive.switch.ch/index.php/s/t9jUSqHWCZnsuoK/download
+    Info:
+Global_EXC_40Hz_smoothing50ms:
+    Link: https://drive.switch.ch/index.php/s/47bIOU2N5UBpgia/download
+    Info:
+Global_EXC_40Hz_smoothing50ms_causalkernel:
+    Link: https://drive.switch.ch/index.php/s/DvYfBrUjPiGfUf1/download
+    Info:
 Global_INH_30Hz_smoothing50ms:
     Link: https://drive.switch.ch/index.php/s/0H64nUtf5zZlvK1/download
     Info:
@@ -189,6 +204,6 @@ Global_EXC_30Hz_smoothing50ms_asymmetric_window_8_frames:
 GCaMP6f_mouse_30Hz_smoothing200ms:
     Link: https://drive.switch.ch/index.php/s/hiT8cJdBMzeZNRB/download
     Info:
-model_only_DS30-GCaMP8f-m-V1:
-    Link: https://drive.google.com/file/d/1zRGQhYXkAC16WJeG2QgbmWde6C6CszH7/view?usp=share_link
-    Info:
+
+
+    
