@@ -224,6 +224,9 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 
 >The deep network uses a window that looks at the calcium trace around the current time point to better understand the context of the current time point. For the first and last points in time, the network is unable to look into the environment and therefore gives back NaNs. If the window size of the network is 64 datapoints (which is the default), the first and last 32 time points will be NaNs.
 
+#### Should I smooth the dF/F traces before I feed them into CASCADE?
+
+>No! Check out [issue #53](https://github.com/HelmchenLabSoftware/Cascade/issues/53).
 
 #### I get a certain noise level for my recordings. What is good or bad?
 
