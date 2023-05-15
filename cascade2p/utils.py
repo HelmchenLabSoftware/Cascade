@@ -232,7 +232,7 @@ def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sam
     
             interpolating_function = interp1d(test_noise,np.arange(60), kind='linear')
     
-            if noise_level >= test_noise[0]:
+            if noise_level >= test_noise[0] and frame_rate > sampling_rate/2:
     
               noise_std = interpolating_function(noise_level)/100*np.sqrt(frame_rate)
               # Get as many artificial noisified replica traces such that natural noise (which
