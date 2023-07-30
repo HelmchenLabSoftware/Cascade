@@ -45,6 +45,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 import scipy.io as sio
+from copy import deepcopy
 from scipy.ndimage.filters import gaussian_filter
 from scipy.signal import resample, convolve
 from scipy.interpolate import interp1d
@@ -225,16 +226,40 @@ def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sam
             base_noise = np.nanmedian(np.abs(np.diff(traces_mean)))*100/np.sqrt(frame_rate)
             # Test how much artificial noise must be added to reach the target noise level
             # THe output of this procedure is 'noise_std'
+            fluo_level = np.sqrt(np.abs(traces_mean + 1))
+            fluo_level /= np.median(fluo_level)
+
             test_noise = np.zeros((60,))
             for test_i in np.arange(60):
-              noise_trace = np.random.normal(0,test_i/100*np.sqrt(frame_rate), traces_mean.shape)
-              test_noise[test_i] = np.nanmedian(np.abs(np.diff(noise_trace+traces_mean)))*100/np.sqrt(frame_rate)
+              
+              noise_additional = np.random.normal(0,test_i*fluo_level/100*np.sqrt(frame_rate), traces_mean.shape)
+              test_noise[test_i] = np.nanmedian(np.abs(np.diff(noise_additional+traces_mean)))*100/np.sqrt(frame_rate)
+              
+              
+            # print(test_noise)
     
             interpolating_function = interp1d(test_noise,np.arange(60), kind='linear')
     
-            if noise_level >= test_noise[0] and frame_rate > sampling_rate/2:
+            # Resampling is not necessary if sampling rates of ground truth and
+            # target sampling rate are similar (<5% relative difference)
+            if np.abs(sampling_rate - frame_rate)/frame_rate > 0.05:
+  
+              num_samples = int(round(traces_mean.shape[0]*sampling_rate/frame_rate))
+              (traces_mean,fluo_times_resampled) = resample(traces_mean,num_samples,np.squeeze(fluo_times),axis=0)
+              
+              base_noise = np.nanmedian(np.abs(np.diff(traces_mean)))*100/np.sqrt(sampling_rate)              
+  
+            else:
+  
+              fluo_times_resampled = fluo_times
+  
     
+            
+            if noise_level >= base_noise and frame_rate > sampling_rate/2:
+              
               noise_std = interpolating_function(noise_level)/100*np.sqrt(frame_rate)
+              
+              # print(noise_std)
               # Get as many artificial noisified replica traces such that natural noise (which
               # is correlated across replicas is not dominant; this is a heuristic procedure.
               # Limit the maximum number of replicas per ground truth trace to 500.
@@ -244,25 +269,15 @@ def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sam
     
                 nb_subROIs = 1
     
+              frame_rate = 1/np.nanmean(np.diff(fluo_times_resampled))
+
+    
             else:
     
               nb_subROIs = 0
     
+    
             if nb_subROIs >= 1:
-    
-              # Resampling is not necessary if sampling rates of ground truth and
-              # target sampling rate are similar (<5% relative difference)
-              if np.abs(sampling_rate - frame_rate)/frame_rate > 0.05:
-    
-                num_samples = int(round(traces_mean.shape[0]*sampling_rate/frame_rate))
-                (traces_mean,fluo_times_resampled) = resample(traces_mean,num_samples,np.squeeze(fluo_times),axis=0)
-                noise_std = noise_std*np.sqrt(sampling_rate/frame_rate)
-    
-              else:
-    
-                fluo_times_resampled = fluo_times
-    
-              frame_rate = 1/np.nanmean(np.diff(fluo_times_resampled))
     
               # Bin the ground truth (spike times) into time bins determined by the resampled calcium recording
               fluo_times_bin_centers = fluo_times_resampled
@@ -280,9 +295,20 @@ def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sam
     
                 fluo_level = np.sqrt(np.abs(traces_mean + 1))
                 fluo_level /= np.median(fluo_level)
-    
-                noise_additional = np.random.normal(0,noise_std*fluo_level, traces_mean.shape)
-                sub_traces_single = traces_mean + noise_additional
+                
+                # iterative determination of noise levels to add until it is within 0.1 of the target value
+                noise_std_adapted = deepcopy(noise_std)
+                correction = 1
+                while np.abs(correction) > 0.1:
+                
+                    noise_additional = np.random.normal(0,noise_std_adapted*fluo_level, traces_mean.shape)
+                    
+                    sub_traces_single = traces_mean + noise_additional
+                    
+                    noise_check = np.nanmedian(np.abs(np.diff(sub_traces_single)))*100/np.sqrt(frame_rate)
+                    correction = noise_check - noise_level
+                    noise_std_adapted -= correction*noise_std_adapted*0.1
+                
     
                 # 'sub_traces' are sub-sampled replica traces from the same mean trace 'traces_mean';
                 # 'sub_traces_events' are the corresponding ground truth action potentials
