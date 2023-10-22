@@ -307,7 +307,7 @@ def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sam
                     
                     noise_check = np.nanmedian(np.abs(np.diff(sub_traces_single)))*100/np.sqrt(frame_rate)
                     correction = noise_check - noise_level
-                    noise_std_adapted -= correction*noise_std_adapted*0.1
+                    noise_std_adapted -= correction*noise_std_adapted*0.01
                 
     
                 # 'sub_traces' are sub-sampled replica traces from the same mean trace 'traces_mean';
