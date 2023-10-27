@@ -35,6 +35,7 @@ checks.check_packages()
 import numpy as np
 import scipy.io as sio
 import ruamel.yaml as yaml
+yaml = yaml.YAML(typ='rt')
 
 from cascade2p import cascade # local folder
 from cascade2p.utils import plot_dFF_traces, plot_noise_level_distribution, plot_noise_matched_ground_truth
@@ -99,7 +100,7 @@ Load list of available models
 cascade.download_model( 'update_models',verbose = 1)
 
 yaml_file = open('Pretrained_models/available_models.yaml')
-X = yaml.load(yaml_file, Loader=yaml.Loader)
+X = yaml.load(yaml_file)
 list_of_models = list(X.keys())
 
 for model in list_of_models:
