@@ -82,9 +82,11 @@ def read_config(config_yaml_file):
     # if this results in an error, install the package with: pip install ruamel.yaml
     try:
         import ruamel.yaml as yaml   # install the package with: pip install ruamel.yaml
+        yaml = yaml.YAML(typ='rt')
     except ImportError:
         pip.main(['install', '--user', 'ruamel'])
         import ruamel.yaml as yaml   # install the package with: pip install ruamel.yaml
+        yaml = yaml.YAML(typ='rt')
 
     # TODO: add handling of file not found error
 
@@ -101,9 +103,11 @@ def write_config(config_dict, save_file):
     # if this results in an error, install the package with: pip install ruamel.yaml
     try:
         import ruamel.yaml as yaml   # install the package with: pip install ruamel.yaml
+        yaml = yaml.YAML(typ='rt')
     except ImportError:
         pip.main(['install', '--user', 'ruamel'])
         import ruamel.yaml as yaml   # install the package with: pip install ruamel.yaml
+        yaml = yaml.YAML(typ='rt')
 
     # TODO: some error handling in case of missing default values?
 
