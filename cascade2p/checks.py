@@ -15,6 +15,7 @@ def check_yaml():
 
     try:
         import ruamel.yaml
+        yaml = yaml.YAML(typ='rt')
     except ModuleNotFoundError:
         print('\nModuleNotFoundError: The package "ruamel.yaml" does not seem to be installed on this PC.',
               'This package is necessary to load the configuration files of the models.\n',
