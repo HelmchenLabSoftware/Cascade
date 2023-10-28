@@ -90,9 +90,8 @@ def read_config(config_yaml_file):
 
     # TODO: add handling of file not found error
 
-    yaml_config = yaml.YAML()
     with open(config_yaml_file, 'r') as file:
-        config_dict = yaml_config.load(file)
+        config_dict = yaml.load(file)
 
     return config_dict
 
@@ -112,8 +111,7 @@ def write_config(config_dict, save_file):
     # TODO: some error handling in case of missing default values?
 
     # read in template
-    yml_config = yaml.YAML()
-    yml_dict = yml_config.load(config_template)
+    yml_dict = yaml.load(config_template)
 
     # update values of config dict (to keep default values)
     for key in config_dict:
@@ -123,7 +121,7 @@ def write_config(config_dict, save_file):
 
     # save updated configs in save_file
     with open(save_file, 'w') as file:
-        yml_config.dump(yml_dict, file)
+        yaml.dump(yml_dict, file)
 
     if not file_existed:
         print('Created file', save_file)
