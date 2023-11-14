@@ -1,7 +1,7 @@
 ###
 ### Download links for available models
 ###
-### Last update: October 27th 2023
+### Last update: November 14th 2023
 
 Global_EXC_1Hz_smoothing500ms:
     Link: https://drive.switch.ch/index.php/s/ZAc2kNO0aqSO3ja/download
@@ -20,6 +20,9 @@ Global_EXC_2Hz_smoothing500ms:
     Info:
 Global_EXC_2Hz_smoothing1000ms:
     Link: https://drive.switch.ch/index.php/s/o3cSQkOjTuyKzu2/download
+    Info:
+Global_EXC_2.5Hz_smoothing400ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/lhhhLhaq8eioVA2/download
     Info:
 Global_EXC_3Hz_smoothing400ms:
     Link: https://drive.switch.ch/index.php/s/ZTAtoekfVSRHTg0/download
@@ -164,6 +167,9 @@ Global_EXC_30Hz_smoothing25ms_causalkernel:
     Info:
 Global_EXC_30Hz_smoothing50ms:
     Link: https://drive.switch.ch/index.php/s/4wVuOV8YlOZprXU/download
+    Info:
+Global_EXC_30Hz_smoothing50ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/7vBrmEWHR7T8t7z/download
     Info:
 Global_EXC_30Hz_smoothing50ms_causalkernel:
     Link: https://drive.switch.ch/index.php/s/lR2zjb9VhWj8w3I/download
