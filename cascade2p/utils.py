@@ -222,8 +222,19 @@ def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sam
             traces_mean = traces_mean[~np.isnan(fluo_times)]
             fluo_times = fluo_times[~np.isnan(fluo_times)]
     
+            # Resampling is not necessary if sampling rates of ground truth and
+            # target sampling rate are similar (<5% relative difference)
+            if np.abs(sampling_rate - frame_rate)/frame_rate > 0.05:
+  
+              num_samples = int(round(traces_mean.shape[0]*sampling_rate/frame_rate))
+              (traces_mean,fluo_times_resampled) = resample(traces_mean,num_samples,np.squeeze(fluo_times),axis=0)
+              
+            else:
+  
+              fluo_times_resampled = fluo_times
+
             # Compute the baseline noise level for this recording
-            base_noise = np.nanmedian(np.abs(np.diff(traces_mean)))*100/np.sqrt(frame_rate)
+            base_noise = np.nanmedian(np.abs(np.diff(traces_mean)))*100/np.sqrt(sampling_rate)
             # Test how much artificial noise must be added to reach the target noise level
             # THe output of this procedure is 'noise_std'
             fluo_level = np.sqrt(np.abs(traces_mean + 1))
@@ -235,25 +246,8 @@ def calibrated_ground_truth_artificial_noise(ground_truth_folder,noise_level,sam
               noise_additional = np.random.normal(0,test_i*fluo_level/100*np.sqrt(frame_rate), traces_mean.shape)
               test_noise[test_i] = np.nanmedian(np.abs(np.diff(noise_additional+traces_mean)))*100/np.sqrt(frame_rate)
               
-              
-            # print(test_noise)
-    
             interpolating_function = interp1d(test_noise,np.arange(60), kind='linear')
-    
-            # Resampling is not necessary if sampling rates of ground truth and
-            # target sampling rate are similar (<5% relative difference)
-            if np.abs(sampling_rate - frame_rate)/frame_rate > 0.05:
-  
-              num_samples = int(round(traces_mean.shape[0]*sampling_rate/frame_rate))
-              (traces_mean,fluo_times_resampled) = resample(traces_mean,num_samples,np.squeeze(fluo_times),axis=0)
-              
-              base_noise = np.nanmedian(np.abs(np.diff(traces_mean)))*100/np.sqrt(sampling_rate)              
-  
-            else:
-  
-              fluo_times_resampled = fluo_times
-  
-    
+
             
             if noise_level >= base_noise and frame_rate > sampling_rate/2:
               
