@@ -14,7 +14,7 @@
 
 *Cascade's* toolbox consists of
 
-- A large ground truth database spanning brain regions, calcium indicators, species
+- A large and continuously updated ground truth database spanning brain regions, calcium indicators, species
 - A deep network that is trained to predict spike rates from calcium data
 - Procedures to resample the training ground truth such that noise levels and frame rates of calcium recordings are matched
 - A large set of pre-trained deep networks for various conditions
