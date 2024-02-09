@@ -59,7 +59,7 @@ Just click on the link or the images!
 
 **Updates to the database**:
 
-*2024-02-08* - Models and ground truth datasets for jGCaMP7f and jGCaMP8f/m/s will be added in a few months. See issue [#43](https://github.com/HelmchenLabSoftware/Cascade/issues/43) for a preliminary discussion on jGCaMP7f
+*2024-02-08* - Models and ground truth datasets for jGCaMP7f and jGCaMP8f/m/s will be added in a few months. See issue [#43](https://github.com/HelmchenLabSoftware/Cascade/issues/43) for a preliminary discussion on jGCaMP7f.
 
 *2021-12-01* - Spike times for dataset #1 were found to be misaligned (see issue [#28](https://github.com/HelmchenLabSoftware/Cascade/issues/28)). The corrected dataset was uploaded and replaced the previous dataset #1.
 
