@@ -450,8 +450,8 @@ def preprocess_groundtruth_artificial_noise_balanced(ground_truth_folders,before
 
     if verbose>1: print('Number of neurons in the ground truth: '+str(len(sub_traces_events_all)))
 
-    before = int(before_frac*windowsize)
-    after = int(after_frac*windowsize)
+    before = int(np.round(before_frac*windowsize))
+    after = int(np.round(after_frac*windowsize))
 
     if causal_kernel:
 
