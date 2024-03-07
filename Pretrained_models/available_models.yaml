@@ -1,7 +1,7 @@
 ###
 ### Download links for available models
 ###
-### Last update: February 6th 2024
+### Last update: March 7th 2024
 
 Global_EXC_1Hz_smoothing500ms:
     Link: https://drive.switch.ch/index.php/s/ZAc2kNO0aqSO3ja/download
@@ -228,6 +228,19 @@ Global_EXC_30Hz_smoothing50ms_asymmetric_window_8_frames:
 GCaMP6f_mouse_30Hz_smoothing200ms:
     Link: https://drive.switch.ch/index.php/s/hiT8cJdBMzeZNRB/download
     Info:
+Spinal_cord_excitatory_30Hz_smoothing50ms:
+    Link: https://drive.switch.ch/index.php/s/Uxxtd9vv6oZDpg7/download
+    Info:
+Spinal_cord_inhibitory_30Hz_smoothing50ms:
+    Link: https://drive.switch.ch/index.php/s/4Jye6npHmUS99wq/download
+    Info:
+Spinal_cord_excitatory_2.5Hz_smoothing400ms:
+    Link: https://drive.switch.ch/index.php/s/EKNDKBhkdCSCSZn/download
+    Info:
+Spinal_cord_inhibitory_2.5Hz_smoothing400ms:
+    Link: https://drive.switch.ch/index.php/s/GxVo3fYhbmy4QzQ/download
+    Info:
+    
 
 
     
