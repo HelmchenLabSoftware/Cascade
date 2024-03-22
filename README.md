@@ -217,7 +217,7 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 
 #### Can I apply CASCADE to data recorded with GCaMP8? 
 
->Yes. We have tested the global models with the new GCaMP8 datasets (available via the [GCaMP8 paper](https://www.nature.com/articles/s41586-023-05828-9)). The standard pretrained models were in general good; the only caveat is that predictions were shifted in time - due to the fast rise time of GCaMP8, inferred spike rates occur earlier than true spike rates. We are currently (Mid 2023) in the process of making more in-depth analysis of spike inference with GCaMP8 data.
+>Yes. We have tested the global models with the new GCaMP8 datasets (available via the [GCaMP8 paper](https://www.nature.com/articles/s41586-023-05828-9)). The standard pretrained models were in general good; the only caveat is that predictions were shifted in time - due to the fast rise time of GCaMP8, inferred spike rates occur earlier than true spike rates. We are currently (March 2024) in the process of making more in-depth analysis of spike inference with GCaMP8 data with systematic validation and benchmarking.
 
 
 #### Why is the output of the algorithm a probability, why not discrete spikes?
