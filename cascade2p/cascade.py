@@ -196,7 +196,7 @@ def train_model(
             model.compile(loss=cfg["loss_function"], optimizer=optimizer)
 
             cfg["nr_of_epochs"] = np.minimum(
-                cfg["nr_of_epochs"], np.int(10 * np.floor(5e6 / len(X)))
+                cfg["nr_of_epochs"], int(10 * np.floor(5e6 / len(X)))
             )
 
             model.fit(
