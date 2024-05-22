@@ -104,7 +104,7 @@ If you have an existing Python environment, you can also try simply installing t
 
 #### With a local installation (macOS)
 
-On macOS there is an issue with the Tensorflow build provided by Conda (see https://stackoverflow.com/questions/53014306/error-15-initializing-libiomp5-dylib-but-found-libiomp5-dylib-already-initial ). There are several workarounds, but it seems to be most reliable to install Tensorflow and Keras using `pip`. To do so, follow these steps:
+On macOS there is an issue with the Tensorflow build provided by Conda (see https://stackoverflow.com/questions/53014306/error-15-initializing-libiomp5-dylib-but-found-libiomp5-dylib-already-initial ). There are several workarounds, but it seems to be most reliable to install Tensorflow and Keras using `pip`. To do so, download/clone the Github repository to your local computer, navigate to the main folder of the repository, and follow these steps:
 1. Create a new Anaconda environment with required base packages: `conda env create -f etc/environment_mac.yml`
 2. Activate the environment: `conda activate Cascade`
 3. Install Tensorflow / Keras: `pip install -r etc/requirements_mac.txt`
