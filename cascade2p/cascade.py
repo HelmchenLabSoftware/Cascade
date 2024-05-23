@@ -140,6 +140,10 @@ def train_model(
     nr_model_fits = len(cfg["noise_levels"]) * cfg["ensemble_size"]
     print("Fitting a total of {} models:".format(nr_model_fits))
 
+    # reshape matrix of traces if only a single neuron's activity is provided as input to the inference
+    if len(traces.shape) == 1:
+      traces = np.expand_dims(traces,0)
+  
     curr_model_nr = 0
 
     print(training_folders[0])
