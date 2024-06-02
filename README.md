@@ -39,6 +39,20 @@ You will get started within few minutes.
 <a href="https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Calibrated_spike_inference_with_Cascade.ipynb" rel="Spike inference from calcium data, showing activations of intermediate network layers"><img src="https://github.com/HelmchenLabSoftware/Calibrated-inference-of-spiking/blob/master/etc/Network_activations_output.gif "  width="85%"></a>
 </p>
 
+## Updates to ground truth datasets and pretrained models:
+
+***2024-06-02*** - Models and ground truth datasets for **GCaMP6s in spinal cord** in mice (**excitatory/inhibitory transgenic**) are added (datasets #40 and #41), trained for imaging rates of 2.5, 3 and 30 Hz. Additional models for spinal cord datasets are trained upon request. A preprint on the datasets and models will be released within the next months.
+
+***2024-02-08*** - Models and ground truth datasets for **GCaMP7f** and **GCaMP8f/m/s** will be added in a few months. See issue [#43](https://github.com/HelmchenLabSoftware/Cascade/issues/43) for a preliminary discussion on GCaMP7f.
+
+***2021-12-01*** - Spike times for dataset #1 were found to be misaligned (see issue [#28](https://github.com/HelmchenLabSoftware/Cascade/issues/28)). The corrected dataset was uploaded and replaced the previous dataset #1.
+
+***2021-12-01*** - Some neurons in dataset #15 exhibited a systematic delay with calcium signals with respect to spike times. This delay was corrected based on inspection of spike-triggered averages. Dataset #15 was replaced with the corrected dataset.
+
+***2021-12-11*** - Neuron #8 in dataset #20 was removed since calcium signals were found to be unrelated to simultaneously recorded spike patterns. Most likely, calcium imaging and electrophysiology were performed from two different neurons.
+
+
+
 ## [Exploration of the ground truth database](https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Explore_ground_truth_datasets.ipynb)
 
 Explore the 27 ground truth data sets and browse through the 298 neurons.
@@ -56,16 +70,6 @@ Just click on the link or the images!
 <p align="center">
 <a href="https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Explore_ground_truth_datasets.ipynb" rel="Tool for the exploration of the ground truth database"><img src="https://github.com/HelmchenLabSoftware/Calibrated-inference-of-spiking/blob/master/etc/Exploration%20tool.gif"  width="85%"></a>
 </p>
-
-**Updates to the database**:
-
-*2024-02-08* - Models and ground truth datasets for jGCaMP7f and jGCaMP8f/m/s will be added in a few months. See issue [#43](https://github.com/HelmchenLabSoftware/Cascade/issues/43) for a preliminary discussion on jGCaMP7f.
-
-*2021-12-01* - Spike times for dataset #1 were found to be misaligned (see issue [#28](https://github.com/HelmchenLabSoftware/Cascade/issues/28)). The corrected dataset was uploaded and replaced the previous dataset #1.
-
-*2021-12-01* - Some neurons in dataset #15 exhibited a systematic delay with calcium signals with respect to spike times. This delay was corrected based on inspection of spike-triggered averages. Dataset #15 was replaced with the corrected dataset.
-
-*2021-12-11* - Neuron #8 in dataset #20 was removed since calcium signals were found to be unrelated to simultaneously recorded spike patterns. Most likely, calcium imaging and electrophysiology were performed from two different neurons.
 
 
 ## Getting started
