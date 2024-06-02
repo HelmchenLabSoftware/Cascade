@@ -1,7 +1,7 @@
 ###
 ### Download links for available models
 ###
-### Last update: March 7th 2024
+### Last update: June 2nd 2024
 
 Global_EXC_1Hz_smoothing500ms:
     Link: https://drive.switch.ch/index.php/s/ZAc2kNO0aqSO3ja/download
@@ -233,6 +233,12 @@ Spinal_cord_excitatory_30Hz_smoothing50ms:
     Info:
 Spinal_cord_inhibitory_30Hz_smoothing50ms:
     Link: https://drive.switch.ch/index.php/s/4Jye6npHmUS99wq/download
+    Info:
+Spinal_cord_excitatory_3Hz_smoothing400ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/hwWVDvRzRZj3tKk/download
+    Info:
+Spinal_cord_inhibitory_3Hz_smoothing400ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/MMBUMzRlZuK7O2O/download
     Info:
 Spinal_cord_excitatory_2.5Hz_smoothing400ms:
     Link: https://drive.switch.ch/index.php/s/EKNDKBhkdCSCSZn/download
