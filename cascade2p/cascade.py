@@ -378,7 +378,7 @@ def predict(
     differences = np.array(trace_noise_levels)[:,None] - np.array(noise_levels_model)[None,:]
     relative_differences = np.min(differences,axis=1)
     if np.mean(relative_differences) > 2:
-        print("WARNING: The available models cannot match the experimetally obtained noise levels (difference: ", str(np.mean(relative_differences)),"). Please check that the computation of dF/F is performed correctly. Otherwise, please reach out and ask for pretrained models with higher noise level models (see: https://github.com/HelmchenLabSoftware/Cascade/issues/61).")
+        print("WARNING: The available models cannot match the experimentally obtained noise levels (difference: ", str(np.mean(relative_differences)),"). Please check that the computation of dF/F is performed correctly. Otherwise, please reach out and ask for pretrained models with higher noise level models (see: https://github.com/HelmchenLabSoftware/Cascade/issues/61).")
     best_model_for_each_neuron = np.argmin(np.abs(differences),axis=1)
     
     # Use for each noise level the matching model
