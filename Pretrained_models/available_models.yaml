@@ -60,6 +60,9 @@ Global_EXC_7Hz_smoothing200ms:
 Global_EXC_7Hz_smoothing200ms_causalkernel:
     Link: https://drive.switch.ch/index.php/s/hHytQ0fyrSUfJfr/download
     Info:
+Global_EXC_7.5Hz_smoothing200ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/98IBn1gT08M4EUF/download
+    Info:
 Global_EXC_7.5Hz_smoothing200ms:
     Link: https://drive.switch.ch/index.php/s/2XKVdJ5UNF53AMD/download
     Info:
