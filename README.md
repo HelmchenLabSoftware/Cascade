@@ -41,6 +41,8 @@ You will get started within few minutes.
 
 ## Updates to ground truth datasets and pretrained models:
 
+***2024-06-26*** - Peter Rupprecht presents a poster at the FENS conference in Vienna about ongoing work on spike inference with **GCaMP8**, and about spike inference in **spinal cord** in mice.
+
 ***2024-06-02*** - Models and ground truth datasets for **GCaMP6s in spinal cord** in mice (**excitatory/inhibitory transgenic**) are added (datasets #40 and #41), trained for imaging rates of 2.5, 3 and 30 Hz. Additional models for spinal cord datasets are trained upon request. A preprint on the datasets and models will be released within the next months.
 
 ***2024-02-08*** - Models and ground truth datasets for **GCaMP7f** and **GCaMP8f/m/s** will be added in a few months. See issue [#43](https://github.com/HelmchenLabSoftware/Cascade/issues/43) for a preliminary discussion on GCaMP7f.
