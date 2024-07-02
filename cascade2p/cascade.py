@@ -226,6 +226,252 @@ def train_model(
     print("Runtime: {:.0f} min".format((time.time() - start) / 60))
 
 
+
+
+
+def transfer_train_model(
+    model_name,template_model, model_folder="Pretrained_models", ground_truth_folder="Ground_truth"
+):
+
+    """Train neural network with parameters specified in the config.yaml file in the model folder
+
+    In this function, a model is configured (defined in the input 'model_name': frame rate, noise levels, ground truth datasets, etc.).
+    The ground truth is resampled (function 'preprocess_groundtruth_artificial_noise_balanced', defined in "utils.py").
+    The network architecture is defined (function 'define_model', defined in "utils.py").
+    The thereby defined model is trained with the resampled ground truth data.
+    The trained model with its weight and configuration details is saved to disk.
+
+    Parameters
+    ----------
+    model_name : str
+        Name of the model, e.g. 'Universal_30Hz_smoothing100ms'
+        This name has to correspond to the folder with the config.yaml file which defines the model parameters
+
+    template_model: str
+        Name of default model that is used for transfer learning
+        The parameters of this model have to match the parameters of the to-be-trained model
+
+    model_folder: str
+        Absolute or relative path, which defines the location of the specified model_name folder
+        Default value 'Pretrained_models' assumes a current working directory in the Cascade folder
+
+    ground_truth_folder : str
+        Absolute or relative path, which defines the location of the ground truth datasets
+        Default value 'Ground_truth'  assumes a current working directory in the Cascade folder
+
+    Returns
+    --------
+    None
+        All results are saved in the folder model_name as .h5 files containing the trained model
+
+    """
+    import tensorflow.keras
+    from tensorflow.keras.optimizers import Adagrad
+
+    model_template_path = os.path.join(model_folder, template_model)
+    cfg_file_template = os.path.join(model_template_path, "config.yaml")
+
+    model_path = os.path.join(model_folder, model_name)
+    cfg_file = os.path.join(model_path, "config.yaml")
+
+    # check if configuration file can be found
+    if not os.path.isfile(cfg_file):
+        m = (
+            'The configuration file "config.yaml" can not be found at the location "{}".\n'.format(
+                os.path.abspath(cfg_file)
+            )
+            + 'You have provided the model "{}" at the absolute or relative path "{}".\n'.format(
+                model_name, model_folder
+            )
+            + 'Please check if there is a folder for model "{}" at the location "{}".'.format(
+                model_name, os.path.abspath(model_folder)
+            )
+        )
+        print(m)
+        raise Exception(m)
+        
+    # check if configuration file can be found
+    if not os.path.isfile(cfg_file_template):
+        m = (
+            'The configuration file "config.yaml" can not be found at the location "{}".\n'.format(
+                os.path.abspath(cfg_file_template)
+            )
+            + 'You have provided the model "{}" at the absolute or relative path "{}".\n'.format(
+                model_name, model_folder
+            )
+            + 'Please check if there is a folder for model "{}" at the location "{}".'.format(
+                model_name, os.path.abspath(model_folder)
+            )
+        )
+        print(m)
+        raise Exception(m)
+
+    # load cfg dictionary from old config.yaml file (to be consistent)
+    cfg_new = config.read_config(cfg_file)
+    cfg = config.read_config(cfg_file_template)
+    cfg['training_datasets'] = cfg_new['training_datasets']
+    cfg['model_name'] = cfg_new['model_name']
+    verbose = cfg["verbose"]
+
+
+    if verbose:
+        print(
+            "Used configuration for model fitting (file {}):\n".format(
+                os.path.abspath(cfg_file)
+            )
+        )
+        for key in cfg:
+            print("{}:\t{}".format(key, cfg[key]))
+
+        print("\n\nModels will be saved into this folder:", os.path.abspath(model_path))
+
+    # add base folder to selected training datasets
+    training_folders = [
+        os.path.join(ground_truth_folder, ds) for ds in cfg["training_datasets"]
+    ]
+
+    # check if the training datasets can be found
+    missing = False
+    for folder in training_folders:
+        if not os.path.isdir(folder):
+            print(
+                'The folder "{}" could not be found at the specified location "{}"'.format(
+                    folder, os.path.abspath(folder)
+                )
+            )
+            missing = True
+    if missing:
+        m = (
+            'At least one training dataset could not be located.\nThis could mean that the given path "{}" '.format(
+                ground_truth_folder
+            )
+            + "does not specify the correct location or that e.g. a training dataset referenced in the config.yaml file "
+            + "contained a typo."
+        )
+        print(m)
+        raise Exception(m)
+
+    start = time.time()
+    
+    model_pretrained_dict = get_model_paths(model_template_path)  # function defined below
+    if verbose > 2:
+        print("Loaded models:", str(model_pretrained_dict))
+    
+    # Update model fitting status
+    cfg["training_finished"] = "Running"
+    config.write_config(cfg, os.path.join(model_path, "config.yaml"))
+
+    nr_model_fits = len(cfg["noise_levels"]) * cfg["ensemble_size"]
+    print("Fitting a total of {} models:".format(nr_model_fits))
+
+    curr_model_nr = 0
+
+    print(training_folders[0])
+    from tensorflow.keras.models import load_model
+    
+    for noise_level in cfg["noise_levels"]:
+      
+        pretrained_models = list()
+        for model_pathX in model_pretrained_dict[noise_level]:
+            pretrained_models.append(load_model(model_pathX))
+      
+        for ensemble in range(cfg["ensemble_size"]):
+            # train 'ensemble_size' (e.g. 5) models for each noise level
+
+            curr_model_nr += 1
+            print(
+                "\nFitting model {} with noise level {} (total {} out of {}).".format(
+                    ensemble + 1, noise_level, curr_model_nr, nr_model_fits
+                )
+            )
+
+            if cfg["sampling_rate"] > 30:
+
+                #cfg["windowsize"] = int(np.power(cfg["sampling_rate"] / 30, 0.25) * 64)
+                suggestion = int(np.power(cfg["sampling_rate"] / 30, 0.25) * 64)
+                # write again the config file to update the adjusted window size value
+                # config.write_config(cfg, os.path.join(model_path, "config.yaml"))
+
+                print(
+                    "Warning: Window size should be enlarged to "
+                    + str(suggestion)
+                    + " time points due to the high calcium imaging sampling rate("
+                    + str(cfg["sampling_rate"])
+                    + ")."
+                )
+
+            print(training_folders)
+
+            # preprocess dataset to get uniform dataset for training
+            X, Y = utils.preprocess_groundtruth_artificial_noise_balanced(
+                ground_truth_folders=training_folders,
+                before_frac=cfg["before_frac"],
+                windowsize=cfg["windowsize"],
+                after_frac=1 - cfg["before_frac"],
+                noise_level=noise_level,
+                sampling_rate=cfg["sampling_rate"],
+                smoothing=cfg["smoothing"] * cfg["sampling_rate"],
+                omission_list=[],
+                permute=1,
+                verbose=cfg["verbose"],
+                replicas=1,
+                causal_kernel=cfg["causal_kernel"],
+            )
+
+            model = utils.define_model(
+                filter_sizes=cfg["filter_sizes"],
+                filter_numbers=cfg["filter_numbers"],
+                dense_expansion=cfg["dense_expansion"],
+                windowsize=cfg["windowsize"],
+                loss_function=cfg["loss_function"],
+                optimizer=cfg["optimizer"],
+            )
+
+            optimizer = Adagrad(learning_rate=0.05)
+            model.compile(loss=cfg["loss_function"], optimizer=optimizer)
+            
+            
+            model.load_weights(model_pretrained_dict[noise_level][ensemble])
+            
+            ######################################
+            
+            # freeze convolutional layers
+            for k in np.arange(6):
+              model.layers[k].trainable = False
+
+            # Re-compile (maybe not necessary?):
+            model.compile(loss=cfg["loss_function"], optimizer=Adagrad(learning_rate=0.02))
+            
+            ######################################
+            
+            cfg["nr_of_epochs"] = np.minimum(
+                cfg["nr_of_epochs"], int(10 * np.floor(5e6 / len(X)))
+            )
+
+            model.fit(
+                X,
+                Y,
+                batch_size=cfg["batch_size"],
+                epochs=cfg["nr_of_epochs"],
+                verbose=cfg["verbose"],
+            )
+
+            # save model
+            file_name = "Model_NoiseLevel_{}_Ensemble_{}.h5".format(
+                int(noise_level), ensemble
+            )
+            model.save(os.path.join(model_path, file_name))
+            print("Saved model:", file_name)
+
+    # Update model fitting status
+    # cfg['training_finished'] = 'Yes'
+    # config.write_config(cfg, os.path.join( model_path, 'config.yaml' ))
+
+    print("\n\nDone!")
+    print("Runtime: {:.0f} min".format((time.time() - start) / 60))
+
+
+
 def predict(
     model_name, traces, model_folder="Pretrained_models", threshold=0, padding=np.nan, verbosity=1
 ):
