@@ -1,7 +1,7 @@
 ###
 ### Download links for available models
 ###
-### Last update: June 23rd 2024
+### Last update: July 8th 2024
 
 Global_EXC_1Hz_smoothing500ms:
     Link: https://drive.switch.ch/index.php/s/ZAc2kNO0aqSO3ja/download
@@ -258,7 +258,40 @@ Spinal_cord_excitatory_2.5Hz_smoothing400ms:
 Spinal_cord_inhibitory_2.5Hz_smoothing400ms:
     Link: https://drive.switch.ch/index.php/s/GxVo3fYhbmy4QzQ/download
     Info:
-    
-
-
+GC8_EXC_5Hz_smoothing400ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/3pFzJABPMXwRsRH/download
+    Info:
+GC8_EXC_5Hz_smoothing800ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/eEAb9eET0I4yLRT/download
+    Info:
+GC8_EXC_7.5Hz_smoothing100ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/ZzMu9uKqIifYcRU/download
+    Info:
+GC8_EXC_7.5Hz_smoothing200ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/xtERdlqRAqjS5B5/download
+    Info:
+GC8_EXC_10Hz_smoothing150ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/UrSGNslXKdsmiBQ/download
+    Info:
+GC8_EXC_10Hz_smoothing75ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/H2kiyPViO0oL45C/download
+    Info:
+GC8_EXC_15Hz_smoothing100ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/dvORWhkCck3WsLq/download
+    Info:
+GC8_EXC_15Hz_smoothing50ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/UrSGNslXKdsmiBQ/download
+    Info:
+GC8_EXC_30Hz_smoothing25ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/Nsw5Gik2YOW5TTM/download
+    Info:
+GC8_EXC_30Hz_smoothing50ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/sAiEIHX21csbPnv/download
+    Info:
+GC8_EXC_40Hz_smoothing15ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/vLhe85Dqo6aBvVR/download
+    Info:
+GC8_EXC_40Hz_smoothing30ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/09Ynzw8wSL9GP3n/download
+    Info:
     
