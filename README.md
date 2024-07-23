@@ -10,7 +10,7 @@
 
 *Cascade* translates calcium imaging ΔF/F traces into spiking probabilities or discrete spikes.
 
-*Cascade* is described in detail in **[the main paper](https://www.nature.com/articles/s41593-021-00895-5)**.
+*Cascade* is described in detail in **[the main paper](https://www.nature.com/articles/s41593-021-00895-5)**. There is an additional paper which describe the application of Cascade to [spinal cord data](https://www.biorxiv.org/content/10.1101/2024.07.17.603957v1).
 
 *Cascade's* toolbox consists of
 
@@ -40,6 +40,8 @@ You will get started within few minutes.
 </p>
 
 ## Updates to ground truth datasets and pretrained models:
+
+***2024-06-26*** - **[A new preprint](https://www.biorxiv.org/content/10.1101/2024.07.17.603957v1)** about Cascade, where it is applied to* calcium imaging data from spinal cord**. Cascade models pretrained on spinal cord ground truth are already available, and the ground truth with both excitatory and inhibitory spinal cord neurons is already part of this repository's ground truth database (datasets #40 and #41).
 
 ***2024-06-26*** - Peter Rupprecht presents a poster at the FENS conference in Vienna about ongoing work on spike inference with **GCaMP8**, and about spike inference in **spinal cord** in mice.
 
