@@ -41,6 +41,8 @@ You will get started within few minutes.
 
 ## Updates to ground truth datasets and pretrained models:
 
+***2024-08-28*** - New **models pretrained with GCaMP8** ground truth are now available for Cascade. They are briefly described in this **[blog post](https://gcamp6f.com/2024/08/22/spike-inference-with-gcamp8-new-pretrained-models-available/)** with a coarse comparison of the model with previous Cascade models. A more detailed analysis of these models and their application to GCaMP8 data will follow in a few months!.
+
 ***2024-07-23*** - **[A new preprint](https://www.biorxiv.org/content/10.1101/2024.07.17.603957v1)** about Cascade, where it is applied to **calcium imaging data from spinal cord**. Cascade models pretrained on spinal cord ground truth are already available, and the ground truth with both excitatory and inhibitory spinal cord neurons is already part of this repository's ground truth database (datasets #40 and #41).
 
 ***2024-06-26*** - Peter Rupprecht presents a poster at the FENS conference in Vienna about ongoing work on spike inference with **GCaMP8**, and about spike inference in **spinal cord** in mice.
