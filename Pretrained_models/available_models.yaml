@@ -1,7 +1,7 @@
 ###
 ### Download links for available models
 ###
-### Last update: July 8th 2024
+### Last update: September 19th 2024
 
 Global_EXC_1Hz_smoothing500ms:
     Link: https://drive.switch.ch/index.php/s/ZAc2kNO0aqSO3ja/download
@@ -258,6 +258,12 @@ Spinal_cord_excitatory_2.5Hz_smoothing400ms:
 Spinal_cord_inhibitory_2.5Hz_smoothing400ms:
     Link: https://drive.switch.ch/index.php/s/GxVo3fYhbmy4QzQ/download
     Info:
+GC8_EXC_3Hz_smoothing500ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/LL9GtTfRnUDLyfc/download
+    Info:
+GC8_EXC_3Hz_smoothing250ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/bqiowuR6SwWSJwX/download
+    Info:
 GC8_EXC_5Hz_smoothing400ms_high_noise:
     Link: https://drive.switch.ch/index.php/s/3pFzJABPMXwRsRH/download
     Info:
@@ -282,6 +288,12 @@ GC8_EXC_15Hz_smoothing100ms_high_noise:
 GC8_EXC_15Hz_smoothing50ms_high_noise:
     Link: https://drive.switch.ch/index.php/s/UrSGNslXKdsmiBQ/download
     Info:
+GC8_EXC_20Hz_smoothing60ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/LXpFMR7fr99kHbM/download
+    Info:
+GC8_EXC_20Hz_smoothing30ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/ThN8DvAaJQILBif/download
+    Info:
 GC8_EXC_30Hz_smoothing25ms_high_noise:
     Link: https://drive.switch.ch/index.php/s/Nsw5Gik2YOW5TTM/download
     Info:
@@ -294,4 +306,69 @@ GC8_EXC_40Hz_smoothing15ms_high_noise:
 GC8_EXC_40Hz_smoothing30ms_high_noise:
     Link: https://drive.switch.ch/index.php/s/09Ynzw8wSL9GP3n/download
     Info:
-    
+GC8s_EXC_3Hz_smoothing500ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/qwjKYkRSASVSMd0/download
+    Info:
+GC8s_EXC_3Hz_smoothing250ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/3C6gevW5k4MtAbo/download
+    Info:
+GC8s_EXC_7.5Hz_smoothing200ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/iKYJglhq98Nhcnc/download
+    Info:
+GC8s_EXC_7.5Hz_smoothing100ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/NRZ9m3nHQELOf23/download
+    Info:
+GC8s_EXC_20Hz_smoothing60ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/rDFAT23cgoBozQp/download
+    Info:
+GC8s_EXC_20Hz_smoothing30ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/ivYapwgC1SqGXzq/download
+    Info:
+GC8s_EXC_30Hz_smoothing50ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/P1Bmn8MzXTUipev/download
+    Info:
+GC8s_EXC_30Hz_smoothing25ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/ot950bYervOOnZ7/download
+    Info:
+GC8s_EXC_15Hz_smoothing50ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/ot950bYervOOnZ7/download
+    Info:
+GC8s_EXC_15Hz_smoothing100ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/w8eDXtV90uuX9u2/download
+    Info:
+GC8m_EXC_7.5Hz_smoothing200ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/z0rptaPV2FrdOy8/download
+    Info:
+GC8m_EXC_7.5Hz_smoothing100ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/RdlX4HtwOVhu0FG/download
+    Info:
+GC8m_EXC_30Hz_smoothing50ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/k7RPu05t41y0gNt/download
+    Info:
+GC8m_EXC_30Hz_smoothing25ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/jEr5Y8v79F1tviZ/download
+    Info:
+GC8m_EXC_15Hz_smoothing50ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/FU1BVZyKomyUvG3/download
+    Info:
+GC8m_EXC_15Hz_smoothing100ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/e9fazh01MFPvv5g/download
+    Info:
+GC8f_EXC_7.5Hz_smoothing200ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/LqlLjBUHsEdDFOG/download
+    Info:
+GC8f_EXC_7.5Hz_smoothing100ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/fnBDoi9c7IEJhA7/download
+    Info:
+GC8f_EXC_30Hz_smoothing50ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/FdeffuqcIw7jFI5/download
+    Info:
+GC8f_EXC_30Hz_smoothing25ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/bmWzhQvNuYpiR62/download
+    Info:
+GC8f_EXC_15Hz_smoothing50ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/ZXb7BCmrhCA2OKZ/download
+    Info:
+GC8f_EXC_15Hz_smoothing100ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/xnaZDlifTxhG9Hb/download
+    Info:
