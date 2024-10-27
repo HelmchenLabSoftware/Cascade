@@ -114,6 +114,8 @@ If you have an existing Python environment, you can also try simply installing t
 
 #### With a local installation (macOS)
 
+For macOS, we provide instructions on how to run Cascade with the old (Intel) chips:
+
 On macOS there is an issue with the Tensorflow build provided by Conda (see https://stackoverflow.com/questions/53014306/error-15-initializing-libiomp5-dylib-but-found-libiomp5-dylib-already-initial ). There are several workarounds, but it seems to be most reliable to install Tensorflow and Keras using `pip`. To do so, download/clone the Github repository to your local computer, navigate to the main folder of the repository, and follow these steps:
 1. Create a new Anaconda environment with required base packages: `conda env create -f etc/environment_mac.yml`
 2. Activate the environment: `conda activate Cascade`
@@ -121,6 +123,9 @@ On macOS there is an issue with the Tensorflow build provided by Conda (see http
 4. If you want to use the Jupyter demo Notebooks, make the new environment visible in Jupyter: `ipython kernel install --user --name=Cascade`
 
 This recipe has been tested on macOS 10.15 (Catalina).
+
+For more recent Macbook versions, the Apple Silicon chip makes it challenging to install the packages recommended for Cascade. There is a [related issue](https://github.com/HelmchenLabSoftware/Cascade/issues/46) on this topic. We provide instructions to install Cacade with Rosetta that is compatible Apple Silicon chips: [https://github.com/HelmchenLabSoftware/Cascade/blob/master/etc/Instructions_Mac2024.md](Link to instructions).
+
 
 
 ## Typical work flow
