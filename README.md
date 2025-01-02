@@ -41,6 +41,8 @@ You will get started within few minutes.
 
 ## Updates to ground truth datasets and pretrained models:
 
+***2025-01-02*** - Updated **spinal cord ground truth data**. The ground truth data for spinal cord (describedy in this [preprint](https://www.biorxiv.org/content/10.1101/2024.07.17.603957v1)) are now updated and also contain the field *stim*, which indicates timepoints of electrical dorsal root stimulation.
+
 ***2024-08-22*** - New **models pretrained with GCaMP8** ground truth are now available for Cascade. They are briefly described in this **[blog post](https://gcamp6f.com/2024/08/22/spike-inference-with-gcamp8-new-pretrained-models-available/)** with a coarse comparison of the model with previous Cascade models. A more detailed analysis of these models and their application to GCaMP8 data will follow in a few months!
 
 ***2024-07-23*** - **[A new preprint](https://www.biorxiv.org/content/10.1101/2024.07.17.603957v1)** about Cascade, where it is applied to **calcium imaging data from spinal cord**. Cascade models pretrained on spinal cord ground truth are already available, and the ground truth with both excitatory and inhibitory spinal cord neurons is already part of this repository's ground truth database (datasets #40 and #41).
