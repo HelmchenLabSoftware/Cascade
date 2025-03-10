@@ -10,7 +10,7 @@
 
 *Cascade* translates calcium imaging ΔF/F traces into spiking probabilities or discrete spikes.
 
-*Cascade* is described in detail in **[the main paper](https://www.nature.com/articles/s41593-021-00895-5)**. There is an additional paper which describes the application of Cascade to [spinal cord data](https://www.biorxiv.org/content/10.1101/2024.07.17.603957v1).
+*Cascade* is described in detail in **[the main paper](https://www.nature.com/articles/s41593-021-00895-5)**. There are follow-up papers which describe the application of Cascade to [spinal cord data](https://www.biorxiv.org/content/10.1101/2024.07.17.603957) and the application of Cascade to [GCaMP8](https://www.biorxiv.org/content/10.1101/2025.03.03.641129).
 
 *Cascade's* toolbox consists of
 
@@ -41,6 +41,8 @@ You will get started within few minutes.
 
 ## Updates to ground truth datasets and pretrained models:
 
+***2025-03-10*** - **[New preprint](https://www.biorxiv.org/content/10.1101/2025.03.03.641129)** on spike inference with **GCaMP8**. The analyses compare spike inference with specifically GCaMP8-trained models, for the algorithms Cascade, MLSpike and OASIS. The analyses also provide insights into the consequences of the non-linearity of GCaMP8 and GCaMP6 variants, and the potential for single-action potential-detection with GCaMP8 vs. other indicators.
+
 ***2025-01-02*** - Updated **spinal cord ground truth data**. The ground truth data for spinal cord (describedy in this [preprint](https://www.biorxiv.org/content/10.1101/2024.07.17.603957v1)) are now updated and also contain the field *stim*, which indicates timepoints of electrical dorsal root stimulation.
 
 ***2024-08-22*** - New **models pretrained with GCaMP8** ground truth are now available for Cascade. They are briefly described in this **[blog post](https://gcamp6f.com/2024/08/22/spike-inference-with-gcamp8-new-pretrained-models-available/)** with a coarse comparison of the model with previous Cascade models. A more detailed analysis of these models and their application to GCaMP8 data will follow in a few months!
@@ -63,11 +65,11 @@ You will get started within few minutes.
 
 ## [Exploration of the ground truth database](https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Explore_ground_truth_datasets.ipynb)
 
-Explore the 27 ground truth data sets and browse through the 298 neurons.
+Explore the 35 ground truth data sets and browse through >400 neurons.
 
 Zoom into single events and observe calcium responses (or lack thereof) to single spikes.
 
-Indicators: GCaMP6f, GCaMP6s, R-CaMP, jRCaMP, jRGECO, GCaMP5k, OGB-1, Cal-520.
+Indicators: GCaMP8s, GCaMP8m, GCaMP8f, GCaMP7f, GCaMP6f, GCaMP6s, R-CaMP, jRCaMP, jRGECO, GCaMP5k, OGB-1, Cal-520.
 
 Mouse pyramidal cells in visual and somatosensory cortices, interneurons, hippocampal principal cells; zebrafish forebrain and olfactory bulb.
 
@@ -332,6 +334,12 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 > Rupprecht P, Carta S, Hoffmann A, Echizen M, Blot A, Kwan AC, Dan Y, Hofer SB, Kitamura K, Helmchen F\*, Friedrich RW\*, *A database and deep learning toolbox for noise-optimized, generalized spike inference from calcium imaging*, Nature Neuroscience (2021).
 >
 > (\* = co-senior authors)
+>
+> If you use models trained for spinal cord or GCaMP8 data, please also refer to the following papers:
+>
+> Rupprecht P, Rózsa M, Fang X, Svoboda K, Helmchen F. *[Spike inference from calcium imaging data acquired with GCaMP8 indicators](https://www.biorxiv.org/content/10.1101/2025.03.03.641129)*, bioRxiv (2025).
+>
+> Rupprecht P, Fan W, Sullivan S, Helmchen F, Sdrulla A. *[Spike rate inference from mouse spinal cord calcium imaging data](https://www.biorxiv.org/content/10.1101/2024.07.17.603957)*, bioRxiv (2024).
 >
 > If you use the respective ground truth datasets directly, please also refer to the original papers and the associated dataset:
 > 
