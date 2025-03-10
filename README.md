@@ -10,7 +10,7 @@
 
 *Cascade* translates calcium imaging ΔF/F traces into spiking probabilities or discrete spikes.
 
-*Cascade* is described in detail in **[the main paper](https://www.nature.com/articles/s41593-021-00895-5)**. There are follow-up papers which describe the application of Cascade to [spinal cord data](https://www.biorxiv.org/content/10.1101/2024.07.17.603957) and the application of Cascade to [GCaMP8](https://www.biorxiv.org/content/10.1101/2025.03.03.641129).
+*Cascade* is described in detail in **[the main paper](https://www.nature.com/articles/s41593-021-00895-5)**. There are follow-up papers which describe the application of Cascade to **[spinal cord data](https://www.biorxiv.org/content/10.1101/2024.07.17.603957)** and the application of Cascade to **[GCaMP8](https://www.biorxiv.org/content/10.1101/2025.03.03.641129)**.
 
 *Cascade's* toolbox consists of
 
