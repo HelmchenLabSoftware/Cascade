@@ -41,6 +41,8 @@ You will get started within few minutes.
 
 ## Updates to ground truth datasets and pretrained models:
 
+***2025-03-14*** - New [blog post](https://gcamp6f.com/2025/03/14/non-linearity-of-calcium-indicators-history-dependence-of-spike-reporting/) on the non-linearity of calcium indicators (GCaMP6 vs. GCaMP8) and how this feature affects spike inference.
+
 ***2025-03-10*** - **[New preprint](https://www.biorxiv.org/content/10.1101/2025.03.03.641129)** on spike inference with **GCaMP8**. The paper studies spike inference with specifically GCaMP8-trained models, for the algorithms Cascade, MLSpike and OASIS. The analyses also provide insights into the consequences of the non-linearity of GCaMP8 and GCaMP6 variants, and the potential for single-action potential-detection with GCaMP8 vs. other indicators.
 
 ***2025-01-02*** - Updated **spinal cord ground truth data**. The ground truth data for spinal cord (describedy in this [preprint](https://www.biorxiv.org/content/10.1101/2024.07.17.603957v1)) are now updated and also contain the field *stim*, which indicates timepoints of electrical dorsal root stimulation.
