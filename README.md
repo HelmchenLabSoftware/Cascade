@@ -295,6 +295,13 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 > However, if the ground truth is smoothed not with a symmetric Gaussian but with a smooth causal kernel, this limitation can be circumvented (discussed in detail in Fig. S12 in the [paper](https://www.nature.com/articles/s41593-021-00895-5)), and spiking activity is almost exclusively assigned to time points after the calcium event started. It must be noted that this reliable causal re-assignment of activity works well for high-quality datasets, but in case of higher noise levels, any deconvolution algorithm will assign activity to non-causal time points. Good to keep in mind when you interpret your results!
 
 
+#### How can I use CASCADE for online spike inference?
+
+> Models for online spike inference can be identified from the model name that contains an "Online" at the beginning. Currently, we have pretrained models for online spike inference with GCaMP6 and GCaMP8 for frame rates of 30 Hz and 60 Hz, at moderate noise levels only (assuming that nobody will attempt online spike inference with low latency for extremely noisy data!). If you need additional models, get in touch by opening a [Github](https://github.com/HelmchenLabSoftware/Cascade) issue or via [e-Mail](mailto:p.t.r.rupprecht+cascade@gmail.com).
+> 
+> How can you select a good online spike inference model for you? Check out Figure 5 in our [preprint](https://www.biorxiv.org/content/10.1101/2025.03.03.641129v1), and read our related [blog post](https://gcamp6f.com/2025/03/24/online-spike-inference-with-gcamp8/). If you then still have question, get in touch via email or just open an issue on GitHub!
+
+
 #### None of the models is good for me. What can I do?
 
 > First of all, is this really true? For example, if you have recorded at 30.5 Hz, you can also use a model trained at 30 Hz imaging rates. A deviation by less than 5\% of the imaging rate is totally okay in our experience!
