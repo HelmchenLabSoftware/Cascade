@@ -41,7 +41,7 @@ You will get started within few minutes.
 
 ## Updates to ground truth datasets and pretrained models:
 
-***2025-03-24*** - Models for online spike inference are now uploaded and available. The models are characterized in Figure 5 in our [preprint](https://www.biorxiv.org/content/10.1101/2025.03.03.641129v1), and the model selection is described in more practical terms in this [blog post]([https://gcamp6f.com/2025/03/14/non-linearity-of-calcium-indicators-history-dependence-of-spike-reporting/](https://gcamp6f.com/2025/03/24/online-spike-inference-with-gcamp8/)). If you are into online spike inference, definitely check it out!
+***2025-03-24*** - Models for online spike inference are now uploaded and available. The models are characterized in Figure 5 in our [preprint](https://www.biorxiv.org/content/10.1101/2025.03.03.641129v1), and the model selection is described in more practical terms in this [blog post](https://gcamp6f.com/2025/03/24/online-spike-inference-with-gcamp8/). If you are into online spike inference, definitely check it out!
 
 ***2025-03-14*** - New [blog post](https://gcamp6f.com/2025/03/14/non-linearity-of-calcium-indicators-history-dependence-of-spike-reporting/) on the non-linearity of calcium indicators (GCaMP6 vs. GCaMP8) and how this feature affects spike inference.
 
