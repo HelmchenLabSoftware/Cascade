@@ -43,6 +43,8 @@ You will get started within few minutes.
 
 ***2025-03-24*** - Models for online spike inference are now uploaded and available. The models are characterized in Figure 5 in our [preprint](https://www.biorxiv.org/content/10.1101/2025.03.03.641129v1), and the model selection is described in more practical terms in this [blog post](https://gcamp6f.com/2025/03/24/online-spike-inference-with-gcamp8/). If you are into online spike inference, definitely check it out!
 
+***2025-03-21*** - New [blog post](https://gcamp6f.com/2025/03/21/detecting-single-spikes-from-calcium-imaging/) on the detection of isolated single spikes with CASCADE for GCaMP8 vs. other indicators such as GCaMP6, GCaMP7 and X-CaMP-Gf.
+
 ***2025-03-14*** - New [blog post](https://gcamp6f.com/2025/03/14/non-linearity-of-calcium-indicators-history-dependence-of-spike-reporting/) on the non-linearity of calcium indicators (GCaMP6 vs. GCaMP8) and how this feature affects spike inference.
 
 ***2025-03-10*** - **[New preprint](https://www.biorxiv.org/content/10.1101/2025.03.03.641129)** on spike inference with **GCaMP8**. The paper studies spike inference with specifically GCaMP8-trained models, for the algorithms Cascade, MLSpike and OASIS. The analyses also provide insights into the consequences of the non-linearity of GCaMP8 and GCaMP6 variants, and the potential for single-action potential-detection with GCaMP8 vs. other indicators.
