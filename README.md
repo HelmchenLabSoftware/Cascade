@@ -124,7 +124,7 @@ If you have an existing Python environment, you can also try simply installing t
 
 #### With a local installation (macOS)
 
-For more recent Macbook versions, the Apple Silicon chip makes it challenging to install the packages recommended for Cascade (however, CASCADE user [Matúš Halák](https://github.com/matushalak) has recently found a nice and simple solution, [check it out!](https://github.com/HelmchenLabSoftware/Cascade/issues/46#issuecomment-2765456770)). There is a [related issue](https://github.com/HelmchenLabSoftware/Cascade/issues/46) on this topic. We provide instructions to install Cacade with Rosetta that is compatible Apple Silicon chips: [https://github.com/HelmchenLabSoftware/Cascade/blob/master/etc/Instructions_Mac2024.md](Link to instructions).
+For more recent Macbook versions, the Apple Silicon chip makes it challenging to install the packages recommended for Cascade (however, CASCADE user [Matúš Halák](https://github.com/matushalak) has recently found a nice and simple solution, [check it out!](https://github.com/HelmchenLabSoftware/Cascade/issues/46#issuecomment-2765456770)). There is a [related issue](https://github.com/HelmchenLabSoftware/Cascade/issues/46) on this topic. We provide instructions to install Cacade with Rosetta that is compatible Apple Silicon chips: [Link to instructions](https://github.com/HelmchenLabSoftware/Cascade/blob/master/etc/Instructions_Mac2024.md).
 
 
 For older macOS versions, we provide instructions on how to run Cascade with the old (Intel) chips:
