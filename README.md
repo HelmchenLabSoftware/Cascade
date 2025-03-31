@@ -124,7 +124,10 @@ If you have an existing Python environment, you can also try simply installing t
 
 #### With a local installation (macOS)
 
-For macOS, we provide instructions on how to run Cascade with the old (Intel) chips:
+For more recent Macbook versions, the Apple Silicon chip makes it challenging to install the packages recommended for Cascade (however, CASCADE user [Matúš Halák](https://github.com/matushalak) has recently found a nice and simple solution, [check it out!](https://github.com/HelmchenLabSoftware/Cascade/issues/46#issuecomment-2765456770)). There is a [related issue](https://github.com/HelmchenLabSoftware/Cascade/issues/46) on this topic. We provide instructions to install Cacade with Rosetta that is compatible Apple Silicon chips: [https://github.com/HelmchenLabSoftware/Cascade/blob/master/etc/Instructions_Mac2024.md](Link to instructions).
+
+
+For older macOS versions, we provide instructions on how to run Cascade with the old (Intel) chips:
 
 On macOS there is an issue with the Tensorflow build provided by Conda (see https://stackoverflow.com/questions/53014306/error-15-initializing-libiomp5-dylib-but-found-libiomp5-dylib-already-initial ). There are several workarounds, but it seems to be most reliable to install Tensorflow and Keras using `pip`. To do so, download/clone the Github repository to your local computer, navigate to the main folder of the repository, and follow these steps:
 1. Create a new Anaconda environment with required base packages: `conda env create -f etc/environment_mac.yml`
@@ -134,7 +137,7 @@ On macOS there is an issue with the Tensorflow build provided by Conda (see http
 
 This recipe has been tested on macOS 10.15 (Catalina).
 
-For more recent Macbook versions, the Apple Silicon chip makes it challenging to install the packages recommended for Cascade. There is a [related issue](https://github.com/HelmchenLabSoftware/Cascade/issues/46) on this topic. We provide instructions to install Cacade with Rosetta that is compatible Apple Silicon chips: [https://github.com/HelmchenLabSoftware/Cascade/blob/master/etc/Instructions_Mac2024.md](Link to instructions).
+
 
 
 
