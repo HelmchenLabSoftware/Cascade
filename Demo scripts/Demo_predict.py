@@ -64,6 +64,8 @@ def load_neurons_x_time(file_path):
 
     traces = sio.loadmat(file_path)['dF_traces']
 
+    # PLEASE NOTE: If you use mat73 to load large *.mat-file, be aware of potential numerical errors, see issue #67 (https://github.com/HelmchenLabSoftware/Cascade/issues/67)
+
     return traces
 
 
