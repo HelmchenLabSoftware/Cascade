@@ -247,6 +247,15 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 
 >Yes. We have tested the global models with the new GCaMP8 datasets (available via the [GCaMP8 paper](https://www.nature.com/articles/s41586-023-05828-9)). The standard pretrained models were in general good; the only caveat is that predictions were shifted in time - due to the fast rise time of GCaMP8, inferred spike rates occur earlier than true spike rates. We are currently (March 2024) in the process of making more in-depth analysis of spike inference with GCaMP8 data with systematic validation and benchmarking.
 
+#### Can I apply CASCADE to data recorded with interneurons? 
+
+> Since April 2025, models based on interneuron ground truth have become available. These models are named, for example, `Interneurons_GC8+_30Hz_smoothing50ms_high_noise`. The ground truth dataset for these interneurons consists of 17 putative fast-spiking interneurons, recorded primarily with various GCaMP8 variants, from [Zhang et al. (2023)](https://www.nature.com/articles/s41586-023-05828-9). The models themselves are described in Figure 6 of our preprint [Rupprecht et al. (2025)](https://www.biorxiv.org/content/10.1101/2025.03.03.641129).
+>
+> It is important to keep in mind that these models trained for application to interneurons are not yet as reliable and well-tested as the models for excitatory neurons. First, the ground truth dataset is still relatively small (17 neurons). Second, as with all ground truth data, the recordings were obtained under light anesthesia. It is likely that the activity patterns of interneurons differ more between awake vs. anesthetized states than those of excitatory neurons. Therefore, please keep these caveats in mind when interpreting the output of spike inference for interneuron data. And if you want to discuss, don't hesitate to reach out or open an issue on GitHub.
+>
+> It was also noticed (kudos to [Hal Rockwell](https://github.com/hal-rock)) that the computed noise levels my differ slightly between interneurons and excitatory neurons at otherwise similar recording conditions. This may be because the fluorescence levels, which change with spike rate for fast-spiking interneurons, might result in systematically lower noise levels compared to excitatory neurons, which exhibit sharp fluorescence transients from single spikes or bursts. It's not crucial, but if you are interested in noise level comparisons, keep it in mind.
+>
+> Finally, if you need any further pretrained interneuron models that are not uploaded yet, just let us know via GitHub issues or [e-Mail](mailto:p.t.r.rupprecht+cascade@gmail.com)!
 
 #### Why is the output of the algorithm a probability, why not discrete spikes?
 
