@@ -1,7 +1,7 @@
 ###
 ### Download links for available models
 ###
-### Last update: March 24th 2025
+### Last update: April 10th 2025
 
 Global_EXC_1Hz_smoothing500ms:
     Link: https://drive.switch.ch/index.php/s/ZAc2kNO0aqSO3ja/download
@@ -371,6 +371,18 @@ GC8f_EXC_15Hz_smoothing50ms_high_noise:
     Info:
 GC8f_EXC_15Hz_smoothing100ms_high_noise:
     Link: https://drive.switch.ch/index.php/s/xnaZDlifTxhG9Hb/download
+    Info:
+Interneurons_GC8+_7.5Hz_smoothing100ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/E7Epvzh4te2joDB/download
+    Info:
+Interneurons_GC8+_7.5Hz_smoothing200ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/Hefmyj3MUtTYYnH/download
+    Info:
+Interneurons_GC8+_30Hz_smoothing25ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/hwiBYtpLnG8T359/download
+    Info:
+Interneurons_GC8+_30Hz_smoothing50ms_high_noise:
+    Link: https://drive.switch.ch/index.php/s/NHnmSDi5EKp9YZ3/download
     Info:
 Online_model_30Hz_integration_100ms_smoothing_25ms_GCaMP6:
     Link: https://drive.switch.ch/index.php/s/4MUFDhmAkKWI6Rj/download
