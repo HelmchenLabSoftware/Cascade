@@ -41,6 +41,8 @@ You will get started within few minutes.
 
 ## Updates to ground truth datasets and pretrained models:
 
+***2025-04-25*** - New [blog post](https://gcamp6f.com/2025/04/25/accuaretly-computing-noise-levels-for-calcium-imaging-data/) about the standardized noise level $\nu$ that can be used to compare shot noise levels across calcium imaging recordings. The blog post investigas the effect of true noise levels, imaging rates and true neuronal spike rates on the measured noise metric.
+
 ***2025-04-10*** - First models for spike inference with interneurons, primarily based on GCaMP8 data, are now available. The models are described in our recent [preprint](https://www.biorxiv.org/content/10.1101/2025.03.03.641129v1) in Figure 6. Please check out this [FAQ section](https://github.com/HelmchenLabSoftware/Cascade?tab=readme-ov-file#can-i-apply-cascade-to-data-recorded-with-interneurons) for more details about these models and their potential limitations.
 
 ***2025-03-24*** - Models for online spike inference are now uploaded and available. The models are characterized in Figure 5 in our [preprint](https://www.biorxiv.org/content/10.1101/2025.03.03.641129v1), and the model selection is described in more practical terms in this [blog post](https://gcamp6f.com/2025/03/24/online-spike-inference-with-gcamp8/). If you are into online spike inference, definitely check it out!
