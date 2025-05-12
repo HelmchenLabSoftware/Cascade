@@ -1,7 +1,7 @@
 ###
 ### Download links for available models
 ###
-### Last update: April 10th 2025
+### Last update: May 12th 2025
 
 Global_EXC_1Hz_smoothing500ms:
     Link: https://drive.switch.ch/index.php/s/ZAc2kNO0aqSO3ja/download
@@ -74,6 +74,15 @@ OGB_zf_pDp_7.5Hz_smoothing200ms:
     Info:
 OGB_zf_pDp_7.5Hz_smoothing200ms_causalkernel:
     Link: https://drive.switch.ch/index.php/s/t4secylUuZTrimj/download
+    Info:
+OGB_zf_pDp_7.5Hz_smoothing100ms:
+    Link: https://drive.switch.ch/index.php/s/ArIEXSEXEroraj8/download
+    Info:
+OGB_zf_pDp_7.5Hz_smoothing150ms:
+    Link: https://drive.switch.ch/index.php/s/T0qukks0v2nWzer/download
+    Info:
+OGB_zf_pDp_7.5Hz_smoothing66ms:
+    Link: https://drive.switch.ch/index.php/s/13woYK1FO3SWNJH/download
     Info:
 Global_EXC_10Hz_smoothing50ms:
     Link: https://drive.switch.ch/index.php/s/vU7bUlVmmcGQ4mM/download
