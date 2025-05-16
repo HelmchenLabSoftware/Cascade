@@ -116,7 +116,7 @@ We recommend the following installation procedure, but many other options are po
          ``conda create -n Cascade python=3.7 tensorflow==2.3 keras==2.3.1 h5py numpy scipy matplotlib seaborn ruamel.yaml spyder``. 
     * For a GPU installation (faster, recommended if you will train networks): 
         
-        ``conda create -n Cascade python=3.7 tensorflow-gpu==2.4.1 keras h5py numpy scipy matplotlib seaborn ruamel.yaml spyder`` (Linux)
+        ``conda create -n Cascade python=3.7 tensorflow-gpu==2.4.1 keras==2.3.1 h5py numpy scipy matplotlib seaborn ruamel.yaml spyder`` (Linux)
 
         ``conda create -n Cascade python=3.7 tensorflow-gpu==2.3.0 keras h5py numpy scipy matplotlib seaborn ruamel.yaml spyder`` (Windows)
 
