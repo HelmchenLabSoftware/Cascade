@@ -370,7 +370,7 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 >
 > Rupprecht P, Rózsa M, Fang X, Svoboda K, Helmchen F. *[Spike inference from calcium imaging data acquired with GCaMP8 indicators](https://www.biorxiv.org/content/10.1101/2025.03.03.641129)*, bioRxiv (2025).
 >
-> Rupprecht P, Fan W, Sullivan S, Helmchen F, Sdrulla A. *[Spike rate inference from mouse spinal cord calcium imaging data](https://www.biorxiv.org/content/10.1101/2024.07.17.603957)*, bioRxiv (2024).
+> Rupprecht P, Fan W, Sullivan S, Helmchen F, Sdrulla A. *[Spike rate inference from mouse spinal cord calcium imaging data](https://www.jneurosci.org/content/45/18/e1187242025)*, J Neuroscience (2025).
 >
 > If you use the respective ground truth datasets directly, please also refer to the original papers and the associated dataset:
 > 
