@@ -85,7 +85,7 @@ Zoom into single events and observe calcium responses (or lack thereof) to singl
 
 Indicators: GCaMP8s, GCaMP8m, GCaMP8f, GCaMP7f, GCaMP6f, GCaMP6s, R-CaMP, jRCaMP, jRGECO, GCaMP5k, OGB-1, Cal-520.
 
-Mouse pyramidal cells in visual and somatosensory cortices, interneurons, hippocampal principal cells; zebrafish forebrain and olfactory bulb.
+Mouse pyramidal cells in visual and somatosensory cortices, interneurons, spinal cord neurons, hippocampal principal cells; zebrafish forebrain and olfactory bulb.
 
 [Exploration of the ground truth database](https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Explore_ground_truth_datasets.ipynb)
 
