@@ -39,7 +39,7 @@ You will get started within few minutes.
 <a href="https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Calibrated_spike_inference_with_Cascade.ipynb" rel="Spike inference from calcium data, showing activations of intermediate network layers"><img src="https://github.com/HelmchenLabSoftware/Calibrated-inference-of-spiking/blob/master/etc/Network_activations_output.gif "  width="85%"></a>
 </p>
 
-#### Updates to ground truth datasets and pretrained models:
+### Updates to ground truth datasets and pretrained models:
 
 ***2025-06-03*** - Spike times for dataset #21 were found to be misaligned (see issue [#76](https://github.com/HelmchenLabSoftware/Cascade/issues/76)). The corrected ground truth data for the two affected neurons was uploaded and replaced the previous data.
 
