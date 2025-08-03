@@ -17,7 +17,7 @@
 - A large and continuously updated ground truth database spanning brain regions, calcium indicators, species
 - A deep network that is trained to predict spike rates from calcium data
 - Procedures to resample the training ground truth such that noise levels and frame rates of calcium recordings are matched
-- A large set of pre-trained deep networks for various conditions
+- A large set of pre-trained deep networks for various conditions (additional models upon request)
 - Tools to quantify the out-of-dataset generalization for a given model and noise level
 - A tool to transform inferred spike rates into discrete spikes
 
