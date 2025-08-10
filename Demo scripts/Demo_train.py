@@ -25,7 +25,7 @@ Import python packages
 
 """
 
-import os
+import os, sys
 
 if "Demo scripts" in os.getcwd():
     sys.path.append(os.path.abspath(".."))  # add parent directory to path for imports
@@ -48,7 +48,7 @@ Configure model and its parameters
 """
 
 cfg = dict(
-    model_name="Universal_30Hz",  # Model name (and name of the save folder)
+    model_name="Global_30Hz_25ms",  # Model name (and name of the save folder)
     sampling_rate=30,  # Sampling rate in Hz (round to next integer)
     training_datasets=[
         "DS03-Cal520-m-S1",
@@ -71,12 +71,12 @@ cfg = dict(
         "DS20-jRCaMP1a-m-V1",
     ],
     noise_levels=[
-        noise for noise in range(2, 9)
+        noise for noise in range(2, 15)
     ],  # int values of noise values (do not use numpy here => representer error!)
-    smoothing=0.2,  # std of Gaussian smoothing in time (sec)
+    smoothing=0.025,  # std of Gaussian smoothing in time (sec)
     causal_kernel=0,  # causal ground truth smoothing kernel
     # Advanced:
-    # For additional parameters, you can find their names in the helper_scripts/config.py
+    # For additional parameters, you can find their names in the cascade2p/config.py
     # file in the config_template string
 )
 
