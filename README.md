@@ -151,14 +151,14 @@ This recipe has been tested on macOS 10.15 (Catalina).
 
 ## Typical work flow
 
-The average user will only use pretrained models to produce predictions for his/her own data, and the [Colaboratory Notebook](https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Calibrated_spike_inference_with_Cascade.ipynb) should in most cases be sufficient. The description of the complete work flow (below) is not necessary but helpful to understand what the algorithm does.
+The average user will only use pretrained models to produce predictions for his/her own data, and the [Colaboratory Notebook](https://colab.research.google.com/github/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Calibrated_spike_inference_with_Cascade.ipynb) should in most cases be sufficient. The description of the complete work flow (below) goes beyond that but may be helpful to understand the working principles of Cascade.
 
 
 **Train a model with ground truth (optional)**
 
 This section can be reproduced with the ``Demo_train.py`` file.
 
-The user specifies the properties of the model: the sampling rate of the calcium imaging data, the ground truth datasets used for training, the range of noise levels, the smoothing of the ground truth and whether a causal kernel is used. For an explanation what the last two adjustments mean, please read the FAQ below.
+The user specifies the properties of the model: the sampling rate of the calcium imaging data, the ground truth datasets used for training, the range of noise levels, the smoothing of the ground truth and whether a causal kernel is used. For an explanation of the last two adjustments, please read the FAQ below.
 
 Then, a folder is created, where the configuration parameters of the model and the trained deep networks are stored.
 
@@ -168,9 +168,9 @@ Finally, the real training procedure is started with ``cascade.train_model( mode
 
 This section can be reproduced with the ``Demo_predict.py`` file.
 
-First, a function is defined that loads the calcium traces. In the default configuration, the input data should be a matrix (number of neurons x time points) that has been saved as a \*.-mat-file in Matlab or as a \*.npy-file in Python. Usually, we name the variable ``dF_traces``. However, we also give instructions on how to easily adapt the function to your requirements.
+First, a function is defined that loads the calcium traces. In the default configuration, the input data should be a matrix (number of neurons x time points) that has been saved as a \*.-mat-file in Matlab or as a \*.npy-file in Python. In the default script, the variable name of this matrix is ``dF_traces``. However, we also provide instructions on how to easily adapt the function to your requirements.
 
-Next, the user indicates the path of the file that should be processed and the frame rate. We recommend to plot example traces to see whether everything went well.
+Next, the user indicates the path of the file that should be processed and the frame rate. We recommend to plot example traces to confirm that the import went well.
 
 Now, the user indicates the model of the (already trained) model and performs the spike inference with the command ``spike_prob = cascade.predict( model_name, traces )``. The input (``traces``) is processed by the model (``model_name``) to produce the spiking probabilities as output (``spike_prob``). The spiking probabilities are given at the same sampling rate as the input calcium recording.
 
@@ -182,13 +182,13 @@ This section can be reproduced with the ``Demo_discrete_spikes.py`` file.
 
 In this section, the output from the previous step (``spike_prob``) is loaded from disk. Single spikes are fitted into the smooth probabilities such that the most likely spike sequence is recovered. For optimal fitting, the parameters of the model used for spike predictions has to be loaded as well (``model_name``). The result of the procedure are spike times. They are given with the same temporal precision as the sampling rate of the calcium recording.
 
-We do not recommend discrete spike predictions except for outstanding high-quality recordings and refer to the FAQ and the paper ([link](https://www.nature.com/articles/s41593-021-00895-5), Fig. S7 and Supplementary Note 3) for a discussion.
+We do not recommend discrete spike predictions except for outstanding high-quality recordings and refer to the FAQ and the paper ([link](https://www.nature.com/articles/s41593-021-00895-5), Fig. S7 and Supplementary Note 3) for a discussion. But see our more recent [work on GCaMP8](https://www.biorxiv.org/content/10.1101/2025.03.03.641129v3), where single action-potential resolution is partially achieved with GCaMP8s and GCaMP8m.
 
 **Quantify expected performance of the model (optional)**
 
 This section can be reproduced with the ``Demo_benchmark_model.py`` file.
 
-To understand how good predictions are, it is important to quantify the performance of a given trained model. As discussed in depth in the [paper](https://www.nature.com/articles/s41593-021-00895-5), this is best measured by quantifying the performance when training the deep network on all except one ground truth dataset and test it on the held-out dataset.
+To understand how good predictions are, it is recommended to quantify the performance of a given trained model. As discussed in depth in the [paper](https://www.nature.com/articles/s41593-021-00895-5), this is best measured by quantifying the performance when training the deep network on all except one ground truth dataset and test it on the held-out dataset.
 
 To do this systematically, a lot of training and testing needs to performed, and we do not recommend this procedure for CPU-only installations.
 
