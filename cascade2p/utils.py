@@ -608,7 +608,7 @@ def plot_noise_matched_ground_truth( model_name, median_noise, frame_rate, nb_tr
                               verbose = cfg['verbose'],
                               replicas = 0)
 
-  X = X[:,np.int(cfg['windowsize']/2),]
+  X = X[:,int(cfg['windowsize']/2),]
   Y = Y[:,]
 
   # the following is very similar to the function "plot_dFF_traces()"
