@@ -330,7 +330,57 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 >
 > If however you want to use an entirely different model, for example a model trained at a sampling rate of 2 Hz, or a model only trained with a specific ground truth dataset, you have two options. 1) You go to the [Github page](https://github.com/HelmchenLabSoftware/Cascade) and follow the instructions on how to train you own model. This can be done even without GPU-support, but it will take some time (on the other hand, you only have to do this once). 2) You contact us via [e-Mail](mailto:p.t.r.rupprecht+cascade@gmail.com) and tell us what kind of model you would like to have. We will train it for you and upload it to our repository. Not only you, but everybody will then be able to use it further on.
 
+#### How can I inspect the ground truth datasets?
 
+> [As described above](https://github.com/HelmchenLabSoftware/Cascade?tab=readme-ov-file#exploration-of-the-ground-truth-database), we provide an interactive Colab tool for visualizing ground truth data. Alternatively, you can load and inspect the data directly in MATLAB, Python, or your favorite language.
+>
+> Each neuron’s ground truth is stored in a separate `*.mat` file (e.g. `CAttached_jGCaMP8s_472182_4_mini.mat`). The filename consists of an abbreviation of "cell-attached" to indicate that it is based on cell-attached experiements, a part that reflects calcium indicator and brain region, a post-fix "mini" to reflect the fact that raw ephys data and additional data were deleted (a "maxi" version was initially used but was too large), and the file ending `.mat`, indicating that it was saved in a Matlab-compatible file format.
+>
+> When you load the `*.mat`-file in MATLAB, you will see a cell array named `CAttached`. The cell contains one or multiple entries, each of them corresponding to a separate recording (but from the same neuron). In experiments, this junking into distinct recordings with a break between them is necessary for technical reasons or when the position of the microscope or the micropipette have to be readjusted during experiments. Each of those recordings, e.g., `CAttached{2}` for the second recording, is a struct. It contains at least the following fields:
+>
+> `fluo_time`: time vector in seconds, with "0" marking the start of that recording  
+> `fluo_mean`: dF/F fluorescence trace over time, averaged over the neuron's ROI  
+> `events_AP`: action potential time tags, stored in units of 0.1 ms (i.e. to convert to seconds divide the values by 10^4)
+>
+> To read these variables in other programming environments like Python, I suggest to have a look at how we read in the data in CASCADE (see [here](https://github.com/HelmchenLabSoftware/Cascade/blob/607358103389fac7a851ec0b74342ffc01fc7abc/cascade2p/utils.py#L686) for example code) or use an LLM for translation.
+>
+> To load and plot an example recording in **MATLAB**:
+>
+> ```matlab
+> load('CAttached_jGCaMP8s_472182_2_mini.mat')
+> recording_ID = 1;
+> fluo_time = CAttached{recording_ID}.fluo_time;
+> fluo_mean = CAttached{recording_ID}.fluo_mean;
+> events_AP = CAttached{recording_ID}.events_AP;
+> 
+> figure(37); plot(fluo_time,fluo_mean,'k'); hold on;
+> for k = 1:numel(events_AP)
+>    plot([events_AP(k) events_AP(k)]/1e4,[-1 -0.5],'r');
+> end
+> hold off
+> xlabel('Time (s)')
+> ylabel('Fluorescence dF/F')
+> ```
+>
+> In **Python**, check out the CASCADE code (e.g.,  [here](https://github.com/HelmchenLabSoftware/Cascade/blob/607358103389fac7a851ec0b74342ffc01fc7abc/cascade2p/utils.py#L686)), or use this snippet:
+> 
+> ```Python
+> import scipy.io as sio
+> import matplotlib.pyplot as plt
+> 
+> data = sio.loadmat('CAttached_jGCaMP8s_472182_2_mini.mat', squeeze_me=True)
+> CAttached = data['CAttached']
+> recording_ID = 0  # MATLAB is 1-based, Python is 0-based
+> fluo_time = CAttached[recording_ID]['fluo_time'].item()
+> fluo_mean = CAttached[recording_ID]['fluo_mean'].item()
+> events_AP = CAttached[recording_ID]['events_AP'].item()
+>
+> plt.figure(37); plt.plot(fluo_time, fluo_mean, 'k')
+> for k in range(len(events_AP)):
+>    plt.plot([events_AP[k] / 1e4, events_AP[k] / 1e4], [-1, -0.5], 'r')
+> plt.xlabel('Time (s)')
+> plt.ylabel('Fluorescence dF/F')
+```
 
 #### I have my own ground truth dataset. How can I use it?
 
