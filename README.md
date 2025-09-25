@@ -380,7 +380,7 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 >    plt.plot([events_AP[k] / 1e4, events_AP[k] / 1e4], [-1, -0.5], 'r')
 > plt.xlabel('Time (s)')
 > plt.ylabel('Fluorescence dF/F')
-```
+> ```
 
 #### I have my own ground truth dataset. How can I use it?
 
