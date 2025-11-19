@@ -41,6 +41,8 @@ You will get started within few minutes.
 
 ### Updates to ground truth datasets and pretrained models:
 
+***2025-11-15*** - There are now plans to switch Cascade from Tensorflow as deep learning framework to PyTorch or JAX. If you are interested in participating in this transition, [please reach out](https://github.com/HelmchenLabSoftware/Cascade/issues/81). Note: The current version of Cascade will be supported continuously, irrespective of this new development.
+
 ***2025-06-03*** - Spike times for dataset #21 were found to be misaligned (see issue [#76](https://github.com/HelmchenLabSoftware/Cascade/issues/76)). The corrected ground truth data for the two affected neurons was uploaded and replaced the previous data.
 
 ***2025-05-01*** - Our study of spike inference for **calcium imaging data from spinal cord** is now published in the Journal of Neuroscience. Check out the [openly accessible manuscript](https://doi.org/10.1523/JNEUROSCI.1187-24.2025), which also includes the reviewer reports and rebuttal letters. Cascade models pretrained on spinal cord ground truth are already available, and the ground truth with both excitatory and inhibitory spinal cord neurons is already part of this repository's ground truth database (datasets #40 and #41).
