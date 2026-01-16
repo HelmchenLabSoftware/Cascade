@@ -344,7 +344,7 @@ gaussian_width = np.round(2*np.sqrt(2*np.log(2))*smoothing/1e3*100)/100
 > `fluo_mean`: dF/F fluorescence trace over time, averaged over the neuron's ROI  
 > `events_AP`: action potential time tags, stored in units of 0.1 ms (i.e. to convert to seconds divide the values by 10^4)
 >
-> To read these variables in other programming environments like Python, I suggest to have a look at how we read in the data in CASCADE (see [here](https://github.com/HelmchenLabSoftware/Cascade/blob/607358103389fac7a851ec0b74342ffc01fc7abc/cascade2p/utils.py#L686) for example code) or use an LLM for translation.
+> Raw ephys recording data are not included in these arrays to reduce ground truth dataset size. To read these variables in other programming environments like Python, I suggest to have a look at how we read in the data in CASCADE (see [here](https://github.com/HelmchenLabSoftware/Cascade/blob/607358103389fac7a851ec0b74342ffc01fc7abc/cascade2p/utils.py#L686) for example code) or use an LLM for translation.
 >
 > To load and plot an example recording in **MATLAB**:
 >
