@@ -35,6 +35,8 @@ import time
 import numpy as np
 import warnings
 from . import config, utils
+import gc
+import tensorflow as tf
 
 
 def train_model(
@@ -213,6 +215,9 @@ def train_model(
             )
             model.save(os.path.join(model_path, file_name))
             print("Saved model:", file_name)
+            del model
+            tf.keras.backend.clear_session()
+            gc.collect()
 
     # Update model fitting status
     # cfg['training_finished'] = 'Yes'
