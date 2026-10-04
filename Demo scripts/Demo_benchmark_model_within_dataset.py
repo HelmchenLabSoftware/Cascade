@@ -27,7 +27,11 @@ center = int(np.round(cfg['before_frac'] * cfg['windowsize']))
 temp_model, temp_gt = model_name + '_LOO_temp', 'Ground_truth_LOO_temp'
 cfg['model_name'], cfg['noise_levels'] = temp_model, noise_levels
 
-results = []
+csv_path = f'LOO_benchmark_{model_name}.csv'
+csv_file = open(csv_path, 'w', newline='')
+writer = csv.writer(csv_file)
+writer.writerow(['neuron', 'noise_level', 'correlation', 'error', 'bias'])
+
 for i, test_file in enumerate(neuron_files):
 
     shutil.rmtree(temp_gt, ignore_errors=True)
@@ -50,7 +54,7 @@ for i, test_file in enumerate(neuron_files):
                 omission_list=[j for j in range(len(neuron_files)) if j != i],
                 permute=0, verbose=cfg['verbose'], replicas=0, causal_kernel=cfg['causal_kernel'])
 
-            spike_rates = np.squeeze(cascade.predict(temp_model, calcium[:, center], verbosity=0))
+            spike_rates = np.squeeze(cascade.predict(temp_model, calcium[:, center].T, verbosity=0))
             ground_truth = np.squeeze(ground_truth)
             ok = ~np.isnan(spike_rates)
             ground_truth, spike_rates = ground_truth[ok], spike_rates[ok]
@@ -65,12 +69,9 @@ for i, test_file in enumerate(neuron_files):
             print(f'Neuron {os.path.basename(test_file)}, noise level {noise_level}: {e}')
             corr = err = bias = np.nan
 
-        results.append([os.path.basename(test_file), noise_level, corr, err, bias])
+        writer.writerow([os.path.basename(test_file), noise_level, corr, err, bias])
+        csv_file.flush()
 
 shutil.rmtree(temp_gt, ignore_errors=True)
 shutil.rmtree(os.path.join('Pretrained_models', temp_model), ignore_errors=True)
-
-with open(f'LOO_benchmark_{model_name}.csv', 'w', newline='') as f:
-    writer = csv.writer(f)
-    writer.writerow(['neuron', 'noise_level', 'correlation', 'error', 'bias'])
-    writer.writerows(results)
+csv_file.close()
