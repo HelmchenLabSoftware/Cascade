@@ -75,3 +75,30 @@ for i, test_file in enumerate(neuron_files):
 shutil.rmtree(temp_gt, ignore_errors=True)
 shutil.rmtree(os.path.join('Pretrained_models', temp_model), ignore_errors=True)
 csv_file.close()
+
+
+## Summarize benchmark results
+
+import pandas as pd
+
+df = pd.read_csv(csv_path)
+metrics = ['correlation', 'error', 'bias']
+ 
+def stats(x):
+    x = x.dropna()
+    return pd.Series({'n': len(x), 'mean': x.mean(), 'sd': x.std(), 'sem': x.sem(),
+                      'median': x.median(), 'q25': x.quantile(0.25), 'q75': x.quantile(0.75),
+                      'min': x.min(), 'max': x.max()})
+ 
+per_noise = df.groupby('noise_level')[metrics].apply(lambda g: g.apply(stats)).unstack()
+overall = df[metrics].apply(stats).unstack().to_frame('all').T
+summary = pd.concat([per_noise, overall])
+summary.index.name = 'noise_level'
+ 
+pd.set_option('display.width', 250, 'display.precision', 3)
+for m in metrics:
+    print(f'\n{m}\n', summary[m])
+print('\nMissing values:', df[metrics].isna().any(axis=1).sum(), 'rows:',
+      df.loc[df[metrics].isna().any(axis=1), ['neuron', 'noise_level']].values.tolist())
+ 
+summary.to_csv(csv_path.replace('.csv', '_summary.csv'))
