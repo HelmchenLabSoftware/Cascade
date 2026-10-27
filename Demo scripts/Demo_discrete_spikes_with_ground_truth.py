@@ -9,6 +9,8 @@ Created on Tue Oct 27 16:04:33 2026
 
 """
 Demo script to test spike rate inference and discrete spike inference on ground truth data.
+This addresses issue #90, so it is possible to check the temporal alignment of inferred discrete and continuous
+spikes compared to the ground truth spikes.
 
 1. Ground truth recordings (dF/F traces and simultaneously recorded spikes) are resampled
    to the frame rate of the chosen model and brought to a chosen noise level (as for training).
@@ -28,7 +30,8 @@ Import python packages
 
 """
 
-import os, sys
+import os
+import sys
 if 'Demo scripts' in os.getcwd():
     sys.path.append( os.path.abspath('..') ) # add parent directory to path for imports
     os.chdir('..')  # change to main directory
@@ -212,7 +215,7 @@ for i in range(len(selected_neurons)):
     axs[2].set_yticklabels(['inferred\ndiscrete spikes', 'ground truth\nspikes'])
     axs[2].set_ylim(-0.6, 1.9)
     axs[2].set_xlabel('Time (s)')
-    axs[2].set_xlim( time[excerpt[0]], time[excerpt[-1]] )
+    axs[2].set_xlim( time[excerpt[0]], time[excerpt[-1]]-5 )
 
     for ax in axs:
         ax.spines['top'].set_visible(False)
