@@ -156,7 +156,7 @@ for iii,noise_xx in enumerate([2,4,8]):
                                           permute = 0,
                                           verbose = 1,
                                           replicas = 0)
-              calcium = calcium[:,int(cfg['before_frac']*cfg['windowsize']-1),]
+              calcium = calcium[:,int(cfg['before_frac']*cfg['windowsize']),]
               ground_truth = ground_truth[:,]
 
               # perform predictions

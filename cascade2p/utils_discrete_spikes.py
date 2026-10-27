@@ -74,7 +74,7 @@ def infer_discrete_spikes(spike_rates,model_name,model_folder='Pretrained_models
     # find non-nan indices (first and last frames of predictions are NaNs)
     nnan_indices = ~np.isnan(prob_density)
     # offset in time to assign inferred spikes to correct positions in the end
-    offset = np.argmax(nnan_indices==True) - 1
+    offset = np.argmax(nnan_indices==True)
 
     if np.sum(nnan_indices) > 0:
 

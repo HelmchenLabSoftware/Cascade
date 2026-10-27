@@ -133,7 +133,7 @@ for index in range(len(all_training_datasets_new)):
                               permute = 0,
                               verbose = cfg['verbose'],
                               replicas = 0)
-  calcium = calcium[:,31,]
+  calcium = calcium[:,32,]
   ground_truth = ground_truth[:,]
 
   # perform predictions

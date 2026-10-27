@@ -133,7 +133,7 @@ def preprocess_traces(neurons_x_time, before_frac, window_size):
 
     """
     dF_traces = neurons_x_time
-    start = int(before_frac * window_size -1)
+    start = int(before_frac * window_size)
     end = dF_traces.shape[1] - window_size + start + 1
     # extract a moving window from the calcium trace
     window_indexes = (np.expand_dims(np.arange(window_size), 0) + np.expand_dims(np.arange(dF_traces.shape[1] - window_size + 1), 0).T)
@@ -551,7 +551,7 @@ def plot_dFF_traces(traces,neuron_indices,frame_rate,spiking=None,discrete_spike
 
       for spike_time in discrete_spikes[neuron_index]:
 
-        axs[subplot_ix].plot(np.array([spike_time,spike_time])/frame_rate+1/frame_rate,[-1.4, -1.2],'k')
+        axs[subplot_ix].plot(np.array([spike_time,spike_time])/frame_rate,[-1.4, -1.2],'k')
      
   return time
 
