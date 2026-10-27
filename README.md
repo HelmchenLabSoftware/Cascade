@@ -41,6 +41,8 @@ You will get started within few minutes.
 
 ### Updates to ground truth datasets and pretrained models:
 
+***2026-10-27*** - There was a temporal alignment error which affected some models such that they generated inferred spike rates 1 time point offset in time. See [issue #90](https://github.com/HelmchenLabSoftware/Cascade/issues/90). The bug is fixed now. We now also provide a [script to check for self-consistency](https://github.com/HelmchenLabSoftware/Cascade/blob/master/Demo%20scripts/Demo_discrete_spikes_with_ground_truth.py) of inferred spike rate timing for each model based on the ground truth data.
+
 ***2026-08-09*** - Our study on spike inference with GCaMP8 data is now [out in Nature Methods](https://doi.org/10.1038/s41592-026-03183-x). It serves as a reference for **CASCADE models trained with GCaMP8 data**. In addition, we benchmark algorithms (OASIS/Suite2p, MLSpike), also with interneurons and online spike inference, and we study **the nonlinearity of calcium indicators** an its effect on the detection of spikes. [Check it out!]((https://doi.org/10.1038/s41592-026-03183-x))
 
 ***2026-02-11*** - There is now a fully working version of **Cascade using Torch** instead of Tensorflow: [CascadeTorch](https://github.com/PTRRupprecht/CascadeTorch). Torch-based CASCADE uses the same models trained for CASCADE (the pretrained models and weights were converted to Torch models), and inference results and output format are therefore identical between Cascade and CascadeTorch. Early feedback is highly welcome!
