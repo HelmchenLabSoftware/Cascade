@@ -8,7 +8,8 @@ Infer discrete spikes from probabilities: define helper functions
 """
 
 
-from scipy.ndimage.filters import gaussian_filter
+from scipy.ndimage import gaussian_filter, convolve1d
+from scipy.stats import invgauss
 import scipy.ndimage as ndim
 from copy import deepcopy
 import numpy as np
@@ -21,12 +22,14 @@ from . import config
 
 
 
-def infer_discrete_spikes(spike_rates,model_name,model_folder='Pretrained_models',verbosity=1):
+def infer_discrete_spikes(spike_rates,model_name,model_folder='Pretrained_models',verbosity=1,kernel='auto'):
 
   """
 
-  Main function. Detailed documentation: To be done.
-
+  Main function. The discrete spikes are smoothed with the same kernel that was used to smooth the ground truth
+  during training of the model ('kernel'='auto'; Gaussian or causal, see 'causal_kernel' in the
+  config file of the model). With 'kernel'='gaussian' or 'kernel'='causal', the respective kernel
+  is used instead.
   """
 
   model_path = os.path.join(model_folder, model_name)
@@ -46,6 +49,16 @@ def infer_discrete_spikes(spike_rates,model_name,model_folder='Pretrained_models
   # extract values from config file into variables
   sampling_rate = cfg['sampling_rate']
   smoothing = cfg['smoothing']
+  
+  if kernel == 'auto':
+    kernel = 'causal' if ('causal_kernel' in cfg and cfg['causal_kernel']) else 'gaussian'
+  if kernel == 'causal':
+    smoothing_kernel = causal_smoothing_kernel(sampling_rate,smoothing)
+  elif kernel == 'gaussian':
+    smoothing_kernel = None
+    
+  if verbosity:
+    print('Discrete spikes are inferred using a {} smoothing kernel.'.format(kernel))
 
   spikes_all = []
   approximations_all = np.nan*np.ones(spike_rates.shape)
@@ -80,21 +93,21 @@ def infer_discrete_spikes(spike_rates,model_name,model_folder='Pretrained_models
         nb_spikes = np.sum(prob_density[support_slices[k]])
 
         # Monte Carlo/Metropolis-based sampling, initial guess of spikes
-        spike_locs,approximation[support_slices[k]],counter = fill_up_APs(prob_density[support_slices[k]],smoothing*sampling_rate,nb_spikes,spike_locs)
+        spike_locs,approximation[support_slices[k]],counter = fill_up_APs(prob_density[support_slices[k]],smoothing*sampling_rate,nb_spikes,spike_locs,smoothing_kernel)
 
         # every spike is shifted to any other position (no sub-pixel resolution) and the best position is used
-        spike_locs,approximation[support_slices[k]] = systematic_exploration(prob_density[support_slices[k]],smoothing*sampling_rate,nb_spikes,spike_locs,approximation[support_slices[k]])
+        spike_locs,approximation[support_slices[k]] = systematic_exploration(prob_density[support_slices[k]],smoothing*sampling_rate,nb_spikes,spike_locs,approximation[support_slices[k]],smoothing_kernel)
 
         # refine initial guess using random shifts or removal of spikes
         for jj in range(5):
           # remove the worst spikes
-          spike_locs,approximation[support_slices[k]] = prune_APs(prob_density[support_slices[k]],smoothing*sampling_rate,nb_spikes,spike_locs,approximation[support_slices[k]])
+          spike_locs,approximation[support_slices[k]] = prune_APs(prob_density[support_slices[k]],smoothing*sampling_rate,nb_spikes,spike_locs,approximation[support_slices[k]],smoothing_kernel)
           # fill up spikes again
           nb_spikes = np.sum(prob_density[support_slices[k]]) - np.sum(approximation[support_slices[k]])
-          spike_locs,approximation[support_slices[k]],counter = fill_up_APs(prob_density[support_slices[k]],smoothing*sampling_rate,nb_spikes,spike_locs)
+          spike_locs,approximation[support_slices[k]],counter = fill_up_APs(prob_density[support_slices[k]],smoothing*sampling_rate,nb_spikes,spike_locs,smoothing_kernel)
 
         # every spike is shifted to any other position (no sub-pixel resolution) and the best position is used
-        spike_locs,approximation[support_slices[k]] = systematic_exploration(prob_density[support_slices[k]],smoothing*sampling_rate,nb_spikes,spike_locs,approximation[support_slices[k]])
+        spike_locs,approximation[support_slices[k]] = systematic_exploration(prob_density[support_slices[k]],smoothing*sampling_rate,nb_spikes,spike_locs,approximation[support_slices[k]],smoothing_kernel)
 
         temporal_offset = vector_of_indices[support_slices[k]][0]
         new_spikes = spike_locs+temporal_offset
@@ -107,11 +120,41 @@ def infer_discrete_spikes(spike_rates,model_name,model_folder='Pretrained_models
   return approximations_all, spikes_all
 
 
+def causal_smoothing_kernel(sampling_rate,smoothing):
+
+  """
+  
+  This function returns the causal kernel that was used to smooth the ground truth
+  for models trained with causal kernel (identical to the kernel defined in
+  utils.preprocess_groundtruth_artificial_noise_balanced(); 'smoothing' is given in seconds).
+  """
+  
+  xx = np.arange(0,199)/sampling_rate
+  yy = invgauss.pdf(xx,smoothing*2.0,101/sampling_rate,1)
+  ix = np.argmax(yy)
+  yy = np.roll(yy,int((99-ix)/1.5))
+  return yy/np.nansum(yy)
 
 
 
+def smooth_spikes(spikes,smoothingX,smoothing_kernel=None):
 
-def fill_up_APs(prob_density,smoothingX,nb_spikes,spike_locs):
+  """
+
+  This function converts discrete spikes into a smoothed spike rate, with a Gaussian kernel
+  (standard deviation 'smoothingX', in frames) if 'smoothing_kernel' is None, otherwise with
+  the (causal) kernel 'smoothing_kernel', in the same way as the ground truth was generated
+  during training.
+  """
+  
+  if smoothing_kernel is None:
+    return gaussian_filter(spikes.astype(float), sigma=smoothingX)
+  else:
+    # same output as scipy.signal.convolve(spikes,smoothing_kernel,mode='same') as used during training
+    return convolve1d(spikes.astype(float), smoothing_kernel, mode='constant')
+
+
+def fill_up_APs(prob_density,smoothingX,nb_spikes,spike_locs,smoothing_kernel=None):
 
   """
 
@@ -128,13 +171,13 @@ def fill_up_APs(prob_density,smoothingX,nb_spikes,spike_locs):
   approximation = np.zeros(prob_density.shape)
   for spike in spike_locs:
     approximation[spike] += 1
-  approximation =  gaussian_filter(approximation.astype(float), sigma=smoothingX)
+  approximation =  smooth_spikes(approximation, smoothingX, smoothing_kernel)
 
-  # sample additional spike guesses using a Monte Carlo/Metropolis sampling scheme
-  #
+  # sample additional spike guesses using a Monte Carlo/Metropolis sampling scheme;
   # during each loop iteration, a spike is added at a likely location (spike_location)
   # the added spike is accepted or rejected based on whether the
   # error of the approximation decreases or not
+  
   counter = 0
   while np.sum(approximation) < nb_spikes and counter < nb_spikes*20:
 
@@ -149,12 +192,13 @@ def fill_up_APs(prob_density,smoothingX,nb_spikes,spike_locs):
     approximation_temp = deepcopy(approximation)
     this_spike =  np.zeros(prob_density.shape)
     this_spike[spike_location] = 1
-    this_spike =  gaussian_filter(this_spike.astype(float), sigma=smoothingX)
+    this_spike = smooth_spikes(this_spike,smoothingX,smoothing_kernel)
     approximation += this_spike
 
     error_change = np.sum(np.abs(prob_density - approximation))  -  np.sum(np.abs(prob_density - approximation_temp))
 
-    if error_change <= 0:
+    # spikes whose smoothed rate lies mostly outside of the slice are not accepted (relevant for causal kernels)
+    if error_change <= 0 and np.sum(this_spike) > 0.5:
       spike_locs.append(spike_location)
     else:
       approximation = deepcopy(approximation_temp)
@@ -169,7 +213,7 @@ def divide_and_conquer(prob_density,smoothingX):
 
   """
 
-  divide_and_conquer(): plits the probablity density in continous chunks of non-zero values (so-called "support").
+  divide_and_conquer(): splits the probablity density into continous chunks of non-zero values (so-called "support").
   These are returned as "slices", i.e., ranges of indices.
 
   """
@@ -183,7 +227,7 @@ def divide_and_conquer(prob_density,smoothingX):
 
 
 
-def systematic_exploration(prob_density,smoothingX,nb_spikes,spike_locs,approximation):
+def systematic_exploration(prob_density,smoothingX,nb_spikes,spike_locs,approximation,smoothing_kernel=None):
 
   """
 
@@ -195,7 +239,7 @@ def systematic_exploration(prob_density,smoothingX,nb_spikes,spike_locs,approxim
   spike_reservoir = np.zeros((len(approximation),len(approximation)))
   for timepoint in range(len(approximation)):
     spike_reservoir[timepoint,timepoint] = 1
-    spike_reservoir[timepoint,:] =  gaussian_filter( (spike_reservoir[timepoint,:]).astype(float), sigma=smoothingX)
+    spike_reservoir[timepoint,:] =  smooth_spikes(spike_reservoir[timepoint,:],smoothingX,smoothing_kernel)
 
   # add a spike at "timepoint", subtract the existing spike at "spike"
   error = np.zeros(approximation.shape)
@@ -204,6 +248,9 @@ def systematic_exploration(prob_density,smoothingX,nb_spikes,spike_locs,approxim
       approximation_suggestion = approximation + spike_reservoir[timepoint] - spike_reservoir[spike]
       error[timepoint] = np.sum(np.abs(prob_density - approximation_suggestion))
 
+    # exclude positions whose smoothed rate lies mostly outside of the slice (relevant for causal kernels)
+    error[np.sum(spike_reservoir,axis=1) < 0.5] = np.inf
+    
     ix = np.argmin(error)
 
     spike_locs[spike_index] = ix
@@ -211,13 +258,13 @@ def systematic_exploration(prob_density,smoothingX,nb_spikes,spike_locs,approxim
     approximation = np.zeros(prob_density.shape)
     for spike in spike_locs:
       approximation[spike] += 1
-    approximation =  gaussian_filter(approximation.astype(float), sigma=smoothingX)
+    approximation =  smooth_spikes(approximation,smoothingX,smoothing_kernel)
 
   return spike_locs,approximation
 
 
 
-def prune_APs(prob_density,smoothing,nb_spikes,spike_locs,approximation):
+def prune_APs(prob_density,smoothing,nb_spikes,spike_locs,approximation,smoothing_kernel=None):
 
   """
 
@@ -230,7 +277,7 @@ def prune_APs(prob_density,smoothing,nb_spikes,spike_locs,approximation):
 
     spike_neg = np.zeros(prob_density.shape)
     spike_neg[spike1] = 1
-    spike_neg =  gaussian_filter(spike_neg.astype(float), sigma=smoothing)
+    spike_neg =  smooth_spikes(spike_neg,smoothing,smoothing_kernel)
 
     approximation_temp = approximation - spike_neg
 
@@ -241,14 +288,5 @@ def prune_APs(prob_density,smoothing,nb_spikes,spike_locs,approximation):
       approximation -= spike_neg
 
   spike_locs = [x for x in spike_locs if x >= 0]
-
-#  # produce approximation based on previously inferred spikes (spike_locs)
-#  approximation = np.zeros(prob_density.shape)
-#  for spike in spike_locs:
-#
-#    this_spike =  np.zeros(prob_density.shape)
-#    this_spike[spike] = 1
-#    this_spike =  gaussian_filter(this_spike.astype(float), sigma=smoothing)
-#    approximation += this_spike
 
   return spike_locs,approximation
