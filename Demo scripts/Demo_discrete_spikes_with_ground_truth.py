@@ -215,7 +215,7 @@ for i in range(len(selected_neurons)):
     axs[2].set_yticklabels(['inferred\ndiscrete spikes', 'ground truth\nspikes'])
     axs[2].set_ylim(-0.6, 1.9)
     axs[2].set_xlabel('Time (s)')
-    axs[2].set_xlim( time[excerpt[0]], time[excerpt[-1]]-5 )
+    axs[2].set_xlim( time[excerpt[0]], time[excerpt[-1]] -5)
 
     for ax in axs:
         ax.spines['top'].set_visible(False)
