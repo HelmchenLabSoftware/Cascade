@@ -1,7 +1,7 @@
 ###
 ### Download links for available models
 ###
-### Last update: October 4th 2026
+### Last update: November 1st 2026
 
 Global_EXC_1Hz_smoothing500ms:
     Link: https://drive.switch.ch/index.php/s/ZAc2kNO0aqSO3ja/download
@@ -54,6 +54,9 @@ Global_EXC_6Hz_smoothing200ms:
 Global_EXC_6Hz_smoothing200ms_causalkernel:
     Link: https://drive.switch.ch/index.php/s/QajDzwNbdptJSfr/download
     Info:
+Global_6.8Hz_200ms_causalkernel_high_noise:
+    Link: https://drive.switch.ch/index.php/s/s3CmaWoFX7ZJP9r/download
+    Info:
 Global_EXC_7Hz_smoothing200ms:
     Link: https://drive.switch.ch/index.php/s/9rCHQfoJhAQAFlQ/download
     Info:
@@ -89,6 +92,15 @@ Global_8.5Hz_100ms_causalkernel:
     Info:
 Global_8.5Hz_50ms_causalkernel:
     Link: https://drive.switch.ch/index.php/s/AM9hj3kwKzDuaiN/download
+    Info:
+Global_8.5Hz_200ms_causalkernel_high_noise:
+    Link: https://drive.switch.ch/index.php/s/LL9FqJ44Ct9nJKa/download
+    Info:
+Global_8.5Hz_100ms_causalkernel_high_noise:
+    Link: https://drive.switch.ch/index.php/s/EdPJ2FL2C58YZXG/download
+    Info:
+Global_8.5Hz_50ms_causalkernel_high_noise:
+    Link: https://drive.switch.ch/index.php/s/y8DJ6gCySSWMJoj/download
     Info:
 Global_x_Spinal_INH_8.5Hz_100ms_causalkernel:
     Link: https://drive.switch.ch/index.php/s/AHJngZcXjNHfoM7/download
@@ -137,6 +149,15 @@ Global_13Hz_100ms_causalkernel:
     Info:
 Global_13Hz_50ms_causalkernel:
     Link: https://drive.switch.ch/index.php/s/mrkSE81avtFACla/download
+    Info:
+Global_13Hz_200ms_causalkernel_high_noise:
+    Link: https://drive.switch.ch/index.php/s/7MKTeLRtWzDie49/download
+    Info:
+Global_13Hz_100ms_causalkernel_high_noise:
+    Link: https://drive.switch.ch/index.php/s/DBsxNKEt77xNEDM/download
+    Info:
+Global_13Hz_50ms_causalkernel_high_noise:
+    Link: https://drive.switch.ch/index.php/s/MCPY9pFBSny82os/download
     Info:
 Global_EXC_15Hz_smoothing50ms:
     Link: https://drive.switch.ch/index.php/s/JjHmm5IxDsXzGQW/download
@@ -314,6 +335,15 @@ GC8_EXC_10Hz_smoothing150ms_high_noise:
     Info:
 GC8_EXC_10Hz_smoothing75ms_high_noise:
     Link: https://drive.switch.ch/index.php/s/H2kiyPViO0oL45C/download
+    Info:
+GC8_EXC_13Hz_200ms_causalkernel_high_noise:
+    Link: https://drive.switch.ch/index.php/s/BF2F4xbNqReroqP/download
+    Info:
+GC8_EXC_13Hz_100ms_causalkernel_high_noise:
+    Link: https://drive.switch.ch/index.php/s/qZc8Gc4yKNNGij3/download
+    Info:
+GC8_EXC_13Hz_50ms_causalkernel_high_noise:
+    Link: https://drive.switch.ch/index.php/s/npRknw4aTjyJbzr/download
     Info:
 GC8_EXC_15Hz_smoothing100ms_high_noise:
     Link: https://drive.switch.ch/index.php/s/dvORWhkCck3WsLq/download
